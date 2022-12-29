@@ -1,0 +1,148 @@
+[
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "facetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "enum IDiamondCut.FacetCutAction",
+            "name": "action",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes4[]",
+            "name": "functionSelectors",
+            "type": "bytes4[]"
+          }
+        ],
+        "internalType": "struct IDiamondCut.FacetCut[]",
+        "name": "_diamondCut",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "paymentsFacet",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "serviceOfferFacet",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "serviceAgreementFacet",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "userAccessControlFacet",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "treasuryFacet",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct RadomRegistryDiamond.ConstructorArgs",
+        "name": "_args",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "AddressCannotBeZero",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AddressHasNoCode",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AddressMustBeZero",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CallDataEmptyInitAddressNotZero",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DoesNotAcceptEth",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FunctionDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ImmutableFunction",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectFacetCutAction",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InitAddressZeroCallDataNotEmpty",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LibDiamondCutInitFail",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoSelectorsToCut",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReplacingSameFunction",
+    "type": "error"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
+]

@@ -1,0 +1,1236 @@
+[
+  {
+    "inputs": [],
+    "name": "AddressAlreadyWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AddressNotWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AgreementCancelled",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AgreementNotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AgreementVoid",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AmountIsTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AssetTypeNotSupported",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ChargeIntervalInvalid",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FeatureNotSupported",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectAgreementPurchaser",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectPaymentModel",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientFunds",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientPermissions",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "KVPKeyNotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "KVPRequiredKeyNotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MissingRequiredKeys",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OfferAlreadyExists",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OfferDisabled",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OfferHasActiveAgreement",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OfferNotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OrgMustDeposit",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OrgStreamDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PricingInputInvalid",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PricingOptionDisabled",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PricingSelectionInvalid",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ProductHasNoPricing",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnsupportedToken",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "WhitelistLimitExceeded",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint160",
+        "name": "serviceOfferId",
+        "type": "uint160"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "purchaser",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "OneTimePurchaseSuccessful",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "serviceAgreementId",
+        "type": "uint64"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "serviceOfferId",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "purchaser",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "userExpiryTimestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "revoked",
+        "type": "bool"
+      }
+    ],
+    "name": "ServiceAgreementCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "serviceAgreementId",
+        "type": "uint64"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "serviceOfferId",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "purchaser",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "ServiceAgreementCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "serviceAgreementId",
+        "type": "uint64"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint32",
+        "name": "serviceOfferId",
+        "type": "uint32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "purchaser",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "ServiceAgreementUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "agreementId",
+        "type": "uint64"
+      }
+    ],
+    "name": "_getAgreementPricingSelection",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes31",
+            "name": "key",
+            "type": "bytes31"
+          },
+          {
+            "internalType": "bytes31",
+            "name": "option",
+            "type": "bytes31"
+          }
+        ],
+        "internalType": "struct Services.PricingSelection[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "agreementId",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bytes20",
+        "name": "offerPurchaser",
+        "type": "bytes20"
+      }
+    ],
+    "name": "cancelSubscription",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "serviceOfferId",
+        "type": "uint32"
+      }
+    ],
+    "name": "getNumberOfActiveAgreements",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "serviceOfferId",
+        "type": "uint32"
+      }
+    ],
+    "name": "getOfferAgreements",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes20",
+            "name": "sellerOrgId",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint64",
+            "name": "serviceAgreementId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "agreementStart",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "agreementEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "indexRunsOutOfFunds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricing",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes20",
+            "name": "offerPurchaser",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint32",
+            "name": "chargeInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "serviceOfferId",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelled",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "revoked",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "key",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "bytes",
+                "name": "value",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct Services.KeyValuePair[]",
+            "name": "keyValuePairs",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes31",
+                "name": "key",
+                "type": "bytes31"
+              },
+              {
+                "internalType": "bytes31",
+                "name": "option",
+                "type": "bytes31"
+              }
+            ],
+            "internalType": "struct Services.PricingSelection[]",
+            "name": "pricingSelection",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum Services.PaymentModel",
+            "name": "paymentModel",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct Services.ServiceAgreementResponse[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes20",
+        "name": "networkId",
+        "type": "bytes20"
+      },
+      {
+        "internalType": "uint64",
+        "name": "offset",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "limit",
+        "type": "uint64"
+      }
+    ],
+    "name": "getPaginatedServiceAgreements",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes20",
+            "name": "sellerOrgId",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint64",
+            "name": "serviceAgreementId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "agreementStart",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "agreementEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "indexRunsOutOfFunds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricing",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes20",
+            "name": "offerPurchaser",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint32",
+            "name": "chargeInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "serviceOfferId",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelled",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "revoked",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "key",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "bytes",
+                "name": "value",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct Services.KeyValuePair[]",
+            "name": "keyValuePairs",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes31",
+                "name": "key",
+                "type": "bytes31"
+              },
+              {
+                "internalType": "bytes31",
+                "name": "option",
+                "type": "bytes31"
+              }
+            ],
+            "internalType": "struct Services.PricingSelection[]",
+            "name": "pricingSelection",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum Services.PaymentModel",
+            "name": "paymentModel",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct Services.ServiceAgreementResponse[]",
+        "name": "",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes20",
+        "name": "networkId",
+        "type": "bytes20"
+      }
+    ],
+    "name": "getPurchasedAgreements",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes20",
+            "name": "sellerOrgId",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint64",
+            "name": "serviceAgreementId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "agreementStart",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "agreementEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "indexRunsOutOfFunds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricing",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes20",
+            "name": "offerPurchaser",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint32",
+            "name": "chargeInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "serviceOfferId",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelled",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "revoked",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "key",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "bytes",
+                "name": "value",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct Services.KeyValuePair[]",
+            "name": "keyValuePairs",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes31",
+                "name": "key",
+                "type": "bytes31"
+              },
+              {
+                "internalType": "bytes31",
+                "name": "option",
+                "type": "bytes31"
+              }
+            ],
+            "internalType": "struct Services.PricingSelection[]",
+            "name": "pricingSelection",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum Services.PaymentModel",
+            "name": "paymentModel",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct Services.ServiceAgreementResponse[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "agreementId",
+        "type": "uint64"
+      }
+    ],
+    "name": "getServiceAgreement",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes20",
+            "name": "sellerOrgId",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint64",
+            "name": "serviceAgreementId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "agreementStart",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "agreementEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "indexRunsOutOfFunds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricing",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes20",
+            "name": "offerPurchaser",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint32",
+            "name": "chargeInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "serviceOfferId",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelled",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "revoked",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "key",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "bytes",
+                "name": "value",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct Services.KeyValuePair[]",
+            "name": "keyValuePairs",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes31",
+                "name": "key",
+                "type": "bytes31"
+              },
+              {
+                "internalType": "bytes31",
+                "name": "option",
+                "type": "bytes31"
+              }
+            ],
+            "internalType": "struct Services.PricingSelection[]",
+            "name": "pricingSelection",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum Services.PaymentModel",
+            "name": "paymentModel",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct Services.ServiceAgreementResponse",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes20",
+        "name": "networkId",
+        "type": "bytes20"
+      }
+    ],
+    "name": "getSoldAgreements",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes20",
+            "name": "sellerOrgId",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint64",
+            "name": "serviceAgreementId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "agreementStart",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "agreementEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "indexRunsOutOfFunds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricing",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes20",
+            "name": "offerPurchaser",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint32",
+            "name": "chargeInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "serviceOfferId",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelled",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "revoked",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "key",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "bytes",
+                "name": "value",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct Services.KeyValuePair[]",
+            "name": "keyValuePairs",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes31",
+                "name": "key",
+                "type": "bytes31"
+              },
+              {
+                "internalType": "bytes31",
+                "name": "option",
+                "type": "bytes31"
+              }
+            ],
+            "internalType": "struct Services.PricingSelection[]",
+            "name": "pricingSelection",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "enum Services.PaymentModel",
+            "name": "paymentModel",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct Services.ServiceAgreementResponse[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pricingStep",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes20",
+            "name": "offerPurchaser",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint32",
+            "name": "serviceOfferId",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "tokenIndex",
+            "type": "uint32"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "key",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "bytes",
+                "name": "value",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct Services.KeyValuePair[]",
+            "name": "configSelection",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes31",
+                "name": "key",
+                "type": "bytes31"
+              },
+              {
+                "internalType": "uint8",
+                "name": "optionIndex",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct Services.PricingSelectionData[]",
+            "name": "pricingSelection",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Services.PurchaseAgreementData",
+        "name": "purchaseAgreementData",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bool",
+        "name": "fromRadomBalance",
+        "type": "bool"
+      }
+    ],
+    "name": "purchase",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "agreementId",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "serviceOfferId",
+        "type": "uint32"
+      }
+    ],
+    "name": "revokeSubscription",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes20",
+            "name": "buyerOrgId",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint64",
+            "name": "agreementId",
+            "type": "uint64"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes32",
+                "name": "key",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "bytes",
+                "name": "value",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct Services.KeyValuePair[]",
+            "name": "configSelection",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Services.UpdateAgreementConfigData",
+        "name": "updateData",
+        "type": "tuple"
+      }
+    ],
+    "name": "updateAgreementConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes20",
+            "name": "buyerOrgId",
+            "type": "bytes20"
+          },
+          {
+            "internalType": "uint64",
+            "name": "agreementId",
+            "type": "uint64"
+          },
+          {
+            "components": [
+              {
+                "internalType": "bytes31",
+                "name": "key",
+                "type": "bytes31"
+              },
+              {
+                "internalType": "uint8",
+                "name": "optionIndex",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct Services.PricingSelectionData[]",
+            "name": "pricingSelection",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Services.UpdateAgreementPricingSelectionData",
+        "name": "updateData",
+        "type": "tuple"
+      }
+    ],
+    "name": "updateAgreementPricingSelection",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
