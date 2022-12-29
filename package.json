@@ -1,0 +1,22 @@
+{
+  "name": "contracts-js",
+  "version": "1.0.0",
+  "description": "Radom contract abi files",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RadomNetwork/contracts-js.git"
+  },
+  "author": "Radom Network",
+  "license": "BUSL-1.1",
+  "bugs": {
+    "url": "https://github.com/RadomNetwork/contracts-js/issues"
+  },
+  "homepage": "https://github.com/RadomNetwork/contracts-js#readme",
+  "dependencies": {
+    "ethers": "^5.7.2"
+  }
+}
