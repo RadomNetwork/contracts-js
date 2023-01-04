@@ -37,6 +37,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "BillingFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BillingFacet__factory>;
+    getContractFactory(
       name: "DiamondCutFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DiamondCutFacet__factory>;
@@ -49,14 +53,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PaymentsFacet__factory>;
     getContractFactory(
-      name: "ServiceAgreementFacet",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ServiceAgreementFacet__factory>;
-    getContractFactory(
-      name: "ServiceOfferFacet",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ServiceOfferFacet__factory>;
-    getContractFactory(
       name: "TreasuryFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TreasuryFacet__factory>;
@@ -64,6 +60,10 @@ declare module "hardhat/types/runtime" {
       name: "UserAccessControlFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.UserAccessControlFacet__factory>;
+    getContractFactory(
+      name: "IBilling",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IBilling__factory>;
     getContractFactory(
       name: "IDiamondCut",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -73,25 +73,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IDiamondLoupe__factory>;
     getContractFactory(
+      name: "IErrors",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IErrors__factory>;
+    getContractFactory(
       name: "IRadomRegistryDiamond",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IRadomRegistryDiamond__factory>;
     getContractFactory(
-      name: "IServiceAgreement",
+      name: "ISubscription",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IServiceAgreement__factory>;
-    getContractFactory(
-      name: "IServiceErrors",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IServiceErrors__factory>;
-    getContractFactory(
-      name: "IServiceOffer",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IServiceOffer__factory>;
-    getContractFactory(
-      name: "IServices",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IServices__factory>;
+    ): Promise<Contracts.ISubscription__factory>;
     getContractFactory(
       name: "IUserAccessControl",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -148,6 +140,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
+      name: "BillingFacet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BillingFacet>;
+    getContractAt(
       name: "DiamondCutFacet",
       address: string,
       signer?: ethers.Signer
@@ -163,16 +160,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.PaymentsFacet>;
     getContractAt(
-      name: "ServiceAgreementFacet",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ServiceAgreementFacet>;
-    getContractAt(
-      name: "ServiceOfferFacet",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ServiceOfferFacet>;
-    getContractAt(
       name: "TreasuryFacet",
       address: string,
       signer?: ethers.Signer
@@ -182,6 +169,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.UserAccessControlFacet>;
+    getContractAt(
+      name: "IBilling",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IBilling>;
     getContractAt(
       name: "IDiamondCut",
       address: string,
@@ -193,30 +185,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IDiamondLoupe>;
     getContractAt(
+      name: "IErrors",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IErrors>;
+    getContractAt(
       name: "IRadomRegistryDiamond",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IRadomRegistryDiamond>;
     getContractAt(
-      name: "IServiceAgreement",
+      name: "ISubscription",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IServiceAgreement>;
-    getContractAt(
-      name: "IServiceErrors",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IServiceErrors>;
-    getContractAt(
-      name: "IServiceOffer",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IServiceOffer>;
-    getContractAt(
-      name: "IServices",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IServices>;
+    ): Promise<Contracts.ISubscription>;
     getContractAt(
       name: "IUserAccessControl",
       address: string,

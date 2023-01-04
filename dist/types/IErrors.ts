@@ -6,18 +6,18 @@ import { BaseContract, Signer, utils } from "ethers";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface IServiceErrorsInterface extends utils.Interface {
+export interface IErrorsInterface extends utils.Interface {
   functions: {};
 
   events: {};
 }
 
-export interface IServiceErrors extends BaseContract {
+export interface IErrors extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IServiceErrorsInterface;
+  interface: IErrorsInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

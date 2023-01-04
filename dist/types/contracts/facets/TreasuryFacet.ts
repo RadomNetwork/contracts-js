@@ -29,14 +29,14 @@ import type {
 
 export interface TreasuryFacetInterface extends utils.Interface {
   functions: {
-    "deposit(bytes20,address,uint256)": FunctionFragment;
-    "getAllTokenBalances(bytes20)": FunctionFragment;
-    "getBuyAndSellBalances(bytes20,address)": FunctionFragment;
-    "getBuyBalance(bytes20,address)": FunctionFragment;
-    "getSellBalance(bytes20,address)": FunctionFragment;
-    "getTokenSpendRateAndExpiry(bytes20,address)": FunctionFragment;
-    "withdrawBuyBalance(bytes20,address,uint256,address)": FunctionFragment;
-    "withdrawSellBalance(bytes20,address,uint256,address)": FunctionFragment;
+    "deposit(address,address,uint256)": FunctionFragment;
+    "getAllTokenBalances(address)": FunctionFragment;
+    "getBuyAndSellBalances(address,address)": FunctionFragment;
+    "getBuyBalance(address,address)": FunctionFragment;
+    "getSellBalance(address,address)": FunctionFragment;
+    "getTokenSpendRateAndExpiry(address,address)": FunctionFragment;
+    "withdrawBuyBalance(address,address,uint256,address)": FunctionFragment;
+    "withdrawSellBalance(address,address,uint256,address)": FunctionFragment;
   };
 
   getFunction(
@@ -54,35 +54,35 @@ export interface TreasuryFacetInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "deposit",
     values: [
-      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "getAllTokenBalances",
-    values: [PromiseOrValue<BytesLike>]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getBuyAndSellBalances",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getBuyBalance",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getSellBalance",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getTokenSpendRateAndExpiry",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawBuyBalance",
     values: [
-      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>
@@ -91,7 +91,7 @@ export interface TreasuryFacetInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "withdrawSellBalance",
     values: [
-      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>
@@ -142,7 +142,7 @@ export interface TreasuryFacetInterface extends utils.Interface {
 }
 
 export interface DepositEventObject {
-  networkId: string;
+  orgId: string;
   token: string;
   amount: BigNumber;
 }
@@ -154,8 +154,8 @@ export type DepositEvent = TypedEvent<
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
 export interface InnerTransferEventObject {
-  senderNetwork: string;
-  recipientNetwork: string;
+  senderOrg: string;
+  recipientOrg: string;
   token: string;
   amount: BigNumber;
   userExpiryTimestamp: BigNumber;
@@ -168,7 +168,7 @@ export type InnerTransferEvent = TypedEvent<
 export type InnerTransferEventFilter = TypedEventFilter<InnerTransferEvent>;
 
 export interface WithdrawBuyBalanceEventObject {
-  networkId: string;
+  orgId: string;
   token: string;
   amount: BigNumber;
   recipient: string;
@@ -182,7 +182,7 @@ export type WithdrawBuyBalanceEventFilter =
   TypedEventFilter<WithdrawBuyBalanceEvent>;
 
 export interface WithdrawSellBalanceEventObject {
-  networkId: string;
+  orgId: string;
   token: string;
   amount: BigNumber;
   recipient: string;
@@ -223,43 +223,43 @@ export interface TreasuryFacet extends BaseContract {
 
   functions: {
     deposit(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getAllTokenBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[string[], BigNumber[], BigNumber[]]>;
 
     getBuyAndSellBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber]>;
 
     getBuyBalance(
-      buyerOrgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     getTokenSpendRateAndExpiry(
-      orgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber]>;
 
     withdrawBuyBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -267,7 +267,7 @@ export interface TreasuryFacet extends BaseContract {
     ): Promise<ContractTransaction>;
 
     withdrawSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -276,43 +276,43 @@ export interface TreasuryFacet extends BaseContract {
   };
 
   deposit(
-    networkId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getAllTokenBalances(
-    networkId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<[string[], BigNumber[], BigNumber[]]>;
 
   getBuyAndSellBalances(
-    networkId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber]>;
 
   getBuyBalance(
-    buyerOrgId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getSellBalance(
-    networkId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getTokenSpendRateAndExpiry(
-    orgId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<[BigNumber, BigNumber]>;
 
   withdrawBuyBalance(
-    networkId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     withdrawTo: PromiseOrValue<string>,
@@ -320,7 +320,7 @@ export interface TreasuryFacet extends BaseContract {
   ): Promise<ContractTransaction>;
 
   withdrawSellBalance(
-    networkId: PromiseOrValue<BytesLike>,
+    orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     withdrawTo: PromiseOrValue<string>,
@@ -329,43 +329,43 @@ export interface TreasuryFacet extends BaseContract {
 
   callStatic: {
     deposit(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getAllTokenBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[string[], BigNumber[], BigNumber[]]>;
 
     getBuyAndSellBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber]>;
 
     getBuyBalance(
-      buyerOrgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTokenSpendRateAndExpiry(
-      orgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber, BigNumber]>;
 
     withdrawBuyBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -373,7 +373,7 @@ export interface TreasuryFacet extends BaseContract {
     ): Promise<void>;
 
     withdrawSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -383,52 +383,52 @@ export interface TreasuryFacet extends BaseContract {
 
   filters: {
     "Deposit(address,address,uint256)"(
-      networkId?: PromiseOrValue<string> | null,
+      orgId?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null
     ): DepositEventFilter;
     Deposit(
-      networkId?: PromiseOrValue<string> | null,
+      orgId?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null
     ): DepositEventFilter;
 
     "InnerTransfer(address,address,address,uint256,uint256)"(
-      senderNetwork?: PromiseOrValue<string> | null,
-      recipientNetwork?: PromiseOrValue<string> | null,
+      senderOrg?: PromiseOrValue<string> | null,
+      recipientOrg?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null,
       userExpiryTimestamp?: null
     ): InnerTransferEventFilter;
     InnerTransfer(
-      senderNetwork?: PromiseOrValue<string> | null,
-      recipientNetwork?: PromiseOrValue<string> | null,
+      senderOrg?: PromiseOrValue<string> | null,
+      recipientOrg?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null,
       userExpiryTimestamp?: null
     ): InnerTransferEventFilter;
 
     "WithdrawBuyBalance(address,address,uint256,address)"(
-      networkId?: PromiseOrValue<string> | null,
+      orgId?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null,
       recipient?: null
     ): WithdrawBuyBalanceEventFilter;
     WithdrawBuyBalance(
-      networkId?: PromiseOrValue<string> | null,
+      orgId?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null,
       recipient?: null
     ): WithdrawBuyBalanceEventFilter;
 
     "WithdrawSellBalance(address,address,uint256,address)"(
-      networkId?: PromiseOrValue<string> | null,
+      orgId?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null,
       recipient?: null
     ): WithdrawSellBalanceEventFilter;
     WithdrawSellBalance(
-      networkId?: PromiseOrValue<string> | null,
+      orgId?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
       amount?: null,
       recipient?: null
@@ -437,43 +437,43 @@ export interface TreasuryFacet extends BaseContract {
 
   estimateGas: {
     deposit(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getAllTokenBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getBuyAndSellBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getBuyBalance(
-      buyerOrgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTokenSpendRateAndExpiry(
-      orgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     withdrawBuyBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -481,7 +481,7 @@ export interface TreasuryFacet extends BaseContract {
     ): Promise<BigNumber>;
 
     withdrawSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -491,43 +491,43 @@ export interface TreasuryFacet extends BaseContract {
 
   populateTransaction: {
     deposit(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getAllTokenBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getBuyAndSellBalances(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getBuyBalance(
-      buyerOrgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getTokenSpendRateAndExpiry(
-      orgId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     withdrawBuyBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -535,7 +535,7 @@ export interface TreasuryFacet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     withdrawSellBalance(
-      networkId: PromiseOrValue<BytesLike>,
+      orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,

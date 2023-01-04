@@ -29,31 +29,6 @@
             "internalType": "address",
             "name": "owner",
             "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "paymentsFacet",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "serviceOfferFacet",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "serviceAgreementFacet",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "userAccessControlFacet",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "treasuryFacet",
-            "type": "address"
           }
         ],
         "internalType": "struct RadomRegistryDiamond.ConstructorArgs",

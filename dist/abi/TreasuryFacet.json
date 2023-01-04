@@ -1,57 +1,12 @@
 [
   {
     "inputs": [],
-    "name": "AddressAlreadyWhitelisted",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AddressNotWhitelisted",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AgreementCancelled",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AgreementNotFound",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AgreementVoid",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AmountIsTooSmall",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AssetTypeNotSupported",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "ChargeIntervalInvalid",
     "type": "error"
   },
   {
     "inputs": [],
     "name": "FeatureNotSupported",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "IncorrectAgreementPurchaser",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "IncorrectPaymentModel",
     "type": "error"
   },
   {
@@ -66,37 +21,7 @@
   },
   {
     "inputs": [],
-    "name": "KVPKeyNotFound",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "KVPRequiredKeyNotFound",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "MissingRequiredKeys",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "OfferAlreadyExists",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "OfferDisabled",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "OfferHasActiveAgreement",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "OfferNotFound",
+    "name": "NoPermission",
     "type": "error"
   },
   {
@@ -111,22 +36,12 @@
   },
   {
     "inputs": [],
-    "name": "PricingInputInvalid",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "PricingOptionDisabled",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "PricingSelectionInvalid",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "ProductHasNoPricing",
+    "name": "ProductHasNoPrice",
     "type": "error"
   },
   {
@@ -136,12 +51,22 @@
   },
   {
     "inputs": [],
-    "name": "UnsupportedToken",
+    "name": "SubscriptionNotFound",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "WhitelistLimitExceeded",
+    "name": "SubscriptionVoid",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnsupportedProduct",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnsupportedToken",
     "type": "error"
   },
   {
@@ -150,7 +75,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "networkId",
+        "name": "orgId",
         "type": "address"
       },
       {
@@ -175,13 +100,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "senderNetwork",
+        "name": "senderOrg",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "recipientNetwork",
+        "name": "recipientOrg",
         "type": "address"
       },
       {
@@ -212,7 +137,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "networkId",
+        "name": "orgId",
         "type": "address"
       },
       {
@@ -243,7 +168,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "networkId",
+        "name": "orgId",
         "type": "address"
       },
       {
@@ -271,9 +196,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
-        "name": "networkId",
-        "type": "bytes20"
+        "internalType": "address",
+        "name": "orgId",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -294,9 +219,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
-        "name": "networkId",
-        "type": "bytes20"
+        "internalType": "address",
+        "name": "orgId",
+        "type": "address"
       }
     ],
     "name": "getAllTokenBalances",
@@ -323,9 +248,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
-        "name": "networkId",
-        "type": "bytes20"
+        "internalType": "address",
+        "name": "orgId",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -352,9 +277,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
-        "name": "buyerOrgId",
-        "type": "bytes20"
+        "internalType": "address",
+        "name": "orgId",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -376,9 +301,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
-        "name": "networkId",
-        "type": "bytes20"
+        "internalType": "address",
+        "name": "orgId",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -400,9 +325,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
+        "internalType": "address",
         "name": "orgId",
-        "type": "bytes20"
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -429,9 +354,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
-        "name": "networkId",
-        "type": "bytes20"
+        "internalType": "address",
+        "name": "orgId",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -457,9 +382,9 @@
   {
     "inputs": [
       {
-        "internalType": "bytes20",
-        "name": "networkId",
-        "type": "bytes20"
+        "internalType": "address",
+        "name": "orgId",
+        "type": "address"
       },
       {
         "internalType": "address",

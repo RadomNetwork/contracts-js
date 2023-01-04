@@ -22,7 +22,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "UserDoesNotExistOnNetwork",
+    name: "UserDoesNotExistOnOrganization",
     type: "error",
   },
   {
@@ -31,7 +31,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "networkId",
+        name: "orgId",
         type: "address",
       },
       {
@@ -56,7 +56,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "networkId",
+        name: "orgId",
         type: "address",
       },
       {
@@ -81,7 +81,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "networkId",
+        name: "orgId",
         type: "address",
       },
       {
@@ -100,7 +100,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "networkId",
+        name: "orgId",
         type: "address",
       },
       {
@@ -119,7 +119,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "networkId",
+        name: "orgId",
         type: "address",
       },
       {
@@ -141,9 +141,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes20",
-        name: "networkId",
-        type: "bytes20",
+        internalType: "address",
+        name: "orgId",
+        type: "address",
       },
       {
         internalType: "bytes32",
@@ -164,9 +164,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes20",
-        name: "networkId",
-        type: "bytes20",
+        internalType: "address",
+        name: "orgId",
+        type: "address",
       },
       {
         internalType: "bytes32",
@@ -187,9 +187,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes20",
-        name: "networkId",
-        type: "bytes20",
+        internalType: "address",
+        name: "orgId",
+        type: "address",
       },
       {
         internalType: "bytes32",
@@ -205,12 +205,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes20",
-        name: "networkId",
-        type: "bytes20",
+        internalType: "address",
+        name: "orgId",
+        type: "address",
       },
     ],
-    name: "getNetworkRoleNames",
+    name: "getOrganizationRoleNames",
     outputs: [
       {
         internalType: "bytes32[]",
@@ -224,9 +224,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes20",
-        name: "networkId",
-        type: "bytes20",
+        internalType: "address",
+        name: "orgId",
+        type: "address",
       },
       {
         internalType: "bytes32",
@@ -234,7 +234,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "getNetworkRolePermissions",
+    name: "getOrganizationRolePermissions",
     outputs: [
       {
         internalType: "bytes2",
@@ -248,9 +248,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes20",
-        name: "networkId",
-        type: "bytes20",
+        internalType: "address",
+        name: "orgId",
+        type: "address",
       },
       {
         internalType: "bytes32",
@@ -258,7 +258,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "getNetworkRoleUsers",
+    name: "getOrganizationRoleUsers",
     outputs: [
       {
         internalType: "address[]",

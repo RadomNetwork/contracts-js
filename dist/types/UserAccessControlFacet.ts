@@ -19,67 +19,67 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface UserAccessControlFacetInterface extends utils.Interface {
   functions: {
-    "assignRole(bytes20,bytes32,address)": FunctionFragment;
-    "changeRolePermissions(bytes20,bytes32,bytes2)": FunctionFragment;
-    "createRole(bytes20,bytes32,bytes2)": FunctionFragment;
-    "createRoles(bytes20,bytes32[],bytes2[])": FunctionFragment;
-    "deleteRole(bytes20,bytes32)": FunctionFragment;
-    "getNetworkRoleNames(bytes20)": FunctionFragment;
-    "getNetworkRolePermissions(bytes20,bytes32)": FunctionFragment;
-    "getNetworkRoleUsers(bytes20,bytes32)": FunctionFragment;
-    "getPaginatedUserNetworkIds(bytes20,uint256,uint256)": FunctionFragment;
-    "getRoleNameForUserByNetworkId(bytes20,bytes20)": FunctionFragment;
-    "hasPermissions(bytes2,bytes20,address)": FunctionFragment;
-    "unassignRole(bytes20,address)": FunctionFragment;
+    "assignRole(address,bytes32,address)": FunctionFragment;
+    "changeRolePermissions(address,bytes32,bytes2)": FunctionFragment;
+    "createRole(address,bytes32,bytes2)": FunctionFragment;
+    "createRoles(address,bytes32[],bytes2[])": FunctionFragment;
+    "deleteRole(address,bytes32)": FunctionFragment;
+    "getOrganizationRoleNames(address)": FunctionFragment;
+    "getOrganizationRolePermissions(address,bytes32)": FunctionFragment;
+    "getOrganizationRoleUsers(address,bytes32)": FunctionFragment;
+    "getPaginatedUserOrganizationIds(address,uint256,uint256)": FunctionFragment;
+    "getRoleNameForUserByOrganizationId(address,address)": FunctionFragment;
+    "hasPermissions(bytes2,address,address)": FunctionFragment;
+    "unassignRole(address,address)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "assignRole",
-    values: [BytesLike, BytesLike, string]
+    values: [string, BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "changeRolePermissions",
-    values: [BytesLike, BytesLike, BytesLike]
+    values: [string, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "createRole",
-    values: [BytesLike, BytesLike, BytesLike]
+    values: [string, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "createRoles",
-    values: [BytesLike, BytesLike[], BytesLike[]]
+    values: [string, BytesLike[], BytesLike[]]
   ): string;
   encodeFunctionData(
     functionFragment: "deleteRole",
-    values: [BytesLike, BytesLike]
+    values: [string, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "getNetworkRoleNames",
-    values: [BytesLike]
+    functionFragment: "getOrganizationRoleNames",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "getNetworkRolePermissions",
-    values: [BytesLike, BytesLike]
+    functionFragment: "getOrganizationRolePermissions",
+    values: [string, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "getNetworkRoleUsers",
-    values: [BytesLike, BytesLike]
+    functionFragment: "getOrganizationRoleUsers",
+    values: [string, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "getPaginatedUserNetworkIds",
-    values: [BytesLike, BigNumberish, BigNumberish]
+    functionFragment: "getPaginatedUserOrganizationIds",
+    values: [string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getRoleNameForUserByNetworkId",
-    values: [BytesLike, BytesLike]
+    functionFragment: "getRoleNameForUserByOrganizationId",
+    values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "hasPermissions",
-    values: [BytesLike, BytesLike, string]
+    values: [BytesLike, string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "unassignRole",
-    values: [BytesLike, string]
+    values: [string, string]
   ): string;
 
   decodeFunctionResult(functionFragment: "assignRole", data: BytesLike): Result;
@@ -94,23 +94,23 @@ export interface UserAccessControlFacetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "deleteRole", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getNetworkRoleNames",
+    functionFragment: "getOrganizationRoleNames",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getNetworkRolePermissions",
+    functionFragment: "getOrganizationRolePermissions",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getNetworkRoleUsers",
+    functionFragment: "getOrganizationRoleUsers",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getPaginatedUserNetworkIds",
+    functionFragment: "getPaginatedUserOrganizationIds",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getRoleNameForUserByNetworkId",
+    functionFragment: "getRoleNameForUserByOrganizationId",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -139,35 +139,35 @@ export interface UserAccessControlFacetInterface extends utils.Interface {
 
 export type RoleAssignedEvent = TypedEvent<
   [string, string, string],
-  { networkId: string; user: string; roleName: string }
+  { orgId: string; user: string; roleName: string }
 >;
 
 export type RoleAssignedEventFilter = TypedEventFilter<RoleAssignedEvent>;
 
 export type RoleCreatedEvent = TypedEvent<
   [string, string, string],
-  { networkId: string; roleName: string; permissions: string }
+  { orgId: string; roleName: string; permissions: string }
 >;
 
 export type RoleCreatedEventFilter = TypedEventFilter<RoleCreatedEvent>;
 
 export type RoleDeletedEvent = TypedEvent<
   [string, string],
-  { networkId: string; roleName: string }
+  { orgId: string; roleName: string }
 >;
 
 export type RoleDeletedEventFilter = TypedEventFilter<RoleDeletedEvent>;
 
 export type RoleUnassignedEvent = TypedEvent<
   [string, string],
-  { networkId: string; user: string }
+  { orgId: string; user: string }
 >;
 
 export type RoleUnassignedEventFilter = TypedEventFilter<RoleUnassignedEvent>;
 
 export type RoleUpdatedEvent = TypedEvent<
   [string, string, string],
-  { networkId: string; roleName: string; permissions: string }
+  { orgId: string; roleName: string; permissions: string }
 >;
 
 export type RoleUpdatedEventFilter = TypedEventFilter<RoleUpdatedEvent>;
@@ -200,234 +200,234 @@ export interface UserAccessControlFacet extends BaseContract {
 
   functions: {
     assignRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     changeRolePermissions(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     createRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     createRoles(
-      networkId: BytesLike,
+      orgId: string,
       roleNames: BytesLike[],
       permissions: BytesLike[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     deleteRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getNetworkRoleNames(
-      networkId: BytesLike,
+    getOrganizationRoleNames(
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<[string[]]>;
 
-    getNetworkRolePermissions(
-      networkId: BytesLike,
+    getOrganizationRolePermissions(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getNetworkRoleUsers(
-      networkId: BytesLike,
+    getOrganizationRoleUsers(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<[string[]]>;
 
-    getPaginatedUserNetworkIds(
-      user: BytesLike,
+    getPaginatedUserOrganizationIds(
+      user: string,
       offset: BigNumberish,
       limit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string[], BigNumber]>;
 
-    getRoleNameForUserByNetworkId(
-      user: BytesLike,
-      networkId: BytesLike,
+    getRoleNameForUserByOrganizationId(
+      user: string,
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<[string] & { roleName: string }>;
 
     hasPermissions(
       permissionMask: BytesLike,
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     unassignRole(
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
 
   assignRole(
-    networkId: BytesLike,
+    orgId: string,
     roleName: BytesLike,
     user: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   changeRolePermissions(
-    networkId: BytesLike,
+    orgId: string,
     roleName: BytesLike,
     permissions: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   createRole(
-    networkId: BytesLike,
+    orgId: string,
     roleName: BytesLike,
     permissions: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   createRoles(
-    networkId: BytesLike,
+    orgId: string,
     roleNames: BytesLike[],
     permissions: BytesLike[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   deleteRole(
-    networkId: BytesLike,
+    orgId: string,
     roleName: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getNetworkRoleNames(
-    networkId: BytesLike,
+  getOrganizationRoleNames(
+    orgId: string,
     overrides?: CallOverrides
   ): Promise<string[]>;
 
-  getNetworkRolePermissions(
-    networkId: BytesLike,
+  getOrganizationRolePermissions(
+    orgId: string,
     roleName: BytesLike,
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getNetworkRoleUsers(
-    networkId: BytesLike,
+  getOrganizationRoleUsers(
+    orgId: string,
     roleName: BytesLike,
     overrides?: CallOverrides
   ): Promise<string[]>;
 
-  getPaginatedUserNetworkIds(
-    user: BytesLike,
+  getPaginatedUserOrganizationIds(
+    user: string,
     offset: BigNumberish,
     limit: BigNumberish,
     overrides?: CallOverrides
   ): Promise<[string[], BigNumber]>;
 
-  getRoleNameForUserByNetworkId(
-    user: BytesLike,
-    networkId: BytesLike,
+  getRoleNameForUserByOrganizationId(
+    user: string,
+    orgId: string,
     overrides?: CallOverrides
   ): Promise<string>;
 
   hasPermissions(
     permissionMask: BytesLike,
-    networkId: BytesLike,
+    orgId: string,
     user: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   unassignRole(
-    networkId: BytesLike,
+    orgId: string,
     user: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     assignRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       user: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
     changeRolePermissions(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     createRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
     createRoles(
-      networkId: BytesLike,
+      orgId: string,
       roleNames: BytesLike[],
       permissions: BytesLike[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     deleteRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getNetworkRoleNames(
-      networkId: BytesLike,
+    getOrganizationRoleNames(
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<string[]>;
 
-    getNetworkRolePermissions(
-      networkId: BytesLike,
+    getOrganizationRolePermissions(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getNetworkRoleUsers(
-      networkId: BytesLike,
+    getOrganizationRoleUsers(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<string[]>;
 
-    getPaginatedUserNetworkIds(
-      user: BytesLike,
+    getPaginatedUserOrganizationIds(
+      user: string,
       offset: BigNumberish,
       limit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string[], BigNumber]>;
 
-    getRoleNameForUserByNetworkId(
-      user: BytesLike,
-      networkId: BytesLike,
+    getRoleNameForUserByOrganizationId(
+      user: string,
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<string>;
 
     hasPermissions(
       permissionMask: BytesLike,
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     unassignRole(
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -435,52 +435,49 @@ export interface UserAccessControlFacet extends BaseContract {
 
   filters: {
     "RoleAssigned(address,address,bytes32)"(
-      networkId?: string | null,
+      orgId?: string | null,
       user?: string | null,
       roleName?: null
     ): RoleAssignedEventFilter;
     RoleAssigned(
-      networkId?: string | null,
+      orgId?: string | null,
       user?: string | null,
       roleName?: null
     ): RoleAssignedEventFilter;
 
     "RoleCreated(address,bytes32,bytes2)"(
-      networkId?: string | null,
+      orgId?: string | null,
       roleName?: null,
       permissions?: null
     ): RoleCreatedEventFilter;
     RoleCreated(
-      networkId?: string | null,
+      orgId?: string | null,
       roleName?: null,
       permissions?: null
     ): RoleCreatedEventFilter;
 
     "RoleDeleted(address,bytes32)"(
-      networkId?: string | null,
+      orgId?: string | null,
       roleName?: null
     ): RoleDeletedEventFilter;
-    RoleDeleted(
-      networkId?: string | null,
-      roleName?: null
-    ): RoleDeletedEventFilter;
+    RoleDeleted(orgId?: string | null, roleName?: null): RoleDeletedEventFilter;
 
     "RoleUnassigned(address,address)"(
-      networkId?: string | null,
+      orgId?: string | null,
       user?: string | null
     ): RoleUnassignedEventFilter;
     RoleUnassigned(
-      networkId?: string | null,
+      orgId?: string | null,
       user?: string | null
     ): RoleUnassignedEventFilter;
 
     "RoleUpdated(address,bytes32,bytes2)"(
-      networkId?: string | null,
+      orgId?: string | null,
       roleName?: null,
       permissions?: null
     ): RoleUpdatedEventFilter;
     RoleUpdated(
-      networkId?: string | null,
+      orgId?: string | null,
       roleName?: null,
       permissions?: null
     ): RoleUpdatedEventFilter;
@@ -488,78 +485,78 @@ export interface UserAccessControlFacet extends BaseContract {
 
   estimateGas: {
     assignRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     changeRolePermissions(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     createRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     createRoles(
-      networkId: BytesLike,
+      orgId: string,
       roleNames: BytesLike[],
       permissions: BytesLike[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     deleteRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    getNetworkRoleNames(
-      networkId: BytesLike,
+    getOrganizationRoleNames(
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getNetworkRolePermissions(
-      networkId: BytesLike,
+    getOrganizationRolePermissions(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getNetworkRoleUsers(
-      networkId: BytesLike,
+    getOrganizationRoleUsers(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getPaginatedUserNetworkIds(
-      user: BytesLike,
+    getPaginatedUserOrganizationIds(
+      user: string,
       offset: BigNumberish,
       limit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getRoleNameForUserByNetworkId(
-      user: BytesLike,
-      networkId: BytesLike,
+    getRoleNameForUserByOrganizationId(
+      user: string,
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     hasPermissions(
       permissionMask: BytesLike,
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     unassignRole(
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -567,78 +564,78 @@ export interface UserAccessControlFacet extends BaseContract {
 
   populateTransaction: {
     assignRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     changeRolePermissions(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     createRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       permissions: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     createRoles(
-      networkId: BytesLike,
+      orgId: string,
       roleNames: BytesLike[],
       permissions: BytesLike[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     deleteRole(
-      networkId: BytesLike,
+      orgId: string,
       roleName: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    getNetworkRoleNames(
-      networkId: BytesLike,
+    getOrganizationRoleNames(
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getNetworkRolePermissions(
-      networkId: BytesLike,
+    getOrganizationRolePermissions(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getNetworkRoleUsers(
-      networkId: BytesLike,
+    getOrganizationRoleUsers(
+      orgId: string,
       roleName: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getPaginatedUserNetworkIds(
-      user: BytesLike,
+    getPaginatedUserOrganizationIds(
+      user: string,
       offset: BigNumberish,
       limit: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getRoleNameForUserByNetworkId(
-      user: BytesLike,
-      networkId: BytesLike,
+    getRoleNameForUserByOrganizationId(
+      user: string,
+      orgId: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     hasPermissions(
       permissionMask: BytesLike,
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     unassignRole(
-      networkId: BytesLike,
+      orgId: string,
       user: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

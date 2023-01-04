@@ -27,30 +27,9 @@ export type FacetCutStructOutput = [string, number, string[]] & {
   functionSelectors: string[];
 };
 
-export type ConstructorArgsStruct = {
-  owner: string;
-  paymentsFacet: string;
-  serviceOfferFacet: string;
-  serviceAgreementFacet: string;
-  userAccessControlFacet: string;
-  treasuryFacet: string;
-};
+export type ConstructorArgsStruct = { owner: string };
 
-export type ConstructorArgsStructOutput = [
-  string,
-  string,
-  string,
-  string,
-  string,
-  string
-] & {
-  owner: string;
-  paymentsFacet: string;
-  serviceOfferFacet: string;
-  serviceAgreementFacet: string;
-  userAccessControlFacet: string;
-  treasuryFacet: string;
-};
+export type ConstructorArgsStructOutput = [string] & { owner: string };
 
 export interface RadomRegistryDiamondInterface extends utils.Interface {
   functions: {
