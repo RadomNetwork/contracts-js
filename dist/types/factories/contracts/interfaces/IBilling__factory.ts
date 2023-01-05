@@ -15,6 +15,18 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "address",
+        name: "orgId",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: true,
         internalType: "bytes32",
         name: "orderId",
         type: "bytes32",
@@ -26,6 +38,18 @@ const _abi = [
   {
     anonymous: false,
     inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "orgId",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
       {
         indexed: true,
         internalType: "bytes32",
@@ -79,6 +103,18 @@ const _abi = [
   {
     anonymous: false,
     inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "orgId",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
       {
         indexed: false,
         internalType: "bytes32",
