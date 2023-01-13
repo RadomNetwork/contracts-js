@@ -151,9 +151,9 @@ export interface ISubscriptionInterface extends utils.Interface {
 
   events: {
     "SubscriptionAddOnsUpdated(uint64,uint64,uint64[])": EventFragment;
-    "SubscriptionCancelled(uint64,uint64)": EventFragment;
+    "SubscriptionCancelled(uint64,uint64,address,address)": EventFragment;
     "SubscriptionCreated(uint64,uint64)": EventFragment;
-    "SubscriptionRevoked(uint64,uint64)": EventFragment;
+    "SubscriptionRevoked(uint64,uint64,address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "SubscriptionAddOnsUpdated"): EventFragment;
@@ -178,9 +178,11 @@ export type SubscriptionAddOnsUpdatedEventFilter =
 export interface SubscriptionCancelledEventObject {
   serviceSubscriptionId: BigNumber;
   productId: BigNumber;
+  customer: string;
+  seller: string;
 }
 export type SubscriptionCancelledEvent = TypedEvent<
-  [BigNumber, BigNumber],
+  [BigNumber, BigNumber, string, string],
   SubscriptionCancelledEventObject
 >;
 
@@ -202,9 +204,11 @@ export type SubscriptionCreatedEventFilter =
 export interface SubscriptionRevokedEventObject {
   serviceSubscriptionId: BigNumber;
   productId: BigNumber;
+  customer: string;
+  seller: string;
 }
 export type SubscriptionRevokedEvent = TypedEvent<
-  [BigNumber, BigNumber],
+  [BigNumber, BigNumber, string, string],
   SubscriptionRevokedEventObject
 >;
 
@@ -374,13 +378,17 @@ export interface ISubscription extends BaseContract {
       addOns?: null
     ): SubscriptionAddOnsUpdatedEventFilter;
 
-    "SubscriptionCancelled(uint64,uint64)"(
+    "SubscriptionCancelled(uint64,uint64,address,address)"(
       serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      customer?: null,
+      seller?: PromiseOrValue<string> | null
     ): SubscriptionCancelledEventFilter;
     SubscriptionCancelled(
       serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      customer?: null,
+      seller?: PromiseOrValue<string> | null
     ): SubscriptionCancelledEventFilter;
 
     "SubscriptionCreated(uint64,uint64)"(
@@ -392,13 +400,17 @@ export interface ISubscription extends BaseContract {
       productId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionCreatedEventFilter;
 
-    "SubscriptionRevoked(uint64,uint64)"(
+    "SubscriptionRevoked(uint64,uint64,address,address)"(
       serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      customer?: null,
+      seller?: PromiseOrValue<string> | null
     ): SubscriptionRevokedEventFilter;
     SubscriptionRevoked(
       serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      customer?: null,
+      seller?: PromiseOrValue<string> | null
     ): SubscriptionRevokedEventFilter;
   };
 

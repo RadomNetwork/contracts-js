@@ -218,6 +218,18 @@
         "internalType": "uint64",
         "name": "productId",
         "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "customer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
       }
     ],
     "name": "SubscriptionCancelled",
@@ -256,6 +268,18 @@
         "internalType": "uint64",
         "name": "productId",
         "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "customer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
       }
     ],
     "name": "SubscriptionRevoked",
