@@ -12,11 +12,6 @@ import type {
 const _abi = [
   {
     inputs: [],
-    name: "ChargeIntervalInvalid",
-    type: "error",
-  },
-  {
-    inputs: [],
     name: "FeatureNotSupported",
     type: "error",
   },
@@ -27,7 +22,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "NoPermission",
+    name: "InsufficientPermissions",
     type: "error",
   },
   {
@@ -38,11 +33,6 @@ const _abi = [
   {
     inputs: [],
     name: "OrgStreamDoesNotExist",
-    type: "error",
-  },
-  {
-    inputs: [],
-    name: "PricingSelectionInvalid",
     type: "error",
   },
   {

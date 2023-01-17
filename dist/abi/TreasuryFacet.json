@@ -1,11 +1,6 @@
 [
   {
     "inputs": [],
-    "name": "ChargeIntervalInvalid",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "FeatureNotSupported",
     "type": "error"
   },
@@ -21,22 +16,12 @@
   },
   {
     "inputs": [],
-    "name": "NoPermission",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "OrgMustDeposit",
     "type": "error"
   },
   {
     "inputs": [],
     "name": "OrgStreamDoesNotExist",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "PricingSelectionInvalid",
     "type": "error"
   },
   {

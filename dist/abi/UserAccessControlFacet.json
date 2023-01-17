@@ -1,7 +1,32 @@
 [
   {
     "inputs": [],
+    "name": "FeatureNotSupported",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientFunds",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InsufficientPermissions",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OrgMustDeposit",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OrgStreamDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ProductHasNoPrice",
     "type": "error"
   },
   {
@@ -12,6 +37,26 @@
   {
     "inputs": [],
     "name": "RoleNameExists",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SubscriptionNotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SubscriptionVoid",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnsupportedProduct",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UnsupportedToken",
     "type": "error"
   },
   {

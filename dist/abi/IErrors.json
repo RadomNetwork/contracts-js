@@ -1,11 +1,6 @@
 [
   {
     "inputs": [],
-    "name": "ChargeIntervalInvalid",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "FeatureNotSupported",
     "type": "error"
   },
@@ -16,7 +11,7 @@
   },
   {
     "inputs": [],
-    "name": "NoPermission",
+    "name": "InsufficientPermissions",
     "type": "error"
   },
   {
@@ -27,11 +22,6 @@
   {
     "inputs": [],
     "name": "OrgStreamDoesNotExist",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "PricingSelectionInvalid",
     "type": "error"
   },
   {
