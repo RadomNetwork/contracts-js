@@ -27,6 +27,11 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "InvalidMeteredCharge",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "OrgMustDeposit",
     type: "error",
   },
@@ -43,6 +48,11 @@ const _abi = [
   {
     inputs: [],
     name: "SubscriptionNotFound",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "SubscriptionNotMetered",
     type: "error",
   },
   {

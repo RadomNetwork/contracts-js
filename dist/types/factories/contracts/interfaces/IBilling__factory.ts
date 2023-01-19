@@ -15,6 +15,43 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint64",
+        name: "subscriptionId",
+        type: "uint64",
+      },
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "productId",
+        type: "uint64",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "seller",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "meteredBudgetUsed",
+        type: "uint256",
+      },
+    ],
+    name: "MeteredProductCharged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "address",
         name: "orgId",
         type: "address",
@@ -124,6 +161,24 @@ const _abi = [
     ],
     name: "PaymentSuccessful",
     type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "subscriptionId",
+        type: "uint64",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "chargeMeteredProduct",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [

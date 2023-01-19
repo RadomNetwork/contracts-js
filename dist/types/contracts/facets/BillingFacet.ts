@@ -149,6 +149,7 @@ export declare namespace Subscriptions {
 export interface BillingFacetInterface extends utils.Interface {
   functions: {
     "cancelSubscription(uint64)": FunctionFragment;
+    "chargeMeteredProduct(uint64,uint256)": FunctionFragment;
     "generateOrderId((uint256,address,address,(uint32,bytes)[]))": FunctionFragment;
     "getPaginatedSubscriptions(address,uint64,uint64)": FunctionFragment;
     "getPurchasedSubscriptions(address,uint64,uint64)": FunctionFragment;
@@ -164,6 +165,7 @@ export interface BillingFacetInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "cancelSubscription"
+      | "chargeMeteredProduct"
       | "generateOrderId"
       | "getPaginatedSubscriptions"
       | "getPurchasedSubscriptions"
@@ -179,6 +181,10 @@ export interface BillingFacetInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "cancelSubscription",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "chargeMeteredProduct",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "generateOrderId",
@@ -238,6 +244,10 @@ export interface BillingFacetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "chargeMeteredProduct",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "generateOrderId",
     data: BytesLike
   ): Result;
@@ -273,6 +283,7 @@ export interface BillingFacetInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "MeteredProductCharged(uint64,uint64,address,uint256,uint256)": EventFragment;
     "OrderConfigUpdated(address,address,bytes32)": EventFragment;
     "OrderPurchased(address,address,bytes32,tuple)": EventFragment;
     "PaymentSuccessful(address,address,bytes32)": EventFragment;
@@ -282,6 +293,7 @@ export interface BillingFacetInterface extends utils.Interface {
     "SubscriptionRevoked(uint64,uint64,address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "MeteredProductCharged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OrderConfigUpdated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OrderPurchased"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PaymentSuccessful"): EventFragment;
@@ -290,6 +302,21 @@ export interface BillingFacetInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "SubscriptionCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SubscriptionRevoked"): EventFragment;
 }
+
+export interface MeteredProductChargedEventObject {
+  subscriptionId: BigNumber;
+  productId: BigNumber;
+  seller: string;
+  amount: BigNumber;
+  meteredBudgetUsed: BigNumber;
+}
+export type MeteredProductChargedEvent = TypedEvent<
+  [BigNumber, BigNumber, string, BigNumber, BigNumber],
+  MeteredProductChargedEventObject
+>;
+
+export type MeteredProductChargedEventFilter =
+  TypedEventFilter<MeteredProductChargedEvent>;
 
 export interface OrderConfigUpdatedEventObject {
   orgId: string;
@@ -415,6 +442,12 @@ export interface BillingFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    chargeMeteredProduct(
+      subscriptionId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     generateOrderId(
       orderData: Billing.OrderStruct,
       overrides?: CallOverrides
@@ -484,6 +517,12 @@ export interface BillingFacet extends BaseContract {
 
   cancelSubscription(
     subscriptionId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  chargeMeteredProduct(
+    subscriptionId: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -559,6 +598,12 @@ export interface BillingFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    chargeMeteredProduct(
+      subscriptionId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     generateOrderId(
       orderData: Billing.OrderStruct,
       overrides?: CallOverrides
@@ -627,6 +672,21 @@ export interface BillingFacet extends BaseContract {
   };
 
   filters: {
+    "MeteredProductCharged(uint64,uint64,address,uint256,uint256)"(
+      subscriptionId?: PromiseOrValue<BigNumberish> | null,
+      productId?: PromiseOrValue<BigNumberish> | null,
+      seller?: PromiseOrValue<string> | null,
+      amount?: null,
+      meteredBudgetUsed?: null
+    ): MeteredProductChargedEventFilter;
+    MeteredProductCharged(
+      subscriptionId?: PromiseOrValue<BigNumberish> | null,
+      productId?: PromiseOrValue<BigNumberish> | null,
+      seller?: PromiseOrValue<string> | null,
+      amount?: null,
+      meteredBudgetUsed?: null
+    ): MeteredProductChargedEventFilter;
+
     "OrderConfigUpdated(address,address,bytes32)"(
       orgId?: PromiseOrValue<string> | null,
       user?: PromiseOrValue<string> | null,
@@ -715,6 +775,12 @@ export interface BillingFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    chargeMeteredProduct(
+      subscriptionId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     generateOrderId(
       orderData: Billing.OrderStruct,
       overrides?: CallOverrides
@@ -777,6 +843,12 @@ export interface BillingFacet extends BaseContract {
   populateTransaction: {
     cancelSubscription(
       subscriptionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    chargeMeteredProduct(
+      subscriptionId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
