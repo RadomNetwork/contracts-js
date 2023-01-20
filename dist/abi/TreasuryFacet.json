@@ -16,17 +16,17 @@
   },
   {
     "inputs": [],
+    "name": "InvalidChargingInterval",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidMeteredCharge",
     "type": "error"
   },
   {
     "inputs": [],
     "name": "OrgMustDeposit",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "OrgStreamDoesNotExist",
     "type": "error"
   },
   {
@@ -308,35 +308,6 @@
     ],
     "name": "getSellBalance",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "orgId",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      }
-    ],
-    "name": "getTokenSpendRateAndExpiry",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "",

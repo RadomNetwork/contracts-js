@@ -34,7 +34,6 @@ export interface TreasuryFacetInterface extends utils.Interface {
     "getBuyAndSellBalances(address,address)": FunctionFragment;
     "getBuyBalance(address,address)": FunctionFragment;
     "getSellBalance(address,address)": FunctionFragment;
-    "getTokenSpendRateAndExpiry(address,address)": FunctionFragment;
     "withdrawBuyBalance(address,address,uint256,address)": FunctionFragment;
     "withdrawSellBalance(address,address,uint256,address)": FunctionFragment;
   };
@@ -46,7 +45,6 @@ export interface TreasuryFacetInterface extends utils.Interface {
       | "getBuyAndSellBalances"
       | "getBuyBalance"
       | "getSellBalance"
-      | "getTokenSpendRateAndExpiry"
       | "withdrawBuyBalance"
       | "withdrawSellBalance"
   ): FunctionFragment;
@@ -73,10 +71,6 @@ export interface TreasuryFacetInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getSellBalance",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTokenSpendRateAndExpiry",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -113,10 +107,6 @@ export interface TreasuryFacetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getSellBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTokenSpendRateAndExpiry",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -252,12 +242,6 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    getTokenSpendRateAndExpiry(
-      orgId: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber]>;
-
     withdrawBuyBalance(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -305,12 +289,6 @@ export interface TreasuryFacet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getTokenSpendRateAndExpiry(
-    orgId: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<[BigNumber, BigNumber]>;
-
   withdrawBuyBalance(
     orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
@@ -357,12 +335,6 @@ export interface TreasuryFacet extends BaseContract {
       token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    getTokenSpendRateAndExpiry(
-      orgId: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber]>;
 
     withdrawBuyBalance(
       orgId: PromiseOrValue<string>,
@@ -466,12 +438,6 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getTokenSpendRateAndExpiry(
-      orgId: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     withdrawBuyBalance(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -515,12 +481,6 @@ export interface TreasuryFacet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getSellBalance(
-      orgId: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getTokenSpendRateAndExpiry(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       overrides?: CallOverrides

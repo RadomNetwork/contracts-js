@@ -27,17 +27,17 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "InvalidChargingInterval",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "InvalidMeteredCharge",
     type: "error",
   },
   {
     inputs: [],
     name: "OrgMustDeposit",
-    type: "error",
-  },
-  {
-    inputs: [],
-    name: "OrgStreamDoesNotExist",
     type: "error",
   },
   {

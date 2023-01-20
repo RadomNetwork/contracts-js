@@ -40,10 +40,17 @@ export declare namespace Subscriptions {
     indexRunsOutOfFunds: PromiseOrValue<BigNumberish>;
     pricing: PromiseOrValue<BigNumberish>;
     chargingInterval: PromiseOrValue<BigNumberish>;
+    elapsedIntervals: PromiseOrValue<BigNumberish>;
+    intervals: PromiseOrValue<BigNumberish>;
     isActive: PromiseOrValue<boolean>;
     cancelled: PromiseOrValue<boolean>;
     revoked: PromiseOrValue<boolean>;
+    useRadomBalance: PromiseOrValue<boolean>;
     token: PromiseOrValue<string>;
+    meteredChargingInterval: PromiseOrValue<BigNumberish>;
+    lastMeteredChargeInterval: PromiseOrValue<BigNumberish>;
+    meteredBudget: PromiseOrValue<BigNumberish>;
+    meteredBudgetUsed: PromiseOrValue<BigNumberish>;
   };
 
   export type SubscriptionResponseStructOutput = [
@@ -58,10 +65,17 @@ export declare namespace Subscriptions {
     BigNumber,
     BigNumber,
     number,
+    number,
+    number,
     boolean,
     boolean,
     boolean,
-    string
+    boolean,
+    string,
+    number,
+    number,
+    BigNumber,
+    BigNumber
   ] & {
     customer: string;
     seller: string;
@@ -74,10 +88,17 @@ export declare namespace Subscriptions {
     indexRunsOutOfFunds: BigNumber;
     pricing: BigNumber;
     chargingInterval: number;
+    elapsedIntervals: number;
+    intervals: number;
     isActive: boolean;
     cancelled: boolean;
     revoked: boolean;
+    useRadomBalance: boolean;
     token: string;
+    meteredChargingInterval: number;
+    lastMeteredChargeInterval: number;
+    meteredBudget: BigNumber;
+    meteredBudgetUsed: BigNumber;
   };
 }
 

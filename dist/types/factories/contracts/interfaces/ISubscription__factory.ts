@@ -207,6 +207,16 @@ const _abi = [
             type: "uint32",
           },
           {
+            internalType: "uint32",
+            name: "elapsedIntervals",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "intervals",
+            type: "uint32",
+          },
+          {
             internalType: "bool",
             name: "isActive",
             type: "bool",
@@ -222,9 +232,34 @@ const _abi = [
             type: "bool",
           },
           {
+            internalType: "bool",
+            name: "useRadomBalance",
+            type: "bool",
+          },
+          {
             internalType: "address",
             name: "token",
             type: "address",
+          },
+          {
+            internalType: "uint32",
+            name: "meteredChargingInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "lastMeteredChargeInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudget",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudgetUsed",
+            type: "uint256",
           },
         ],
         internalType: "struct Subscriptions.SubscriptionResponse[]",
@@ -318,6 +353,16 @@ const _abi = [
             type: "uint32",
           },
           {
+            internalType: "uint32",
+            name: "elapsedIntervals",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "intervals",
+            type: "uint32",
+          },
+          {
             internalType: "bool",
             name: "isActive",
             type: "bool",
@@ -333,9 +378,34 @@ const _abi = [
             type: "bool",
           },
           {
+            internalType: "bool",
+            name: "useRadomBalance",
+            type: "bool",
+          },
+          {
             internalType: "address",
             name: "token",
             type: "address",
+          },
+          {
+            internalType: "uint32",
+            name: "meteredChargingInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "lastMeteredChargeInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudget",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudgetUsed",
+            type: "uint256",
           },
         ],
         internalType: "struct Subscriptions.SubscriptionResponse[]",
@@ -419,6 +489,16 @@ const _abi = [
             type: "uint32",
           },
           {
+            internalType: "uint32",
+            name: "elapsedIntervals",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "intervals",
+            type: "uint32",
+          },
+          {
             internalType: "bool",
             name: "isActive",
             type: "bool",
@@ -434,9 +514,34 @@ const _abi = [
             type: "bool",
           },
           {
+            internalType: "bool",
+            name: "useRadomBalance",
+            type: "bool",
+          },
+          {
             internalType: "address",
             name: "token",
             type: "address",
+          },
+          {
+            internalType: "uint32",
+            name: "meteredChargingInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "lastMeteredChargeInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudget",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudgetUsed",
+            type: "uint256",
           },
         ],
         internalType: "struct Subscriptions.SubscriptionResponse",
