@@ -81,6 +81,12 @@ const _abi = [
         name: "productId",
         type: "uint64",
       },
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "orderId",
+        type: "bytes32",
+      },
     ],
     name: "SubscriptionCreated",
     type: "event",
@@ -133,7 +139,7 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "buyer",
+        name: "customer",
         type: "address",
       },
       {

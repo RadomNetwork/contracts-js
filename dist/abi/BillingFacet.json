@@ -102,20 +102,14 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "orgId",
+        "name": "seller",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "user",
+        "name": "customer",
         "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "orderId",
-        "type": "bytes32"
       }
     ],
     "name": "OrderConfigUpdated",
@@ -127,13 +121,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "orgId",
+        "name": "seller",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "user",
+        "name": "customer",
         "type": "address"
       },
       {
@@ -181,6 +175,12 @@
         "internalType": "struct Billing.Order",
         "name": "orderData",
         "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64[]",
+        "name": "subscriptionIds",
+        "type": "uint64[]"
       }
     ],
     "name": "OrderPurchased",
@@ -192,13 +192,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "orgId",
+        "name": "seller",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "user",
+        "name": "customer",
         "type": "address"
       },
       {
@@ -281,6 +281,12 @@
         "internalType": "uint64",
         "name": "productId",
         "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "orderId",
+        "type": "bytes32"
       }
     ],
     "name": "SubscriptionCreated",
@@ -405,7 +411,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "orgId",
+        "name": "seller",
         "type": "address"
       },
       {
@@ -551,7 +557,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "orgId",
+        "name": "customer",
         "type": "address"
       },
       {
@@ -697,7 +703,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "orgId",
+        "name": "seller",
         "type": "address"
       },
       {

@@ -305,12 +305,12 @@ export interface BillingFacetInterface extends utils.Interface {
 
   events: {
     "MeteredProductCharged(uint64,uint64,address,uint256,uint256)": EventFragment;
-    "OrderConfigUpdated(address,address,bytes32)": EventFragment;
-    "OrderPurchased(address,address,bytes32,tuple)": EventFragment;
+    "OrderConfigUpdated(address,address)": EventFragment;
+    "OrderPurchased(address,address,bytes32,tuple,uint64[])": EventFragment;
     "PaymentSuccessful(address,address,bytes32)": EventFragment;
     "SubscriptionAddOnsUpdated(uint64,uint64,uint64[])": EventFragment;
     "SubscriptionCancelled(uint64,uint64,address,address)": EventFragment;
-    "SubscriptionCreated(uint64,uint64)": EventFragment;
+    "SubscriptionCreated(uint64,uint64,bytes32)": EventFragment;
     "SubscriptionRevoked(uint64,uint64,address,address)": EventFragment;
   };
 
@@ -340,12 +340,11 @@ export type MeteredProductChargedEventFilter =
   TypedEventFilter<MeteredProductChargedEvent>;
 
 export interface OrderConfigUpdatedEventObject {
-  orgId: string;
-  user: string;
-  orderId: string;
+  seller: string;
+  customer: string;
 }
 export type OrderConfigUpdatedEvent = TypedEvent<
-  [string, string, string],
+  [string, string],
   OrderConfigUpdatedEventObject
 >;
 
@@ -353,21 +352,22 @@ export type OrderConfigUpdatedEventFilter =
   TypedEventFilter<OrderConfigUpdatedEvent>;
 
 export interface OrderPurchasedEventObject {
-  orgId: string;
-  user: string;
+  seller: string;
+  customer: string;
   orderId: string;
   orderData: Billing.OrderStructOutput;
+  subscriptionIds: BigNumber[];
 }
 export type OrderPurchasedEvent = TypedEvent<
-  [string, string, string, Billing.OrderStructOutput],
+  [string, string, string, Billing.OrderStructOutput, BigNumber[]],
   OrderPurchasedEventObject
 >;
 
 export type OrderPurchasedEventFilter = TypedEventFilter<OrderPurchasedEvent>;
 
 export interface PaymentSuccessfulEventObject {
-  orgId: string;
-  user: string;
+  seller: string;
+  customer: string;
   paymentId: string;
 }
 export type PaymentSuccessfulEvent = TypedEvent<
@@ -408,9 +408,10 @@ export type SubscriptionCancelledEventFilter =
 export interface SubscriptionCreatedEventObject {
   subscriptionId: BigNumber;
   productId: BigNumber;
+  orderId: string;
 }
 export type SubscriptionCreatedEvent = TypedEvent<
-  [BigNumber, BigNumber],
+  [BigNumber, BigNumber, string],
   SubscriptionCreatedEventObject
 >;
 
@@ -475,14 +476,14 @@ export interface BillingFacet extends BaseContract {
     ): Promise<[string] & { orderId: string }>;
 
     getPaginatedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[Subscriptions.SubscriptionResponseStructOutput[], BigNumber]>;
 
     getPurchasedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -493,7 +494,7 @@ export interface BillingFacet extends BaseContract {
     >;
 
     getSoldSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -553,14 +554,14 @@ export interface BillingFacet extends BaseContract {
   ): Promise<string>;
 
   getPaginatedSubscriptions(
-    orgId: PromiseOrValue<string>,
+    seller: PromiseOrValue<string>,
     offset: PromiseOrValue<BigNumberish>,
     limit: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<[Subscriptions.SubscriptionResponseStructOutput[], BigNumber]>;
 
   getPurchasedSubscriptions(
-    orgId: PromiseOrValue<string>,
+    customer: PromiseOrValue<string>,
     offset: PromiseOrValue<BigNumberish>,
     limit: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -571,7 +572,7 @@ export interface BillingFacet extends BaseContract {
   >;
 
   getSoldSubscriptions(
-    orgId: PromiseOrValue<string>,
+    seller: PromiseOrValue<string>,
     offset: PromiseOrValue<BigNumberish>,
     limit: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -631,14 +632,14 @@ export interface BillingFacet extends BaseContract {
     ): Promise<string>;
 
     getPaginatedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[Subscriptions.SubscriptionResponseStructOutput[], BigNumber]>;
 
     getPurchasedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -649,7 +650,7 @@ export interface BillingFacet extends BaseContract {
     >;
 
     getSoldSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -708,38 +709,38 @@ export interface BillingFacet extends BaseContract {
       meteredBudgetUsed?: null
     ): MeteredProductChargedEventFilter;
 
-    "OrderConfigUpdated(address,address,bytes32)"(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null
+    "OrderConfigUpdated(address,address)"(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null
     ): OrderConfigUpdatedEventFilter;
     OrderConfigUpdated(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null
     ): OrderConfigUpdatedEventFilter;
 
-    "OrderPurchased(address,address,bytes32,tuple)"(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+    "OrderPurchased(address,address,bytes32,tuple,uint64[])"(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       orderId?: PromiseOrValue<BytesLike> | null,
-      orderData?: null
+      orderData?: null,
+      subscriptionIds?: null
     ): OrderPurchasedEventFilter;
     OrderPurchased(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       orderId?: PromiseOrValue<BytesLike> | null,
-      orderData?: null
+      orderData?: null,
+      subscriptionIds?: null
     ): OrderPurchasedEventFilter;
 
     "PaymentSuccessful(address,address,bytes32)"(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       paymentId?: null
     ): PaymentSuccessfulEventFilter;
     PaymentSuccessful(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       paymentId?: null
     ): PaymentSuccessfulEventFilter;
 
@@ -767,13 +768,15 @@ export interface BillingFacet extends BaseContract {
       seller?: PromiseOrValue<string> | null
     ): SubscriptionCancelledEventFilter;
 
-    "SubscriptionCreated(uint64,uint64)"(
+    "SubscriptionCreated(uint64,uint64,bytes32)"(
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      orderId?: null
     ): SubscriptionCreatedEventFilter;
     SubscriptionCreated(
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      orderId?: null
     ): SubscriptionCreatedEventFilter;
 
     "SubscriptionRevoked(uint64,uint64,address,address)"(
@@ -808,21 +811,21 @@ export interface BillingFacet extends BaseContract {
     ): Promise<BigNumber>;
 
     getPaginatedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getPurchasedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getSoldSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -879,21 +882,21 @@ export interface BillingFacet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getPaginatedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getPurchasedSubscriptions(
-      orgId: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getSoldSubscriptions(
-      orgId: PromiseOrValue<string>,
+      seller: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides

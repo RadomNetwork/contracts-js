@@ -53,20 +53,14 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "orgId",
+        name: "seller",
         type: "address",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "user",
+        name: "customer",
         type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "bytes32",
-        name: "orderId",
-        type: "bytes32",
       },
     ],
     name: "OrderConfigUpdated",
@@ -78,13 +72,13 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "orgId",
+        name: "seller",
         type: "address",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "user",
+        name: "customer",
         type: "address",
       },
       {
@@ -133,6 +127,12 @@ const _abi = [
         name: "orderData",
         type: "tuple",
       },
+      {
+        indexed: false,
+        internalType: "uint64[]",
+        name: "subscriptionIds",
+        type: "uint64[]",
+      },
     ],
     name: "OrderPurchased",
     type: "event",
@@ -143,13 +143,13 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "orgId",
+        name: "seller",
         type: "address",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "user",
+        name: "customer",
         type: "address",
       },
       {

@@ -173,7 +173,7 @@ export interface ISubscriptionInterface extends utils.Interface {
   events: {
     "SubscriptionAddOnsUpdated(uint64,uint64,uint64[])": EventFragment;
     "SubscriptionCancelled(uint64,uint64,address,address)": EventFragment;
-    "SubscriptionCreated(uint64,uint64)": EventFragment;
+    "SubscriptionCreated(uint64,uint64,bytes32)": EventFragment;
     "SubscriptionRevoked(uint64,uint64,address,address)": EventFragment;
   };
 
@@ -213,9 +213,10 @@ export type SubscriptionCancelledEventFilter =
 export interface SubscriptionCreatedEventObject {
   subscriptionId: BigNumber;
   productId: BigNumber;
+  orderId: string;
 }
 export type SubscriptionCreatedEvent = TypedEvent<
-  [BigNumber, BigNumber],
+  [BigNumber, BigNumber, string],
   SubscriptionCreatedEventObject
 >;
 
@@ -269,7 +270,7 @@ export interface ISubscription extends BaseContract {
     ): Promise<ContractTransaction>;
 
     getPurchasedSubscriptions(
-      buyer: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -313,7 +314,7 @@ export interface ISubscription extends BaseContract {
   ): Promise<ContractTransaction>;
 
   getPurchasedSubscriptions(
-    buyer: PromiseOrValue<string>,
+    customer: PromiseOrValue<string>,
     offset: PromiseOrValue<BigNumberish>,
     limit: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -353,7 +354,7 @@ export interface ISubscription extends BaseContract {
     ): Promise<void>;
 
     getPurchasedSubscriptions(
-      buyer: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -412,13 +413,15 @@ export interface ISubscription extends BaseContract {
       seller?: PromiseOrValue<string> | null
     ): SubscriptionCancelledEventFilter;
 
-    "SubscriptionCreated(uint64,uint64)"(
+    "SubscriptionCreated(uint64,uint64,bytes32)"(
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      orderId?: null
     ): SubscriptionCreatedEventFilter;
     SubscriptionCreated(
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null
+      productId?: PromiseOrValue<BigNumberish> | null,
+      orderId?: null
     ): SubscriptionCreatedEventFilter;
 
     "SubscriptionRevoked(uint64,uint64,address,address)"(
@@ -442,7 +445,7 @@ export interface ISubscription extends BaseContract {
     ): Promise<BigNumber>;
 
     getPurchasedSubscriptions(
-      buyer: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -473,7 +476,7 @@ export interface ISubscription extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getPurchasedSubscriptions(
-      buyer: PromiseOrValue<string>,
+      customer: PromiseOrValue<string>,
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides

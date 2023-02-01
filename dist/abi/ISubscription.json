@@ -69,6 +69,12 @@
         "internalType": "uint64",
         "name": "productId",
         "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "orderId",
+        "type": "bytes32"
       }
     ],
     "name": "SubscriptionCreated",
@@ -122,7 +128,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "buyer",
+        "name": "customer",
         "type": "address"
       },
       {

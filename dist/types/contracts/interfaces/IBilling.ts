@@ -158,8 +158,8 @@ export interface IBillingInterface extends utils.Interface {
 
   events: {
     "MeteredProductCharged(uint64,uint64,address,uint256,uint256)": EventFragment;
-    "OrderConfigUpdated(address,address,bytes32)": EventFragment;
-    "OrderPurchased(address,address,bytes32,tuple)": EventFragment;
+    "OrderConfigUpdated(address,address)": EventFragment;
+    "OrderPurchased(address,address,bytes32,tuple,uint64[])": EventFragment;
     "PaymentSuccessful(address,address,bytes32)": EventFragment;
   };
 
@@ -185,12 +185,11 @@ export type MeteredProductChargedEventFilter =
   TypedEventFilter<MeteredProductChargedEvent>;
 
 export interface OrderConfigUpdatedEventObject {
-  orgId: string;
-  user: string;
-  orderId: string;
+  seller: string;
+  customer: string;
 }
 export type OrderConfigUpdatedEvent = TypedEvent<
-  [string, string, string],
+  [string, string],
   OrderConfigUpdatedEventObject
 >;
 
@@ -198,21 +197,22 @@ export type OrderConfigUpdatedEventFilter =
   TypedEventFilter<OrderConfigUpdatedEvent>;
 
 export interface OrderPurchasedEventObject {
-  orgId: string;
-  user: string;
+  seller: string;
+  customer: string;
   orderId: string;
   orderData: Billing.OrderStructOutput;
+  subscriptionIds: BigNumber[];
 }
 export type OrderPurchasedEvent = TypedEvent<
-  [string, string, string, Billing.OrderStructOutput],
+  [string, string, string, Billing.OrderStructOutput, BigNumber[]],
   OrderPurchasedEventObject
 >;
 
 export type OrderPurchasedEventFilter = TypedEventFilter<OrderPurchasedEvent>;
 
 export interface PaymentSuccessfulEventObject {
-  orgId: string;
-  user: string;
+  seller: string;
+  customer: string;
   paymentId: string;
 }
 export type PaymentSuccessfulEvent = TypedEvent<
@@ -368,38 +368,38 @@ export interface IBilling extends BaseContract {
       meteredBudgetUsed?: null
     ): MeteredProductChargedEventFilter;
 
-    "OrderConfigUpdated(address,address,bytes32)"(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null
+    "OrderConfigUpdated(address,address)"(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null
     ): OrderConfigUpdatedEventFilter;
     OrderConfigUpdated(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null
     ): OrderConfigUpdatedEventFilter;
 
-    "OrderPurchased(address,address,bytes32,tuple)"(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+    "OrderPurchased(address,address,bytes32,tuple,uint64[])"(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       orderId?: PromiseOrValue<BytesLike> | null,
-      orderData?: null
+      orderData?: null,
+      subscriptionIds?: null
     ): OrderPurchasedEventFilter;
     OrderPurchased(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       orderId?: PromiseOrValue<BytesLike> | null,
-      orderData?: null
+      orderData?: null,
+      subscriptionIds?: null
     ): OrderPurchasedEventFilter;
 
     "PaymentSuccessful(address,address,bytes32)"(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       paymentId?: null
     ): PaymentSuccessfulEventFilter;
     PaymentSuccessful(
-      orgId?: PromiseOrValue<string> | null,
-      user?: PromiseOrValue<string> | null,
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       paymentId?: null
     ): PaymentSuccessfulEventFilter;
   };
