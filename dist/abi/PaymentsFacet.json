@@ -1,11 +1,6 @@
 [
   {
     "inputs": [],
-    "name": "CallerNotOwner",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "TokenAlreadyInPaymentTokens",
     "type": "error"
   },

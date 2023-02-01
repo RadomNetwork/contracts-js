@@ -128,7 +128,7 @@ export interface DiamondLoupeFacet extends BaseContract {
     facetFunctionSelectors(
       _facet: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[string[]] & { _facetFunctionSelectors: string[] }>;
+    ): Promise<[string[]] & { facetFunctionSelectors_: string[] }>;
 
     facets(
       overrides?: CallOverrides

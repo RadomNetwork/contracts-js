@@ -4,6 +4,7 @@
 export { IBilling__factory } from "./IBilling__factory";
 export { IDiamondCut__factory } from "./IDiamondCut__factory";
 export { IDiamondLoupe__factory } from "./IDiamondLoupe__factory";
+export { IERC173__factory } from "./IERC173__factory";
 export { IErrors__factory } from "./IErrors__factory";
 export { IRadomRegistryDiamond__factory } from "./IRadomRegistryDiamond__factory";
 export { ISubscription__factory } from "./ISubscription__factory";

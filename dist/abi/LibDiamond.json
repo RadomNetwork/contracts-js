@@ -1,15 +1,5 @@
 [
   {
-    "inputs": [],
-    "name": "IncorrectFacetCutAction",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "LibDiamondCutInitFail",
-    "type": "error"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {

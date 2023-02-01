@@ -4,6 +4,7 @@
 export type { BillingFacet } from "./BillingFacet";
 export type { DiamondCutFacet } from "./DiamondCutFacet";
 export type { DiamondLoupeFacet } from "./DiamondLoupeFacet";
+export type { OwnershipFacet } from "./OwnershipFacet";
 export type { PaymentsFacet } from "./PaymentsFacet";
 export type { TreasuryFacet } from "./TreasuryFacet";
 export type { UserAccessControlFacet } from "./UserAccessControlFacet";

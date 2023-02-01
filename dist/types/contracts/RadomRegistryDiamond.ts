@@ -3,15 +3,12 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumber,
   BigNumberish,
   BytesLike,
-  CallOverrides,
-  PopulatedTransaction,
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -42,15 +39,7 @@ export declare namespace RadomRegistryDiamond {
 }
 
 export interface RadomRegistryDiamondInterface extends utils.Interface {
-  functions: {
-    "owner()": FunctionFragment;
-  };
-
-  getFunction(nameOrSignatureOrTopic: "owner"): FunctionFragment;
-
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  functions: {};
 
   events: {};
 }
@@ -81,23 +70,13 @@ export interface RadomRegistryDiamond extends BaseContract {
   once: OnEvent<this>;
   removeListener: OnEvent<this>;
 
-  functions: {
-    owner(overrides?: CallOverrides): Promise<[string]>;
-  };
+  functions: {};
 
-  owner(overrides?: CallOverrides): Promise<string>;
-
-  callStatic: {
-    owner(overrides?: CallOverrides): Promise<string>;
-  };
+  callStatic: {};
 
   filters: {};
 
-  estimateGas: {
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-  };
+  estimateGas: {};
 
-  populateTransaction: {
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-  };
+  populateTransaction: {};
 }

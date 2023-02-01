@@ -49,6 +49,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DiamondLoupeFacet__factory>;
     getContractFactory(
+      name: "OwnershipFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OwnershipFacet__factory>;
+    getContractFactory(
       name: "PaymentsFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PaymentsFacet__factory>;
@@ -72,6 +76,10 @@ declare module "hardhat/types/runtime" {
       name: "IDiamondLoupe",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IDiamondLoupe__factory>;
+    getContractFactory(
+      name: "IERC173",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC173__factory>;
     getContractFactory(
       name: "IErrors",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -155,6 +163,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.DiamondLoupeFacet>;
     getContractAt(
+      name: "OwnershipFacet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OwnershipFacet>;
+    getContractAt(
       name: "PaymentsFacet",
       address: string,
       signer?: ethers.Signer
@@ -184,6 +197,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IDiamondLoupe>;
+    getContractAt(
+      name: "IERC173",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC173>;
     getContractAt(
       name: "IErrors",
       address: string,

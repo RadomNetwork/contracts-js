@@ -4,6 +4,7 @@
 export type { IBilling } from "./IBilling";
 export type { IDiamondCut } from "./IDiamondCut";
 export type { IDiamondLoupe } from "./IDiamondLoupe";
+export type { IERC173 } from "./IERC173";
 export type { IErrors } from "./IErrors";
 export type { IRadomRegistryDiamond } from "./IRadomRegistryDiamond";
 export type { ISubscription } from "./ISubscription";

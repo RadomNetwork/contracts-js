@@ -36,17 +36,23 @@
   },
   {
     "inputs": [],
-    "name": "IncorrectFacetCutAction",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "InitAddressZeroCallDataNotEmpty",
     "type": "error"
   },
   {
-    "inputs": [],
-    "name": "LibDiamondCutInitFail",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_initializationContractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_calldata",
+        "type": "bytes"
+      }
+    ],
+    "name": "InitializationFunctionReverted",
     "type": "error"
   },
   {
