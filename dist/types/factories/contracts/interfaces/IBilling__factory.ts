@@ -62,8 +62,32 @@ const _abi = [
         name: "customer",
         type: "address",
       },
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "orderId",
+        type: "bytes32",
+      },
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "key",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes",
+            name: "value",
+            type: "bytes",
+          },
+        ],
+        indexed: false,
+        internalType: "struct Billing.KeyValuePair[]",
+        name: "metadata",
+        type: "tuple[]",
+      },
     ],
-    name: "OrderConfigUpdated",
+    name: "OrderMetadataReplaced",
     type: "event",
   },
   {
@@ -133,6 +157,24 @@ const _abi = [
         name: "subscriptionIds",
         type: "uint64[]",
       },
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "key",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes",
+            name: "value",
+            type: "bytes",
+          },
+        ],
+        indexed: false,
+        internalType: "struct Billing.KeyValuePair[]",
+        name: "configInputs",
+        type: "tuple[]",
+      },
     ],
     name: "OrderPurchased",
     type: "event",
@@ -157,6 +199,24 @@ const _abi = [
         internalType: "bytes32",
         name: "paymentId",
         type: "bytes32",
+      },
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "key",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes",
+            name: "value",
+            type: "bytes",
+          },
+        ],
+        indexed: false,
+        internalType: "struct Billing.KeyValuePair[]",
+        name: "metadata",
+        type: "tuple[]",
       },
     ],
     name: "PaymentSuccessful",
@@ -279,6 +339,23 @@ const _abi = [
         name: "fromRadomBalance",
         type: "bool",
       },
+      {
+        components: [
+          {
+            internalType: "bytes32",
+            name: "key",
+            type: "bytes32",
+          },
+          {
+            internalType: "bytes",
+            name: "value",
+            type: "bytes",
+          },
+        ],
+        internalType: "struct Billing.KeyValuePair[]",
+        name: "metadata",
+        type: "tuple[]",
+      },
     ],
     name: "order",
     outputs: [],
@@ -324,55 +401,25 @@ const _abi = [
         name: "fromRadomBalance",
         type: "bool",
       },
-    ],
-    name: "pay",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
       {
         components: [
           {
-            internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
+            internalType: "bytes32",
+            name: "key",
+            type: "bytes32",
           },
           {
-            internalType: "address",
-            name: "customer",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "seller",
-            type: "address",
-          },
-          {
-            components: [
-              {
-                internalType: "uint32",
-                name: "productType",
-                type: "uint32",
-              },
-              {
-                internalType: "bytes",
-                name: "data",
-                type: "bytes",
-              },
-            ],
-            internalType: "struct Billing.Product[]",
-            name: "products",
-            type: "tuple[]",
+            internalType: "bytes",
+            name: "value",
+            type: "bytes",
           },
         ],
-        internalType: "struct Billing.Order",
-        name: "order",
-        type: "tuple",
+        internalType: "struct Billing.KeyValuePair[]",
+        name: "metadata",
+        type: "tuple[]",
       },
     ],
-    name: "replaceOrderConfig",
+    name: "pay",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

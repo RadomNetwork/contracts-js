@@ -28,6 +28,16 @@ import type {
 } from "../../common";
 
 export declare namespace Billing {
+  export type KeyValuePairStruct = {
+    key: PromiseOrValue<BytesLike>;
+    value: PromiseOrValue<BytesLike>;
+  };
+
+  export type KeyValuePairStructOutput = [string, string] & {
+    key: string;
+    value: string;
+  };
+
   export type ProductStruct = {
     productType: PromiseOrValue<BigNumberish>;
     data: PromiseOrValue<BytesLike>;
@@ -176,9 +186,8 @@ export interface BillingFacetInterface extends utils.Interface {
     "getPurchasedSubscriptions(address,uint64,uint64)": FunctionFragment;
     "getSoldSubscriptions(address,uint64,uint64)": FunctionFragment;
     "getSubscription(uint64)": FunctionFragment;
-    "order((uint256,address,address,(uint32,bytes)[]),bool)": FunctionFragment;
-    "pay((uint256,uint256,address,address,address),bool)": FunctionFragment;
-    "replaceOrderConfig((uint256,address,address,(uint32,bytes)[]))": FunctionFragment;
+    "order((uint256,address,address,(uint32,bytes)[]),bool,(bytes32,bytes)[])": FunctionFragment;
+    "pay((uint256,uint256,address,address,address),bool,(bytes32,bytes)[])": FunctionFragment;
     "revokeSubscription(uint64)": FunctionFragment;
     "updateAddOnsOrder((uint64,uint256,uint64[]))": FunctionFragment;
   };
@@ -194,7 +203,6 @@ export interface BillingFacetInterface extends utils.Interface {
       | "getSubscription"
       | "order"
       | "pay"
-      | "replaceOrderConfig"
       | "revokeSubscription"
       | "updateAddOnsOrder"
   ): FunctionFragment;
@@ -241,15 +249,19 @@ export interface BillingFacetInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "order",
-    values: [Billing.OrderStruct, PromiseOrValue<boolean>]
+    values: [
+      Billing.OrderStruct,
+      PromiseOrValue<boolean>,
+      Billing.KeyValuePairStruct[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "pay",
-    values: [Billing.PaymentStruct, PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "replaceOrderConfig",
-    values: [Billing.OrderStruct]
+    values: [
+      Billing.PaymentStruct,
+      PromiseOrValue<boolean>,
+      Billing.KeyValuePairStruct[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeSubscription",
@@ -291,10 +303,6 @@ export interface BillingFacetInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "order", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pay", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "replaceOrderConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "revokeSubscription",
     data: BytesLike
   ): Result;
@@ -305,9 +313,9 @@ export interface BillingFacetInterface extends utils.Interface {
 
   events: {
     "MeteredProductCharged(uint64,uint64,address,uint256,uint256)": EventFragment;
-    "OrderConfigUpdated(address,address)": EventFragment;
-    "OrderPurchased(address,address,bytes32,tuple,uint64[])": EventFragment;
-    "PaymentSuccessful(address,address,bytes32)": EventFragment;
+    "OrderMetadataReplaced(address,address,bytes32,tuple[])": EventFragment;
+    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])": EventFragment;
+    "PaymentSuccessful(address,address,bytes32,tuple[])": EventFragment;
     "SubscriptionAddOnsUpdated(uint64,uint64,uint64[])": EventFragment;
     "SubscriptionCancelled(uint64,uint64,address,address)": EventFragment;
     "SubscriptionCreated(uint64,uint64,bytes32)": EventFragment;
@@ -315,7 +323,7 @@ export interface BillingFacetInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "MeteredProductCharged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OrderConfigUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OrderMetadataReplaced"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OrderPurchased"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PaymentSuccessful"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SubscriptionAddOnsUpdated"): EventFragment;
@@ -339,17 +347,19 @@ export type MeteredProductChargedEvent = TypedEvent<
 export type MeteredProductChargedEventFilter =
   TypedEventFilter<MeteredProductChargedEvent>;
 
-export interface OrderConfigUpdatedEventObject {
+export interface OrderMetadataReplacedEventObject {
   seller: string;
   customer: string;
+  orderId: string;
+  metadata: Billing.KeyValuePairStructOutput[];
 }
-export type OrderConfigUpdatedEvent = TypedEvent<
-  [string, string],
-  OrderConfigUpdatedEventObject
+export type OrderMetadataReplacedEvent = TypedEvent<
+  [string, string, string, Billing.KeyValuePairStructOutput[]],
+  OrderMetadataReplacedEventObject
 >;
 
-export type OrderConfigUpdatedEventFilter =
-  TypedEventFilter<OrderConfigUpdatedEvent>;
+export type OrderMetadataReplacedEventFilter =
+  TypedEventFilter<OrderMetadataReplacedEvent>;
 
 export interface OrderPurchasedEventObject {
   seller: string;
@@ -357,9 +367,17 @@ export interface OrderPurchasedEventObject {
   orderId: string;
   orderData: Billing.OrderStructOutput;
   subscriptionIds: BigNumber[];
+  configInputs: Billing.KeyValuePairStructOutput[];
 }
 export type OrderPurchasedEvent = TypedEvent<
-  [string, string, string, Billing.OrderStructOutput, BigNumber[]],
+  [
+    string,
+    string,
+    string,
+    Billing.OrderStructOutput,
+    BigNumber[],
+    Billing.KeyValuePairStructOutput[]
+  ],
   OrderPurchasedEventObject
 >;
 
@@ -369,9 +387,10 @@ export interface PaymentSuccessfulEventObject {
   seller: string;
   customer: string;
   paymentId: string;
+  metadata: Billing.KeyValuePairStructOutput[];
 }
 export type PaymentSuccessfulEvent = TypedEvent<
-  [string, string, string],
+  [string, string, string, Billing.KeyValuePairStructOutput[]],
   PaymentSuccessfulEventObject
 >;
 
@@ -512,17 +531,14 @@ export interface BillingFacet extends BaseContract {
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     pay(
       payment: Billing.PaymentStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    replaceOrderConfig(
-      orderData: Billing.OrderStruct,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -590,17 +606,14 @@ export interface BillingFacet extends BaseContract {
   order(
     orderData: Billing.OrderStruct,
     fromRadomBalance: PromiseOrValue<boolean>,
+    metadata: Billing.KeyValuePairStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   pay(
     payment: Billing.PaymentStruct,
     fromRadomBalance: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  replaceOrderConfig(
-    orderData: Billing.OrderStruct,
+    metadata: Billing.KeyValuePairStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -668,17 +681,14 @@ export interface BillingFacet extends BaseContract {
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     pay(
       payment: Billing.PaymentStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    replaceOrderConfig(
-      orderData: Billing.OrderStruct,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -709,39 +719,47 @@ export interface BillingFacet extends BaseContract {
       meteredBudgetUsed?: null
     ): MeteredProductChargedEventFilter;
 
-    "OrderConfigUpdated(address,address)"(
+    "OrderMetadataReplaced(address,address,bytes32,tuple[])"(
       seller?: PromiseOrValue<string> | null,
-      customer?: PromiseOrValue<string> | null
-    ): OrderConfigUpdatedEventFilter;
-    OrderConfigUpdated(
+      customer?: PromiseOrValue<string> | null,
+      orderId?: PromiseOrValue<BytesLike> | null,
+      metadata?: null
+    ): OrderMetadataReplacedEventFilter;
+    OrderMetadataReplaced(
       seller?: PromiseOrValue<string> | null,
-      customer?: PromiseOrValue<string> | null
-    ): OrderConfigUpdatedEventFilter;
+      customer?: PromiseOrValue<string> | null,
+      orderId?: PromiseOrValue<BytesLike> | null,
+      metadata?: null
+    ): OrderMetadataReplacedEventFilter;
 
-    "OrderPurchased(address,address,bytes32,tuple,uint64[])"(
+    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
       orderId?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
-      subscriptionIds?: null
+      subscriptionIds?: null,
+      configInputs?: null
     ): OrderPurchasedEventFilter;
     OrderPurchased(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
       orderId?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
-      subscriptionIds?: null
+      subscriptionIds?: null,
+      configInputs?: null
     ): OrderPurchasedEventFilter;
 
-    "PaymentSuccessful(address,address,bytes32)"(
+    "PaymentSuccessful(address,address,bytes32,tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      paymentId?: null
+      paymentId?: null,
+      metadata?: null
     ): PaymentSuccessfulEventFilter;
     PaymentSuccessful(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      paymentId?: null
+      paymentId?: null,
+      metadata?: null
     ): PaymentSuccessfulEventFilter;
 
     "SubscriptionAddOnsUpdated(uint64,uint64,uint64[])"(
@@ -839,17 +857,14 @@ export interface BillingFacet extends BaseContract {
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     pay(
       payment: Billing.PaymentStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    replaceOrderConfig(
-      orderData: Billing.OrderStruct,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -910,17 +925,14 @@ export interface BillingFacet extends BaseContract {
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     pay(
       payment: Billing.PaymentStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    replaceOrderConfig(
-      orderData: Billing.OrderStruct,
+      metadata: Billing.KeyValuePairStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
