@@ -315,7 +315,7 @@ export interface BillingFacetInterface extends utils.Interface {
     "MeteredProductCharged(uint64,uint64,address,uint256,uint256)": EventFragment;
     "OrderMetadataReplaced(address,address,bytes32,tuple[])": EventFragment;
     "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])": EventFragment;
-    "PaymentSuccessful(address,address,bytes32,tuple[])": EventFragment;
+    "PaymentSuccessful(address,address,bytes32,tuple,tuple[])": EventFragment;
     "SubscriptionAddOnsUpdated(uint64,uint64,uint64[])": EventFragment;
     "SubscriptionCancelled(uint64,uint64,address,address)": EventFragment;
     "SubscriptionCreated(uint64,uint64,bytes32)": EventFragment;
@@ -387,10 +387,17 @@ export interface PaymentSuccessfulEventObject {
   seller: string;
   customer: string;
   paymentId: string;
+  paymentData: Billing.PaymentStructOutput;
   metadata: Billing.KeyValuePairStructOutput[];
 }
 export type PaymentSuccessfulEvent = TypedEvent<
-  [string, string, string, Billing.KeyValuePairStructOutput[]],
+  [
+    string,
+    string,
+    string,
+    Billing.PaymentStructOutput,
+    Billing.KeyValuePairStructOutput[]
+  ],
   PaymentSuccessfulEventObject
 >;
 
@@ -749,16 +756,18 @@ export interface BillingFacet extends BaseContract {
       configInputs?: null
     ): OrderPurchasedEventFilter;
 
-    "PaymentSuccessful(address,address,bytes32,tuple[])"(
+    "PaymentSuccessful(address,address,bytes32,tuple,tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
       paymentId?: null,
+      paymentData?: null,
       metadata?: null
     ): PaymentSuccessfulEventFilter;
     PaymentSuccessful(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
       paymentId?: null,
+      paymentData?: null,
       metadata?: null
     ): PaymentSuccessfulEventFilter;
 
