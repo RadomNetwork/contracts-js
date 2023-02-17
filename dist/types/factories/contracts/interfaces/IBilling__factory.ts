@@ -221,6 +221,11 @@ const _abi = [
             name: "seller",
             type: "address",
           },
+          {
+            internalType: "uint256",
+            name: "chainId",
+            type: "uint256",
+          },
         ],
         indexed: false,
         internalType: "struct Billing.Payment",
@@ -422,6 +427,11 @@ const _abi = [
             internalType: "address",
             name: "seller",
             type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "chainId",
+            type: "uint256",
           },
         ],
         internalType: "struct Billing.Payment",

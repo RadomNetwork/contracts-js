@@ -75,13 +75,21 @@ export declare namespace Billing {
     token: PromiseOrValue<string>;
     customer: PromiseOrValue<string>;
     seller: PromiseOrValue<string>;
+    chainId: PromiseOrValue<BigNumberish>;
   };
 
-  export type PaymentStructOutput = [BigNumber, string, string, string] & {
+  export type PaymentStructOutput = [
+    BigNumber,
+    string,
+    string,
+    string,
+    BigNumber
+  ] & {
     price: BigNumber;
     token: string;
     customer: string;
     seller: string;
+    chainId: BigNumber;
   };
 }
 
@@ -164,7 +172,7 @@ export interface BillingFacetInterface extends utils.Interface {
     "getSoldSubscriptions(address,uint64,uint64)": FunctionFragment;
     "getSubscription(uint64)": FunctionFragment;
     "order((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[])": FunctionFragment;
-    "pay((uint256,address,address,address),bool,(bytes32,bytes)[])": FunctionFragment;
+    "pay((uint256,address,address,address,uint256),bool,(bytes32,bytes)[])": FunctionFragment;
     "revokeSubscription(uint64)": FunctionFragment;
   };
 
