@@ -1,7 +1,22 @@
 [
   {
     "inputs": [],
+    "name": "AutoDepositConfigDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AutoDepositDisabled",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "FeatureNotSupported",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientAllowance",
     "type": "error"
   },
   {
@@ -16,6 +31,16 @@
   },
   {
     "inputs": [],
+    "name": "InsufficientWalletBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidAutoDepositConfig",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidChargingInterval",
     "type": "error"
   },
@@ -26,12 +51,32 @@
   },
   {
     "inputs": [],
+    "name": "InvalidSubscriptionId",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoSubscriptionsToAutoDeposit",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "OrgMustDeposit",
     "type": "error"
   },
   {
     "inputs": [],
     "name": "ProductHasNoPrice",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReEntrancyGuard",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SubscriptionNotCloseEnoughToExpire",
     "type": "error"
   },
   {
@@ -60,18 +105,17 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "WrongChainId",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
         "indexed": true,
         "internalType": "uint64",
         "name": "subscriptionId",
-        "type": "uint64"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint64",
-        "name": "productId",
         "type": "uint64"
       },
       {
@@ -114,7 +158,7 @@
       {
         "indexed": true,
         "internalType": "bytes32",
-        "name": "orderId",
+        "name": "orderHash",
         "type": "bytes32"
       },
       {
@@ -157,16 +201,11 @@
       {
         "indexed": true,
         "internalType": "bytes32",
-        "name": "orderId",
+        "name": "orderHash",
         "type": "bytes32"
       },
       {
         "components": [
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
           {
             "internalType": "address",
             "name": "customer",
@@ -176,6 +215,16 @@
             "internalType": "address",
             "name": "seller",
             "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainId",
+            "type": "uint256"
           },
           {
             "components": [
@@ -246,16 +295,11 @@
       {
         "indexed": false,
         "internalType": "bytes32",
-        "name": "paymentId",
+        "name": "paymentHash",
         "type": "bytes32"
       },
       {
         "components": [
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
           {
             "internalType": "uint256",
             "name": "price",
@@ -314,37 +358,6 @@
         "type": "uint64"
       },
       {
-        "indexed": true,
-        "internalType": "uint64",
-        "name": "productId",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64[]",
-        "name": "addOns",
-        "type": "uint64[]"
-      }
-    ],
-    "name": "SubscriptionAddOnsUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint64",
-        "name": "serviceSubscriptionId",
-        "type": "uint64"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint64",
-        "name": "productId",
-        "type": "uint64"
-      },
-      {
         "indexed": false,
         "internalType": "address",
         "name": "customer",
@@ -370,15 +383,9 @@
         "type": "uint64"
       },
       {
-        "indexed": true,
-        "internalType": "uint64",
-        "name": "productId",
-        "type": "uint64"
-      },
-      {
         "indexed": false,
         "internalType": "bytes32",
-        "name": "orderId",
+        "name": "orderHash",
         "type": "bytes32"
       }
     ],
@@ -392,12 +399,6 @@
         "indexed": true,
         "internalType": "uint64",
         "name": "serviceSubscriptionId",
-        "type": "uint64"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint64",
-        "name": "productId",
         "type": "uint64"
       },
       {
@@ -452,11 +453,6 @@
       {
         "components": [
           {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
-          {
             "internalType": "address",
             "name": "customer",
             "type": "address"
@@ -465,6 +461,16 @@
             "internalType": "address",
             "name": "seller",
             "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainId",
+            "type": "uint256"
           },
           {
             "components": [
@@ -489,11 +495,11 @@
         "type": "tuple"
       }
     ],
-    "name": "generateOrderId",
+    "name": "generateOrderHash",
     "outputs": [
       {
         "internalType": "bytes32",
-        "name": "orderId",
+        "name": "orderHash",
         "type": "bytes32"
       }
     ],
@@ -531,11 +537,6 @@
             "internalType": "address",
             "name": "seller",
             "type": "address"
-          },
-          {
-            "internalType": "uint64",
-            "name": "productId",
-            "type": "uint64"
           },
           {
             "internalType": "uint32",
@@ -600,11 +601,6 @@
           {
             "internalType": "bool",
             "name": "revoked",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "useRadomBalance",
             "type": "bool"
           },
           {
@@ -679,11 +675,6 @@
             "type": "address"
           },
           {
-            "internalType": "uint64",
-            "name": "productId",
-            "type": "uint64"
-          },
-          {
             "internalType": "uint32",
             "name": "productType",
             "type": "uint32"
@@ -746,11 +737,6 @@
           {
             "internalType": "bool",
             "name": "revoked",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "useRadomBalance",
             "type": "bool"
           },
           {
@@ -825,11 +811,6 @@
             "type": "address"
           },
           {
-            "internalType": "uint64",
-            "name": "productId",
-            "type": "uint64"
-          },
-          {
             "internalType": "uint32",
             "name": "productType",
             "type": "uint32"
@@ -892,11 +873,6 @@
           {
             "internalType": "bool",
             "name": "revoked",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "useRadomBalance",
             "type": "bool"
           },
           {
@@ -961,11 +937,6 @@
             "type": "address"
           },
           {
-            "internalType": "uint64",
-            "name": "productId",
-            "type": "uint64"
-          },
-          {
             "internalType": "uint32",
             "name": "productType",
             "type": "uint32"
@@ -1031,11 +1002,6 @@
             "type": "bool"
           },
           {
-            "internalType": "bool",
-            "name": "useRadomBalance",
-            "type": "bool"
-          },
-          {
             "internalType": "address",
             "name": "token",
             "type": "address"
@@ -1074,11 +1040,6 @@
       {
         "components": [
           {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
-          {
             "internalType": "address",
             "name": "customer",
             "type": "address"
@@ -1087,6 +1048,16 @@
             "internalType": "address",
             "name": "seller",
             "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "chainId",
+            "type": "uint256"
           },
           {
             "components": [
@@ -1142,11 +1113,6 @@
     "inputs": [
       {
         "components": [
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
           {
             "internalType": "uint256",
             "name": "price",
@@ -1209,36 +1175,6 @@
       }
     ],
     "name": "revokeSubscription",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint64",
-            "name": "subscriptionId",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint64[]",
-            "name": "addOns",
-            "type": "uint64[]"
-          }
-        ],
-        "internalType": "struct Billing.UpdateAddOnsOrder",
-        "name": "updateData",
-        "type": "tuple"
-      }
-    ],
-    "name": "updateAddOnsOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

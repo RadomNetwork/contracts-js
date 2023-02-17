@@ -49,75 +49,56 @@ export declare namespace Billing {
   };
 
   export type OrderStruct = {
-    nonce: PromiseOrValue<BigNumberish>;
     customer: PromiseOrValue<string>;
     seller: PromiseOrValue<string>;
+    token: PromiseOrValue<string>;
+    chainId: PromiseOrValue<BigNumberish>;
     products: Billing.ProductStruct[];
   };
 
   export type OrderStructOutput = [
+    string,
+    string,
+    string,
     BigNumber,
-    string,
-    string,
     Billing.ProductStructOutput[]
   ] & {
-    nonce: BigNumber;
     customer: string;
     seller: string;
+    token: string;
+    chainId: BigNumber;
     products: Billing.ProductStructOutput[];
   };
 
   export type PaymentStruct = {
-    nonce: PromiseOrValue<BigNumberish>;
     price: PromiseOrValue<BigNumberish>;
     token: PromiseOrValue<string>;
     customer: PromiseOrValue<string>;
     seller: PromiseOrValue<string>;
   };
 
-  export type PaymentStructOutput = [
-    BigNumber,
-    BigNumber,
-    string,
-    string,
-    string
-  ] & {
-    nonce: BigNumber;
+  export type PaymentStructOutput = [BigNumber, string, string, string] & {
     price: BigNumber;
     token: string;
     customer: string;
     seller: string;
   };
-
-  export type UpdateAddOnsOrderStruct = {
-    subscriptionId: PromiseOrValue<BigNumberish>;
-    price: PromiseOrValue<BigNumberish>;
-    addOns: PromiseOrValue<BigNumberish>[];
-  };
-
-  export type UpdateAddOnsOrderStructOutput = [
-    BigNumber,
-    BigNumber,
-    BigNumber[]
-  ] & { subscriptionId: BigNumber; price: BigNumber; addOns: BigNumber[] };
 }
 
 export interface IBillingInterface extends utils.Interface {
   functions: {
     "chargeMeteredProduct(uint64,uint256)": FunctionFragment;
-    "generateOrderId((uint256,address,address,(uint32,bytes)[]))": FunctionFragment;
-    "order((uint256,address,address,(uint32,bytes)[]),bool,(bytes32,bytes)[])": FunctionFragment;
-    "pay((uint256,uint256,address,address,address),bool,(bytes32,bytes)[])": FunctionFragment;
-    "updateAddOnsOrder((uint64,uint256,uint64[]))": FunctionFragment;
+    "generateOrderHash((address,address,address,uint256,(uint32,bytes)[]))": FunctionFragment;
+    "order((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[])": FunctionFragment;
+    "pay((uint256,address,address,address),bool,(bytes32,bytes)[])": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "chargeMeteredProduct"
-      | "generateOrderId"
+      | "generateOrderHash"
       | "order"
       | "pay"
-      | "updateAddOnsOrder"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -125,7 +106,7 @@ export interface IBillingInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "generateOrderId",
+    functionFragment: "generateOrderHash",
     values: [Billing.OrderStruct]
   ): string;
   encodeFunctionData(
@@ -144,28 +125,20 @@ export interface IBillingInterface extends utils.Interface {
       Billing.KeyValuePairStruct[]
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "updateAddOnsOrder",
-    values: [Billing.UpdateAddOnsOrderStruct]
-  ): string;
 
   decodeFunctionResult(
     functionFragment: "chargeMeteredProduct",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "generateOrderId",
+    functionFragment: "generateOrderHash",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "order", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pay", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAddOnsOrder",
-    data: BytesLike
-  ): Result;
 
   events: {
-    "MeteredProductCharged(uint64,uint64,address,uint256,uint256)": EventFragment;
+    "MeteredProductCharged(uint64,address,uint256,uint256)": EventFragment;
     "OrderMetadataReplaced(address,address,bytes32,tuple[])": EventFragment;
     "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])": EventFragment;
     "PaymentSuccessful(address,address,bytes32,tuple,tuple[])": EventFragment;
@@ -179,13 +152,12 @@ export interface IBillingInterface extends utils.Interface {
 
 export interface MeteredProductChargedEventObject {
   subscriptionId: BigNumber;
-  productId: BigNumber;
   seller: string;
   amount: BigNumber;
   meteredBudgetUsed: BigNumber;
 }
 export type MeteredProductChargedEvent = TypedEvent<
-  [BigNumber, BigNumber, string, BigNumber, BigNumber],
+  [BigNumber, string, BigNumber, BigNumber],
   MeteredProductChargedEventObject
 >;
 
@@ -195,7 +167,7 @@ export type MeteredProductChargedEventFilter =
 export interface OrderMetadataReplacedEventObject {
   seller: string;
   customer: string;
-  orderId: string;
+  orderHash: string;
   metadata: Billing.KeyValuePairStructOutput[];
 }
 export type OrderMetadataReplacedEvent = TypedEvent<
@@ -209,7 +181,7 @@ export type OrderMetadataReplacedEventFilter =
 export interface OrderPurchasedEventObject {
   seller: string;
   customer: string;
-  orderId: string;
+  orderHash: string;
   orderData: Billing.OrderStructOutput;
   subscriptionIds: BigNumber[];
   configInputs: Billing.KeyValuePairStructOutput[];
@@ -231,7 +203,7 @@ export type OrderPurchasedEventFilter = TypedEventFilter<OrderPurchasedEvent>;
 export interface PaymentSuccessfulEventObject {
   seller: string;
   customer: string;
-  paymentId: string;
+  paymentHash: string;
   paymentData: Billing.PaymentStructOutput;
   metadata: Billing.KeyValuePairStructOutput[];
 }
@@ -282,10 +254,10 @@ export interface IBilling extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    generateOrderId(
+    generateOrderHash(
       order: Billing.OrderStruct,
       overrides?: CallOverrides
-    ): Promise<[string] & { orderId: string }>;
+    ): Promise<[string] & { orderHash: string }>;
 
     order(
       order: Billing.OrderStruct,
@@ -300,11 +272,6 @@ export interface IBilling extends BaseContract {
       metadata: Billing.KeyValuePairStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    updateAddOnsOrder(
-      updateData: Billing.UpdateAddOnsOrderStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
   };
 
   chargeMeteredProduct(
@@ -313,7 +280,7 @@ export interface IBilling extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  generateOrderId(
+  generateOrderHash(
     order: Billing.OrderStruct,
     overrides?: CallOverrides
   ): Promise<string>;
@@ -332,11 +299,6 @@ export interface IBilling extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateAddOnsOrder(
-    updateData: Billing.UpdateAddOnsOrderStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     chargeMeteredProduct(
       subscriptionId: PromiseOrValue<BigNumberish>,
@@ -344,7 +306,7 @@ export interface IBilling extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    generateOrderId(
+    generateOrderHash(
       order: Billing.OrderStruct,
       overrides?: CallOverrides
     ): Promise<string>;
@@ -362,24 +324,17 @@ export interface IBilling extends BaseContract {
       metadata: Billing.KeyValuePairStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
-
-    updateAddOnsOrder(
-      updateData: Billing.UpdateAddOnsOrderStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
-    "MeteredProductCharged(uint64,uint64,address,uint256,uint256)"(
+    "MeteredProductCharged(uint64,address,uint256,uint256)"(
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null,
       seller?: PromiseOrValue<string> | null,
       amount?: null,
       meteredBudgetUsed?: null
     ): MeteredProductChargedEventFilter;
     MeteredProductCharged(
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
-      productId?: PromiseOrValue<BigNumberish> | null,
       seller?: PromiseOrValue<string> | null,
       amount?: null,
       meteredBudgetUsed?: null
@@ -388,20 +343,20 @@ export interface IBilling extends BaseContract {
     "OrderMetadataReplaced(address,address,bytes32,tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null,
+      orderHash?: PromiseOrValue<BytesLike> | null,
       metadata?: null
     ): OrderMetadataReplacedEventFilter;
     OrderMetadataReplaced(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null,
+      orderHash?: PromiseOrValue<BytesLike> | null,
       metadata?: null
     ): OrderMetadataReplacedEventFilter;
 
     "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null,
+      orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
       configInputs?: null
@@ -409,7 +364,7 @@ export interface IBilling extends BaseContract {
     OrderPurchased(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      orderId?: PromiseOrValue<BytesLike> | null,
+      orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
       configInputs?: null
@@ -418,14 +373,14 @@ export interface IBilling extends BaseContract {
     "PaymentSuccessful(address,address,bytes32,tuple,tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      paymentId?: null,
+      paymentHash?: null,
       paymentData?: null,
       metadata?: null
     ): PaymentSuccessfulEventFilter;
     PaymentSuccessful(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      paymentId?: null,
+      paymentHash?: null,
       paymentData?: null,
       metadata?: null
     ): PaymentSuccessfulEventFilter;
@@ -438,7 +393,7 @@ export interface IBilling extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    generateOrderId(
+    generateOrderHash(
       order: Billing.OrderStruct,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -454,11 +409,6 @@ export interface IBilling extends BaseContract {
       payment: Billing.PaymentStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    updateAddOnsOrder(
-      updateData: Billing.UpdateAddOnsOrderStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -470,7 +420,7 @@ export interface IBilling extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    generateOrderId(
+    generateOrderHash(
       order: Billing.OrderStruct,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -486,11 +436,6 @@ export interface IBilling extends BaseContract {
       payment: Billing.PaymentStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAddOnsOrder(
-      updateData: Billing.UpdateAddOnsOrderStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -37,6 +37,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "AutomationFacet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AutomationFacet__factory>;
+    getContractFactory(
       name: "BillingFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BillingFacet__factory>;
@@ -64,6 +68,10 @@ declare module "hardhat/types/runtime" {
       name: "UserAccessControlFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.UserAccessControlFacet__factory>;
+    getContractFactory(
+      name: "IAutomation",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IAutomation__factory>;
     getContractFactory(
       name: "IBilling",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -148,6 +156,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
+      name: "AutomationFacet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AutomationFacet>;
+    getContractAt(
       name: "BillingFacet",
       address: string,
       signer?: ethers.Signer
@@ -182,6 +195,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.UserAccessControlFacet>;
+    getContractAt(
+      name: "IAutomation",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IAutomation>;
     getContractAt(
       name: "IBilling",
       address: string,

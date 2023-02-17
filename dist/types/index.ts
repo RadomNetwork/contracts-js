@@ -18,6 +18,8 @@ export type { ERC20PresetFixedSupply } from "./@openzeppelin/contracts/token/ERC
 export { ERC20PresetFixedSupply__factory } from "./factories/@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
+export type { AutomationFacet } from "./contracts/facets/AutomationFacet";
+export { AutomationFacet__factory } from "./factories/contracts/facets/AutomationFacet__factory";
 export type { BillingFacet } from "./contracts/facets/BillingFacet";
 export { BillingFacet__factory } from "./factories/contracts/facets/BillingFacet__factory";
 export type { DiamondCutFacet } from "./contracts/facets/DiamondCutFacet";
@@ -32,6 +34,8 @@ export type { TreasuryFacet } from "./contracts/facets/TreasuryFacet";
 export { TreasuryFacet__factory } from "./factories/contracts/facets/TreasuryFacet__factory";
 export type { UserAccessControlFacet } from "./contracts/facets/UserAccessControlFacet";
 export { UserAccessControlFacet__factory } from "./factories/contracts/facets/UserAccessControlFacet__factory";
+export type { IAutomation } from "./contracts/interfaces/IAutomation";
+export { IAutomation__factory } from "./factories/contracts/interfaces/IAutomation__factory";
 export type { IBilling } from "./contracts/interfaces/IBilling";
 export { IBilling__factory } from "./factories/contracts/interfaces/IBilling__factory";
 export type { IDiamondCut } from "./contracts/interfaces/IDiamondCut";

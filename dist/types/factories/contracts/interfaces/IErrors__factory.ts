@@ -12,7 +12,22 @@ import type {
 const _abi = [
   {
     inputs: [],
+    name: "AutoDepositConfigDoesNotExist",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "AutoDepositDisabled",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "FeatureNotSupported",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InsufficientAllowance",
     type: "error",
   },
   {
@@ -27,6 +42,16 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "InsufficientWalletBalance",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidAutoDepositConfig",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "InvalidChargingInterval",
     type: "error",
   },
@@ -37,12 +62,32 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "InvalidSubscriptionId",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NoSubscriptionsToAutoDeposit",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "OrgMustDeposit",
     type: "error",
   },
   {
     inputs: [],
     name: "ProductHasNoPrice",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ReEntrancyGuard",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "SubscriptionNotCloseEnoughToExpire",
     type: "error",
   },
   {
@@ -68,6 +113,11 @@ const _abi = [
   {
     inputs: [],
     name: "UnsupportedToken",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "WrongChainId",
     type: "error",
   },
 ] as const;

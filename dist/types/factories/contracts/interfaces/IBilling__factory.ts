@@ -21,12 +21,6 @@ const _abi = [
       },
       {
         indexed: true,
-        internalType: "uint64",
-        name: "productId",
-        type: "uint64",
-      },
-      {
-        indexed: true,
         internalType: "address",
         name: "seller",
         type: "address",
@@ -65,7 +59,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "bytes32",
-        name: "orderId",
+        name: "orderHash",
         type: "bytes32",
       },
       {
@@ -108,16 +102,11 @@ const _abi = [
       {
         indexed: true,
         internalType: "bytes32",
-        name: "orderId",
+        name: "orderHash",
         type: "bytes32",
       },
       {
         components: [
-          {
-            internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
-          },
           {
             internalType: "address",
             name: "customer",
@@ -127,6 +116,16 @@ const _abi = [
             internalType: "address",
             name: "seller",
             type: "address",
+          },
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "chainId",
+            type: "uint256",
           },
           {
             components: [
@@ -197,16 +196,11 @@ const _abi = [
       {
         indexed: false,
         internalType: "bytes32",
-        name: "paymentId",
+        name: "paymentHash",
         type: "bytes32",
       },
       {
         components: [
-          {
-            internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
-          },
           {
             internalType: "uint256",
             name: "price",
@@ -278,11 +272,6 @@ const _abi = [
       {
         components: [
           {
-            internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
-          },
-          {
             internalType: "address",
             name: "customer",
             type: "address",
@@ -291,6 +280,16 @@ const _abi = [
             internalType: "address",
             name: "seller",
             type: "address",
+          },
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "chainId",
+            type: "uint256",
           },
           {
             components: [
@@ -315,11 +314,11 @@ const _abi = [
         type: "tuple",
       },
     ],
-    name: "generateOrderId",
+    name: "generateOrderHash",
     outputs: [
       {
         internalType: "bytes32",
-        name: "orderId",
+        name: "orderHash",
         type: "bytes32",
       },
     ],
@@ -331,11 +330,6 @@ const _abi = [
       {
         components: [
           {
-            internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
-          },
-          {
             internalType: "address",
             name: "customer",
             type: "address",
@@ -344,6 +338,16 @@ const _abi = [
             internalType: "address",
             name: "seller",
             type: "address",
+          },
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "chainId",
+            type: "uint256",
           },
           {
             components: [
@@ -401,11 +405,6 @@ const _abi = [
         components: [
           {
             internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
             name: "price",
             type: "uint256",
           },
@@ -453,36 +452,6 @@ const _abi = [
       },
     ],
     name: "pay",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "uint64",
-            name: "subscriptionId",
-            type: "uint64",
-          },
-          {
-            internalType: "uint256",
-            name: "price",
-            type: "uint256",
-          },
-          {
-            internalType: "uint64[]",
-            name: "addOns",
-            type: "uint64[]",
-          },
-        ],
-        internalType: "struct Billing.UpdateAddOnsOrder",
-        name: "updateData",
-        type: "tuple",
-      },
-    ],
-    name: "updateAddOnsOrder",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

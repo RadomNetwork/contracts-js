@@ -1,7 +1,22 @@
 [
   {
     "inputs": [],
+    "name": "AutoDepositConfigDoesNotExist",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AutoDepositDisabled",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "FeatureNotSupported",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientAllowance",
     "type": "error"
   },
   {
@@ -16,12 +31,32 @@
   },
   {
     "inputs": [],
+    "name": "InsufficientWalletBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidAutoDepositConfig",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidChargingInterval",
     "type": "error"
   },
   {
     "inputs": [],
     "name": "InvalidMeteredCharge",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidSubscriptionId",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoSubscriptionsToAutoDeposit",
     "type": "error"
   },
   {
@@ -37,6 +72,11 @@
   {
     "inputs": [],
     "name": "ReEntrancyGuard",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SubscriptionNotCloseEnoughToExpire",
     "type": "error"
   },
   {
@@ -62,6 +102,11 @@
   {
     "inputs": [],
     "name": "UnsupportedToken",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "WrongChainId",
     "type": "error"
   },
   {
@@ -207,6 +252,34 @@
       }
     ],
     "name": "deposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "depositor",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "orgAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositFrom",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

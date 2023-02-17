@@ -20,37 +20,6 @@ const _abi = [
         type: "uint64",
       },
       {
-        indexed: true,
-        internalType: "uint64",
-        name: "productId",
-        type: "uint64",
-      },
-      {
-        indexed: false,
-        internalType: "uint64[]",
-        name: "addOns",
-        type: "uint64[]",
-      },
-    ],
-    name: "SubscriptionAddOnsUpdated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint64",
-        name: "serviceSubscriptionId",
-        type: "uint64",
-      },
-      {
-        indexed: true,
-        internalType: "uint64",
-        name: "productId",
-        type: "uint64",
-      },
-      {
         indexed: false,
         internalType: "address",
         name: "customer",
@@ -76,15 +45,9 @@ const _abi = [
         type: "uint64",
       },
       {
-        indexed: true,
-        internalType: "uint64",
-        name: "productId",
-        type: "uint64",
-      },
-      {
         indexed: false,
         internalType: "bytes32",
-        name: "orderId",
+        name: "orderHash",
         type: "bytes32",
       },
     ],
@@ -98,12 +61,6 @@ const _abi = [
         indexed: true,
         internalType: "uint64",
         name: "serviceSubscriptionId",
-        type: "uint64",
-      },
-      {
-        indexed: true,
-        internalType: "uint64",
-        name: "productId",
         type: "uint64",
       },
       {
@@ -168,11 +125,6 @@ const _abi = [
             type: "address",
           },
           {
-            internalType: "uint64",
-            name: "productId",
-            type: "uint64",
-          },
-          {
             internalType: "uint32",
             name: "productType",
             type: "uint32",
@@ -235,11 +187,6 @@ const _abi = [
           {
             internalType: "bool",
             name: "revoked",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "useRadomBalance",
             type: "bool",
           },
           {
@@ -314,11 +261,6 @@ const _abi = [
             type: "address",
           },
           {
-            internalType: "uint64",
-            name: "productId",
-            type: "uint64",
-          },
-          {
             internalType: "uint32",
             name: "productType",
             type: "uint32",
@@ -381,11 +323,6 @@ const _abi = [
           {
             internalType: "bool",
             name: "revoked",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "useRadomBalance",
             type: "bool",
           },
           {
@@ -450,11 +387,6 @@ const _abi = [
             type: "address",
           },
           {
-            internalType: "uint64",
-            name: "productId",
-            type: "uint64",
-          },
-          {
             internalType: "uint32",
             name: "productType",
             type: "uint32",
@@ -517,11 +449,6 @@ const _abi = [
           {
             internalType: "bool",
             name: "revoked",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "useRadomBalance",
             type: "bool",
           },
           {
