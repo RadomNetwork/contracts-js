@@ -15,15 +15,21 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "uint64",
-        name: "subscriptionId",
-        type: "uint64",
+        internalType: "address",
+        name: "seller",
+        type: "address",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "seller",
+        name: "customer",
         type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "subscriptionId",
+        type: "uint64",
       },
       {
         indexed: false,

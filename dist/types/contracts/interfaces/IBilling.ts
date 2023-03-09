@@ -146,7 +146,7 @@ export interface IBillingInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "pay", data: BytesLike): Result;
 
   events: {
-    "MeteredProductCharged(uint64,address,address,uint256,uint256)": EventFragment;
+    "MeteredProductCharged(address,address,uint64,address,uint256,uint256)": EventFragment;
     "OrderMetadataReplaced(address,address,bytes32,tuple[])": EventFragment;
     "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])": EventFragment;
     "PaymentSuccessful(address,address,bytes32,tuple,tuple[])": EventFragment;
@@ -159,14 +159,15 @@ export interface IBillingInterface extends utils.Interface {
 }
 
 export interface MeteredProductChargedEventObject {
-  subscriptionId: BigNumber;
   seller: string;
+  customer: string;
+  subscriptionId: BigNumber;
   token: string;
   amount: BigNumber;
   meteredBudgetUsed: BigNumber;
 }
 export type MeteredProductChargedEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber, BigNumber],
+  [string, string, BigNumber, string, BigNumber, BigNumber],
   MeteredProductChargedEventObject
 >;
 
@@ -336,16 +337,18 @@ export interface IBilling extends BaseContract {
   };
 
   filters: {
-    "MeteredProductCharged(uint64,address,address,uint256,uint256)"(
-      subscriptionId?: PromiseOrValue<BigNumberish> | null,
+    "MeteredProductCharged(address,address,uint64,address,uint256,uint256)"(
       seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
+      subscriptionId?: PromiseOrValue<BigNumberish> | null,
       token?: null,
       amount?: null,
       meteredBudgetUsed?: null
     ): MeteredProductChargedEventFilter;
     MeteredProductCharged(
-      subscriptionId?: PromiseOrValue<BigNumberish> | null,
       seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
+      subscriptionId?: PromiseOrValue<BigNumberish> | null,
       token?: null,
       amount?: null,
       meteredBudgetUsed?: null

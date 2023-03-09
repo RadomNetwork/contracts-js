@@ -15,21 +15,21 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "uint64",
-        name: "serviceSubscriptionId",
-        type: "uint64",
+        internalType: "address",
+        name: "seller",
+        type: "address",
       },
       {
-        indexed: false,
+        indexed: true,
         internalType: "address",
         name: "customer",
         type: "address",
       },
       {
         indexed: true,
-        internalType: "address",
-        name: "seller",
-        type: "address",
+        internalType: "uint64",
+        name: "serviceSubscriptionId",
+        type: "uint64",
       },
     ],
     name: "SubscriptionCancelled",
@@ -38,6 +38,18 @@ const _abi = [
   {
     anonymous: false,
     inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "seller",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "customer",
+        type: "address",
+      },
       {
         indexed: true,
         internalType: "uint64",
@@ -59,21 +71,21 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "uint64",
-        name: "serviceSubscriptionId",
-        type: "uint64",
+        internalType: "address",
+        name: "seller",
+        type: "address",
       },
       {
-        indexed: false,
+        indexed: true,
         internalType: "address",
         name: "customer",
         type: "address",
       },
       {
         indexed: true,
-        internalType: "address",
-        name: "seller",
-        type: "address",
+        internalType: "uint64",
+        name: "serviceSubscriptionId",
+        type: "uint64",
       },
     ],
     name: "SubscriptionRevoked",

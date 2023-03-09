@@ -165,9 +165,9 @@ export interface ISubscriptionInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "SubscriptionCancelled(uint64,address,address)": EventFragment;
-    "SubscriptionCreated(uint64,bytes32)": EventFragment;
-    "SubscriptionRevoked(uint64,address,address)": EventFragment;
+    "SubscriptionCancelled(address,address,uint64)": EventFragment;
+    "SubscriptionCreated(address,address,uint64,bytes32)": EventFragment;
+    "SubscriptionRevoked(address,address,uint64)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "SubscriptionCancelled"): EventFragment;
@@ -176,12 +176,12 @@ export interface ISubscriptionInterface extends utils.Interface {
 }
 
 export interface SubscriptionCancelledEventObject {
-  serviceSubscriptionId: BigNumber;
-  customer: string;
   seller: string;
+  customer: string;
+  serviceSubscriptionId: BigNumber;
 }
 export type SubscriptionCancelledEvent = TypedEvent<
-  [BigNumber, string, string],
+  [string, string, BigNumber],
   SubscriptionCancelledEventObject
 >;
 
@@ -189,11 +189,13 @@ export type SubscriptionCancelledEventFilter =
   TypedEventFilter<SubscriptionCancelledEvent>;
 
 export interface SubscriptionCreatedEventObject {
+  seller: string;
+  customer: string;
   subscriptionId: BigNumber;
   orderHash: string;
 }
 export type SubscriptionCreatedEvent = TypedEvent<
-  [BigNumber, string],
+  [string, string, BigNumber, string],
   SubscriptionCreatedEventObject
 >;
 
@@ -201,12 +203,12 @@ export type SubscriptionCreatedEventFilter =
   TypedEventFilter<SubscriptionCreatedEvent>;
 
 export interface SubscriptionRevokedEventObject {
-  serviceSubscriptionId: BigNumber;
-  customer: string;
   seller: string;
+  customer: string;
+  serviceSubscriptionId: BigNumber;
 }
 export type SubscriptionRevokedEvent = TypedEvent<
-  [BigNumber, string, string],
+  [string, string, BigNumber],
   SubscriptionRevokedEventObject
 >;
 
@@ -365,35 +367,39 @@ export interface ISubscription extends BaseContract {
   };
 
   filters: {
-    "SubscriptionCancelled(uint64,address,address)"(
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      customer?: null,
-      seller?: PromiseOrValue<string> | null
+    "SubscriptionCancelled(address,address,uint64)"(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
+      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionCancelledEventFilter;
     SubscriptionCancelled(
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      customer?: null,
-      seller?: PromiseOrValue<string> | null
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
+      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionCancelledEventFilter;
 
-    "SubscriptionCreated(uint64,bytes32)"(
+    "SubscriptionCreated(address,address,uint64,bytes32)"(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
       orderHash?: null
     ): SubscriptionCreatedEventFilter;
     SubscriptionCreated(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
       subscriptionId?: PromiseOrValue<BigNumberish> | null,
       orderHash?: null
     ): SubscriptionCreatedEventFilter;
 
-    "SubscriptionRevoked(uint64,address,address)"(
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      customer?: null,
-      seller?: PromiseOrValue<string> | null
+    "SubscriptionRevoked(address,address,uint64)"(
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
+      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionRevokedEventFilter;
     SubscriptionRevoked(
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null,
-      customer?: null,
-      seller?: PromiseOrValue<string> | null
+      seller?: PromiseOrValue<string> | null,
+      customer?: PromiseOrValue<string> | null,
+      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionRevokedEventFilter;
   };
 
