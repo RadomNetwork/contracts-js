@@ -27,6 +27,12 @@ const _abi = [
       },
       {
         indexed: false,
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: false,
         internalType: "uint256",
         name: "amount",
         type: "uint256",
