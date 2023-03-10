@@ -1,0 +1,822 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "proposer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum ProposalType",
+        "name": "proposalType",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "startTime",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "endTime",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "argument",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "ProposalCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProposalExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountTokensDeposited",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "stakedAmount",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "Staked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "originAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "destinationAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "amount",
+        "type": "uint32"
+      }
+    ],
+    "name": "StakedBalanceTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "voter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "vote",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "yesVotes",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "noVotes",
+        "type": "uint32"
+      }
+    ],
+    "name": "Voted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountTokensWithdrawn",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "unstakedAmount",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "Withdrawn",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "name": "_proposals",
+    "outputs": [
+      {
+        "internalType": "enum ProposalType",
+        "name": "proposalType",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint32",
+        "name": "yesVotes",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "noVotes",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "startTime",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "endTime",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bool",
+        "name": "isExecuted",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "proposer",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "argument",
+        "type": "bytes"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "_proposalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "execute",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getGovernanceParameters",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "voteToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "radomRegistryDiamond",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "stakeDecimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8[5]",
+            "name": "minYes",
+            "type": "uint8[5]"
+          },
+          {
+            "internalType": "uint8",
+            "name": "quorum",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "proposalPeriod",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "proposalThreshold",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct GovernanceParameters",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "offset",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "limit",
+        "type": "uint64"
+      }
+    ],
+    "name": "getPaginatedProposals",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "enum ProposalType",
+            "name": "proposalType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "yesVotes",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "noVotes",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "startTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "endTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isExecuted",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "proposer",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes",
+            "name": "argument",
+            "type": "bytes"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Proposal[]",
+        "name": "",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "_proposalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "getProposal",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "enum ProposalType",
+            "name": "proposalType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "yesVotes",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "noVotes",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "startTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "endTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isExecuted",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "proposer",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes",
+            "name": "argument",
+            "type": "bytes"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Proposal",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserInfo",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint64",
+        "name": "proposalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "hasVoted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "voteToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "radomRegistryDiamond",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "stakeDecimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8[5]",
+            "name": "minYes",
+            "type": "uint8[5]"
+          },
+          {
+            "internalType": "uint8",
+            "name": "quorum",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "proposalPeriod",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "proposalThreshold",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct GovernanceParameters",
+        "name": "govParam",
+        "type": "tuple"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "voteToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "radomRegistryDiamond",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "stakeDecimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8[5]",
+            "name": "minYes",
+            "type": "uint8[5]"
+          },
+          {
+            "internalType": "uint8",
+            "name": "quorum",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "proposalPeriod",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "proposalThreshold",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct GovernanceParameters",
+        "name": "govParam",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "proposeChangeGovernanceParameters",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "isDelegateCall",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct ExecutionData",
+        "name": "executionData",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "proposeCodeExecution",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "facetAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "enum IDiamondCut.FacetCutAction",
+            "name": "action",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes4[]",
+            "name": "functionSelectors",
+            "type": "bytes4[]"
+          }
+        ],
+        "internalType": "struct IDiamondCut.FacetCut[]",
+        "name": "_facetCuts",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "proposeDiamondChange",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "proposeOwnershipChange",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "proposeText",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "stake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "stakedBalances",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint32",
+        "name": "_amount",
+        "type": "uint32"
+      }
+    ],
+    "name": "transferStakedBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "_proposalId",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bool",
+        "name": "_yesVote",
+        "type": "bool"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "_unstakeAmount",
+        "type": "uint32"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

@@ -113,9 +113,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LibDiamond__factory>;
     getContractFactory(
+      name: "RadomContractDeployer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RadomContractDeployer__factory>;
+    getContractFactory(
       name: "RadomERC20Token",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.RadomERC20Token__factory>;
+    getContractFactory(
+      name: "RadomGovernance",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RadomGovernance__factory>;
     getContractFactory(
       name: "RadomRegistryDiamond",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -251,10 +259,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.LibDiamond>;
     getContractAt(
+      name: "RadomContractDeployer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RadomContractDeployer>;
+    getContractAt(
       name: "RadomERC20Token",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.RadomERC20Token>;
+    getContractAt(
+      name: "RadomGovernance",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RadomGovernance>;
     getContractAt(
       name: "RadomRegistryDiamond",
       address: string,

@@ -9,5 +9,7 @@ import type * as libraries from "./libraries";
 export type { libraries };
 import type * as test from "./test";
 export type { test };
+export type { RadomContractDeployer } from "./RadomContractDeployer";
 export type { RadomERC20Token } from "./RadomERC20Token";
+export type { RadomGovernance } from "./RadomGovernance";
 export type { RadomRegistryDiamond } from "./RadomRegistryDiamond";

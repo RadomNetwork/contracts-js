@@ -1,5 +1,35 @@
 [
   {
+    "inputs": [],
+    "name": "AddressCannotBeZero",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DoesNotAcceptEth",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_initializationContractAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_calldata",
+        "type": "bytes"
+      }
+    ],
+    "name": "InitializationFunctionReverted",
+    "type": "error"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
     "inputs": [
       {
         "components": [
@@ -36,38 +66,10 @@
         "type": "tuple"
       }
     ],
+    "name": "initialize",
+    "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "inputs": [],
-    "name": "AddressCannotBeZero",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "DoesNotAcceptEth",
-    "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_initializationContractAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes",
-        "name": "_calldata",
-        "type": "bytes"
-      }
-    ],
-    "name": "InitializationFunctionReverted",
-    "type": "error"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "fallback"
+    "type": "function"
   },
   {
     "stateMutability": "payable",

@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -33,17 +32,14 @@ export interface RadomERC20TokenInterface extends utils.Interface {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "buyToken(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
-    "sellToken(uint256)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "withdrawEth()": FunctionFragment;
   };
 
   getFunction(
@@ -51,17 +47,14 @@ export interface RadomERC20TokenInterface extends utils.Interface {
       | "allowance"
       | "approve"
       | "balanceOf"
-      | "buyToken"
       | "decimals"
       | "decreaseAllowance"
       | "increaseAllowance"
       | "name"
-      | "sellToken"
       | "symbol"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
-      | "withdrawEth"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -76,10 +69,6 @@ export interface RadomERC20TokenInterface extends utils.Interface {
     functionFragment: "balanceOf",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "buyToken",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
@@ -90,10 +79,6 @@ export interface RadomERC20TokenInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "sellToken",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -111,15 +96,10 @@ export interface RadomERC20TokenInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawEth",
-    values?: undefined
-  ): string;
 
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "buyToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
@@ -130,7 +110,6 @@ export interface RadomERC20TokenInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "sellToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -141,21 +120,13 @@ export interface RadomERC20TokenInterface extends utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawEth",
-    data: BytesLike
-  ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
-    "PCTBuyEvent(address,address,uint256)": EventFragment;
-    "PCTSellEvent(address,address,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PCTBuyEvent"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PCTSellEvent"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -170,30 +141,6 @@ export type ApprovalEvent = TypedEvent<
 >;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
-
-export interface PCTBuyEventEventObject {
-  from: string;
-  to: string;
-  amount: BigNumber;
-}
-export type PCTBuyEventEvent = TypedEvent<
-  [string, string, BigNumber],
-  PCTBuyEventEventObject
->;
-
-export type PCTBuyEventEventFilter = TypedEventFilter<PCTBuyEventEvent>;
-
-export interface PCTSellEventEventObject {
-  from: string;
-  to: string;
-  amount: BigNumber;
-}
-export type PCTSellEventEvent = TypedEvent<
-  [string, string, BigNumber],
-  PCTSellEventEventObject
->;
-
-export type PCTSellEventEventFilter = TypedEventFilter<PCTSellEventEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -251,11 +198,6 @@ export interface RadomERC20Token extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    buyToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
@@ -272,11 +214,6 @@ export interface RadomERC20Token extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    sellToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -291,10 +228,6 @@ export interface RadomERC20Token extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    withdrawEth(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -316,11 +249,6 @@ export interface RadomERC20Token extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  buyToken(
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
@@ -337,11 +265,6 @@ export interface RadomERC20Token extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  sellToken(
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   symbol(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -356,10 +279,6 @@ export interface RadomERC20Token extends BaseContract {
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  withdrawEth(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -381,11 +300,6 @@ export interface RadomERC20Token extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    buyToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
@@ -401,11 +315,6 @@ export interface RadomERC20Token extends BaseContract {
     ): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
-
-    sellToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -423,8 +332,6 @@ export interface RadomERC20Token extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    withdrawEth(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -438,24 +345,6 @@ export interface RadomERC20Token extends BaseContract {
       spender?: PromiseOrValue<string> | null,
       value?: null
     ): ApprovalEventFilter;
-
-    "PCTBuyEvent(address,address,uint256)"(
-      from?: null,
-      to?: null,
-      amount?: null
-    ): PCTBuyEventEventFilter;
-    PCTBuyEvent(from?: null, to?: null, amount?: null): PCTBuyEventEventFilter;
-
-    "PCTSellEvent(address,address,uint256)"(
-      from?: null,
-      to?: null,
-      amount?: null
-    ): PCTSellEventEventFilter;
-    PCTSellEvent(
-      from?: null,
-      to?: null,
-      amount?: null
-    ): PCTSellEventEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
@@ -487,11 +376,6 @@ export interface RadomERC20Token extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    buyToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
@@ -508,11 +392,6 @@ export interface RadomERC20Token extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sellToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -527,10 +406,6 @@ export interface RadomERC20Token extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    withdrawEth(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -553,11 +428,6 @@ export interface RadomERC20Token extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    buyToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
@@ -574,11 +444,6 @@ export interface RadomERC20Token extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sellToken(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -593,10 +458,6 @@ export interface RadomERC20Token extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    withdrawEth(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

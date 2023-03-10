@@ -3,12 +3,17 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BigNumber,
   BigNumberish,
   BytesLike,
+  CallOverrides,
+  ContractTransaction,
+  Overrides,
+  PopulatedTransaction,
   Signer,
   utils,
 } from "ethers";
-
+import type { FunctionFragment, Result } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -39,7 +44,21 @@ export declare namespace RadomRegistryDiamond {
 }
 
 export interface RadomRegistryDiamondInterface extends utils.Interface {
-  functions: {};
+  functions: {
+    "initialize((address,uint8,bytes4[])[],(address))": FunctionFragment;
+  };
+
+  getFunction(nameOrSignatureOrTopic: "initialize"): FunctionFragment;
+
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [
+      IDiamondCut.FacetCutStruct[],
+      RadomRegistryDiamond.ConstructorArgsStruct
+    ]
+  ): string;
+
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
 
   events: {};
 }
@@ -70,13 +89,43 @@ export interface RadomRegistryDiamond extends BaseContract {
   once: OnEvent<this>;
   removeListener: OnEvent<this>;
 
-  functions: {};
+  functions: {
+    initialize(
+      _diamondCut: IDiamondCut.FacetCutStruct[],
+      _args: RadomRegistryDiamond.ConstructorArgsStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+  };
 
-  callStatic: {};
+  initialize(
+    _diamondCut: IDiamondCut.FacetCutStruct[],
+    _args: RadomRegistryDiamond.ConstructorArgsStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  callStatic: {
+    initialize(
+      _diamondCut: IDiamondCut.FacetCutStruct[],
+      _args: RadomRegistryDiamond.ConstructorArgsStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
+  };
 
   filters: {};
 
-  estimateGas: {};
+  estimateGas: {
+    initialize(
+      _diamondCut: IDiamondCut.FacetCutStruct[],
+      _args: RadomRegistryDiamond.ConstructorArgsStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+  };
 
-  populateTransaction: {};
+  populateTransaction: {
+    initialize(
+      _diamondCut: IDiamondCut.FacetCutStruct[],
+      _args: RadomRegistryDiamond.ConstructorArgsStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+  };
 }

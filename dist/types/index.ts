@@ -56,8 +56,12 @@ export type { EnumerableBytesMap } from "./contracts/libraries/EnumerableBytesMa
 export { EnumerableBytesMap__factory } from "./factories/contracts/libraries/EnumerableBytesMap__factory";
 export type { LibDiamond } from "./contracts/libraries/LibDiamond";
 export { LibDiamond__factory } from "./factories/contracts/libraries/LibDiamond__factory";
+export type { RadomContractDeployer } from "./contracts/RadomContractDeployer";
+export { RadomContractDeployer__factory } from "./factories/contracts/RadomContractDeployer__factory";
 export type { RadomERC20Token } from "./contracts/RadomERC20Token";
 export { RadomERC20Token__factory } from "./factories/contracts/RadomERC20Token__factory";
+export type { RadomGovernance } from "./contracts/RadomGovernance";
+export { RadomGovernance__factory } from "./factories/contracts/RadomGovernance__factory";
 export type { RadomRegistryDiamond } from "./contracts/RadomRegistryDiamond";
 export { RadomRegistryDiamond__factory } from "./factories/contracts/RadomRegistryDiamond__factory";
 export type { ERC20CustomDecimals } from "./contracts/test/ERC20CustomDecimals";

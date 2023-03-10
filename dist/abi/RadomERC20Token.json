@@ -11,11 +11,6 @@
     "type": "constructor"
   },
   {
-    "inputs": [],
-    "name": "IncorrectEthAmount",
-    "type": "error"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -38,56 +33,6 @@
       }
     ],
     "name": "Approval",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "PCTBuyEvent",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "PCTSellEvent",
     "type": "event"
   },
   {
@@ -183,19 +128,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "buyToken",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "decimals",
     "outputs": [
@@ -267,19 +199,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "sellToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -358,13 +277,6 @@
         "type": "bool"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdrawEth",
-    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   }
