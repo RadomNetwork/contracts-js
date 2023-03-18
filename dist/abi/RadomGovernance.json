@@ -327,8 +327,18 @@
       {
         "components": [
           {
+            "internalType": "uint64",
+            "name": "proposalId",
+            "type": "uint64"
+          },
+          {
             "internalType": "enum ProposalType",
             "name": "proposalType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum ProposalStatus",
+            "name": "status",
             "type": "uint8"
           },
           {
@@ -357,21 +367,6 @@
             "type": "uint32"
           },
           {
-            "internalType": "bool",
-            "name": "isCanceled",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isExecuted",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isQueued",
-            "type": "bool"
-          },
-          {
             "internalType": "address",
             "name": "proposer",
             "type": "address"
@@ -387,7 +382,7 @@
             "type": "string"
           }
         ],
-        "internalType": "struct Proposal[]",
+        "internalType": "struct ProposalResponse[]",
         "name": "",
         "type": "tuple[]"
       },

@@ -73,49 +73,6 @@ export type GovernanceParametersStructOutput = [
   proposalThreshold: BigNumber;
 };
 
-export type ProposalStruct = {
-  proposalType: PromiseOrValue<BigNumberish>;
-  yesVotes: PromiseOrValue<BigNumberish>;
-  noVotes: PromiseOrValue<BigNumberish>;
-  startTime: PromiseOrValue<BigNumberish>;
-  endTime: PromiseOrValue<BigNumberish>;
-  executionFromTime: PromiseOrValue<BigNumberish>;
-  isCanceled: PromiseOrValue<boolean>;
-  isExecuted: PromiseOrValue<boolean>;
-  isQueued: PromiseOrValue<boolean>;
-  proposer: PromiseOrValue<string>;
-  argument: PromiseOrValue<BytesLike>;
-  description: PromiseOrValue<string>;
-};
-
-export type ProposalStructOutput = [
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  boolean,
-  boolean,
-  boolean,
-  string,
-  string,
-  string
-] & {
-  proposalType: number;
-  yesVotes: number;
-  noVotes: number;
-  startTime: number;
-  endTime: number;
-  executionFromTime: number;
-  isCanceled: boolean;
-  isExecuted: boolean;
-  isQueued: boolean;
-  proposer: string;
-  argument: string;
-  description: string;
-};
-
 export type ProposalResponseStruct = {
   proposalId: PromiseOrValue<BigNumberish>;
   proposalType: PromiseOrValue<BigNumberish>;
@@ -572,7 +529,7 @@ export interface RadomGovernance extends BaseContract {
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[ProposalStructOutput[], BigNumber]>;
+    ): Promise<[ProposalResponseStructOutput[], BigNumber]>;
 
     getProposal(
       proposalId: PromiseOrValue<BigNumberish>,
@@ -682,7 +639,7 @@ export interface RadomGovernance extends BaseContract {
     offset: PromiseOrValue<BigNumberish>,
     limit: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<[ProposalStructOutput[], BigNumber]>;
+  ): Promise<[ProposalResponseStructOutput[], BigNumber]>;
 
   getProposal(
     proposalId: PromiseOrValue<BigNumberish>,
@@ -792,7 +749,7 @@ export interface RadomGovernance extends BaseContract {
       offset: PromiseOrValue<BigNumberish>,
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[ProposalStructOutput[], BigNumber]>;
+    ): Promise<[ProposalResponseStructOutput[], BigNumber]>;
 
     getProposal(
       proposalId: PromiseOrValue<BigNumberish>,
