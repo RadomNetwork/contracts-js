@@ -227,80 +227,6 @@
     "inputs": [
       {
         "internalType": "uint64",
-        "name": "",
-        "type": "uint64"
-      }
-    ],
-    "name": "_proposals",
-    "outputs": [
-      {
-        "internalType": "enum ProposalType",
-        "name": "proposalType",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint32",
-        "name": "yesVotes",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "noVotes",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "startTime",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "endTime",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "executionFromTime",
-        "type": "uint32"
-      },
-      {
-        "internalType": "bool",
-        "name": "isCanceled",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isExecuted",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isQueued",
-        "type": "bool"
-      },
-      {
-        "internalType": "address",
-        "name": "proposer",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes",
-        "name": "argument",
-        "type": "bytes"
-      },
-      {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint64",
         "name": "proposalId",
         "type": "uint64"
       }
@@ -497,6 +423,11 @@
             "type": "uint8"
           },
           {
+            "internalType": "enum ProposalStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
             "internalType": "uint32",
             "name": "yesVotes",
             "type": "uint32"
@@ -517,9 +448,9 @@
             "type": "uint32"
           },
           {
-            "internalType": "enum ProposalStatus",
-            "name": "status",
-            "type": "uint8"
+            "internalType": "uint32",
+            "name": "executionFromTime",
+            "type": "uint32"
           },
           {
             "internalType": "address",
@@ -553,6 +484,32 @@
         "internalType": "uint64",
         "name": "",
         "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalPossibleVotes",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalStaked",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -598,9 +555,21 @@
     "name": "hasVoted",
     "outputs": [
       {
-        "internalType": "uint32",
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "isYesVote",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint32",
+            "name": "votes",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct VoteReceipt",
         "name": "",
-        "type": "uint32"
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -891,25 +860,6 @@
     "name": "stake",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "stakedBalances",
-    "outputs": [
-      {
-        "internalType": "uint32",
-        "name": "",
-        "type": "uint32"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {

@@ -119,11 +119,12 @@ export type ProposalStructOutput = [
 export type ProposalResponseStruct = {
   proposalId: PromiseOrValue<BigNumberish>;
   proposalType: PromiseOrValue<BigNumberish>;
+  status: PromiseOrValue<BigNumberish>;
   yesVotes: PromiseOrValue<BigNumberish>;
   noVotes: PromiseOrValue<BigNumberish>;
   startTime: PromiseOrValue<BigNumberish>;
   endTime: PromiseOrValue<BigNumberish>;
-  status: PromiseOrValue<BigNumberish>;
+  executionFromTime: PromiseOrValue<BigNumberish>;
   proposer: PromiseOrValue<string>;
   argument: PromiseOrValue<BytesLike>;
   description: PromiseOrValue<string>;
@@ -137,20 +138,32 @@ export type ProposalResponseStructOutput = [
   number,
   number,
   number,
+  number,
   string,
   string,
   string
 ] & {
   proposalId: BigNumber;
   proposalType: number;
+  status: number;
   yesVotes: number;
   noVotes: number;
   startTime: number;
   endTime: number;
-  status: number;
+  executionFromTime: number;
   proposer: string;
   argument: string;
   description: string;
+};
+
+export type VoteReceiptStruct = {
+  isYesVote: PromiseOrValue<boolean>;
+  votes: PromiseOrValue<BigNumberish>;
+};
+
+export type VoteReceiptStructOutput = [boolean, number] & {
+  isYesVote: boolean;
+  votes: number;
 };
 
 export type ExecutionDataStruct = {
@@ -183,13 +196,14 @@ export declare namespace IDiamondCut {
 
 export interface RadomGovernanceInterface extends utils.Interface {
   functions: {
-    "_proposals(uint64)": FunctionFragment;
     "cancelProposal(uint64)": FunctionFragment;
     "execute(uint64)": FunctionFragment;
     "getGovernanceParameters()": FunctionFragment;
     "getPaginatedProposals(uint64,uint64)": FunctionFragment;
     "getProposal(uint64)": FunctionFragment;
     "getProposalCount()": FunctionFragment;
+    "getTotalPossibleVotes()": FunctionFragment;
+    "getTotalStaked()": FunctionFragment;
     "getUserInfo(address)": FunctionFragment;
     "hasVoted(address,uint64)": FunctionFragment;
     "initialize((address,address,uint8,uint8[5],uint8[5],uint32,uint32,uint32,uint64))": FunctionFragment;
@@ -200,7 +214,6 @@ export interface RadomGovernanceInterface extends utils.Interface {
     "proposeText(string)": FunctionFragment;
     "queue(uint64)": FunctionFragment;
     "stake(uint256)": FunctionFragment;
-    "stakedBalances(address)": FunctionFragment;
     "transferStakedBalance(address,uint32)": FunctionFragment;
     "vote(uint64,bool)": FunctionFragment;
     "voteAndQueue(uint64,bool)": FunctionFragment;
@@ -209,13 +222,14 @@ export interface RadomGovernanceInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "_proposals"
       | "cancelProposal"
       | "execute"
       | "getGovernanceParameters"
       | "getPaginatedProposals"
       | "getProposal"
       | "getProposalCount"
+      | "getTotalPossibleVotes"
+      | "getTotalStaked"
       | "getUserInfo"
       | "hasVoted"
       | "initialize"
@@ -226,17 +240,12 @@ export interface RadomGovernanceInterface extends utils.Interface {
       | "proposeText"
       | "queue"
       | "stake"
-      | "stakedBalances"
       | "transferStakedBalance"
       | "vote"
       | "voteAndQueue"
       | "withdraw"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "_proposals",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(
     functionFragment: "cancelProposal",
     values: [PromiseOrValue<BigNumberish>]
@@ -259,6 +268,14 @@ export interface RadomGovernanceInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getProposalCount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTotalPossibleVotes",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTotalStaked",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -302,10 +319,6 @@ export interface RadomGovernanceInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "stakedBalances",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferStakedBalance",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -322,7 +335,6 @@ export interface RadomGovernanceInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
 
-  decodeFunctionResult(functionFragment: "_proposals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "cancelProposal",
     data: BytesLike
@@ -342,6 +354,14 @@ export interface RadomGovernanceInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getProposalCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTotalPossibleVotes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTotalStaked",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -372,10 +392,6 @@ export interface RadomGovernanceInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "queue", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "stakedBalances",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "transferStakedBalance",
     data: BytesLike
@@ -538,39 +554,6 @@ export interface RadomGovernance extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    _proposals(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        number,
-        number,
-        number,
-        number,
-        number,
-        number,
-        boolean,
-        boolean,
-        boolean,
-        string,
-        string,
-        string
-      ] & {
-        proposalType: number;
-        yesVotes: number;
-        noVotes: number;
-        startTime: number;
-        endTime: number;
-        executionFromTime: number;
-        isCanceled: boolean;
-        isExecuted: boolean;
-        isQueued: boolean;
-        proposer: string;
-        argument: string;
-        description: string;
-      }
-    >;
-
     cancelProposal(
       proposalId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -598,6 +581,10 @@ export interface RadomGovernance extends BaseContract {
 
     getProposalCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    getTotalPossibleVotes(overrides?: CallOverrides): Promise<[number]>;
+
+    getTotalStaked(overrides?: CallOverrides): Promise<[number]>;
+
     getUserInfo(
       user: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -607,7 +594,7 @@ export interface RadomGovernance extends BaseContract {
       user: PromiseOrValue<string>,
       proposalId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[number]>;
+    ): Promise<[VoteReceiptStructOutput]>;
 
     initialize(
       govParam: GovernanceParametersStruct,
@@ -653,11 +640,6 @@ export interface RadomGovernance extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    stakedBalances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[number]>;
-
     transferStakedBalance(
       _to: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -681,39 +663,6 @@ export interface RadomGovernance extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
-
-  _proposals(
-    arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<
-    [
-      number,
-      number,
-      number,
-      number,
-      number,
-      number,
-      boolean,
-      boolean,
-      boolean,
-      string,
-      string,
-      string
-    ] & {
-      proposalType: number;
-      yesVotes: number;
-      noVotes: number;
-      startTime: number;
-      endTime: number;
-      executionFromTime: number;
-      isCanceled: boolean;
-      isExecuted: boolean;
-      isQueued: boolean;
-      proposer: string;
-      argument: string;
-      description: string;
-    }
-  >;
 
   cancelProposal(
     proposalId: PromiseOrValue<BigNumberish>,
@@ -742,6 +691,10 @@ export interface RadomGovernance extends BaseContract {
 
   getProposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getTotalPossibleVotes(overrides?: CallOverrides): Promise<number>;
+
+  getTotalStaked(overrides?: CallOverrides): Promise<number>;
+
   getUserInfo(
     user: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -751,7 +704,7 @@ export interface RadomGovernance extends BaseContract {
     user: PromiseOrValue<string>,
     proposalId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<number>;
+  ): Promise<VoteReceiptStructOutput>;
 
   initialize(
     govParam: GovernanceParametersStruct,
@@ -797,11 +750,6 @@ export interface RadomGovernance extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  stakedBalances(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<number>;
-
   transferStakedBalance(
     _to: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
@@ -826,39 +774,6 @@ export interface RadomGovernance extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    _proposals(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        number,
-        number,
-        number,
-        number,
-        number,
-        number,
-        boolean,
-        boolean,
-        boolean,
-        string,
-        string,
-        string
-      ] & {
-        proposalType: number;
-        yesVotes: number;
-        noVotes: number;
-        startTime: number;
-        endTime: number;
-        executionFromTime: number;
-        isCanceled: boolean;
-        isExecuted: boolean;
-        isQueued: boolean;
-        proposer: string;
-        argument: string;
-        description: string;
-      }
-    >;
-
     cancelProposal(
       proposalId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -886,6 +801,10 @@ export interface RadomGovernance extends BaseContract {
 
     getProposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTotalPossibleVotes(overrides?: CallOverrides): Promise<number>;
+
+    getTotalStaked(overrides?: CallOverrides): Promise<number>;
+
     getUserInfo(
       user: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -895,7 +814,7 @@ export interface RadomGovernance extends BaseContract {
       user: PromiseOrValue<string>,
       proposalId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<number>;
+    ): Promise<VoteReceiptStructOutput>;
 
     initialize(
       govParam: GovernanceParametersStruct,
@@ -940,11 +859,6 @@ export interface RadomGovernance extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    stakedBalances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<number>;
 
     transferStakedBalance(
       _to: PromiseOrValue<string>,
@@ -1061,11 +975,6 @@ export interface RadomGovernance extends BaseContract {
   };
 
   estimateGas: {
-    _proposals(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     cancelProposal(
       proposalId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1090,6 +999,10 @@ export interface RadomGovernance extends BaseContract {
     ): Promise<BigNumber>;
 
     getProposalCount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalPossibleVotes(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
     getUserInfo(
       user: PromiseOrValue<string>,
@@ -1144,11 +1057,6 @@ export interface RadomGovernance extends BaseContract {
     stake(
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    stakedBalances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferStakedBalance(
@@ -1176,11 +1084,6 @@ export interface RadomGovernance extends BaseContract {
   };
 
   populateTransaction: {
-    _proposals(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     cancelProposal(
       proposalId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1207,6 +1110,12 @@ export interface RadomGovernance extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getProposalCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getTotalPossibleVotes(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getTotalStaked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getUserInfo(
       user: PromiseOrValue<string>,
@@ -1261,11 +1170,6 @@ export interface RadomGovernance extends BaseContract {
     stake(
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    stakedBalances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferStakedBalance(
