@@ -7,12 +7,31 @@
         "internalType": "uint256",
         "name": "proposalId",
         "type": "uint256"
+      }
+    ],
+    "name": "ProposalCanceled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
       },
       {
         "indexed": true,
         "internalType": "address",
         "name": "proposer",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "votes",
+        "type": "uint32"
       },
       {
         "indexed": false,
@@ -59,6 +78,25 @@
       }
     ],
     "name": "ProposalExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "proposalId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "executionFromTime",
+        "type": "uint32"
+      }
+    ],
+    "name": "ProposalQueued",
     "type": "event"
   },
   {
@@ -221,8 +259,23 @@
         "type": "uint32"
       },
       {
+        "internalType": "uint32",
+        "name": "executionFromTime",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bool",
+        "name": "isCanceled",
+        "type": "bool"
+      },
+      {
         "internalType": "bool",
         "name": "isExecuted",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "isQueued",
         "type": "bool"
       },
       {
@@ -248,7 +301,20 @@
     "inputs": [
       {
         "internalType": "uint64",
-        "name": "_proposalId",
+        "name": "proposalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "cancelProposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "proposalId",
         "type": "uint64"
       }
     ],
@@ -284,13 +350,23 @@
             "type": "uint8[5]"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint8[5]",
             "name": "quorum",
-            "type": "uint8"
+            "type": "uint8[5]"
+          },
+          {
+            "internalType": "uint32",
+            "name": "minProposalDuration",
+            "type": "uint32"
           },
           {
             "internalType": "uint32",
             "name": "proposalPeriod",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "executionDelay",
             "type": "uint32"
           },
           {
@@ -350,8 +426,23 @@
             "type": "uint32"
           },
           {
+            "internalType": "uint32",
+            "name": "executionFromTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isCanceled",
+            "type": "bool"
+          },
+          {
             "internalType": "bool",
             "name": "isExecuted",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isQueued",
             "type": "bool"
           },
           {
@@ -387,7 +478,7 @@
     "inputs": [
       {
         "internalType": "uint64",
-        "name": "_proposalId",
+        "name": "proposalId",
         "type": "uint64"
       }
     ],
@@ -395,6 +486,11 @@
     "outputs": [
       {
         "components": [
+          {
+            "internalType": "uint64",
+            "name": "proposalId",
+            "type": "uint64"
+          },
           {
             "internalType": "enum ProposalType",
             "name": "proposalType",
@@ -421,9 +517,9 @@
             "type": "uint32"
           },
           {
-            "internalType": "bool",
-            "name": "isExecuted",
-            "type": "bool"
+            "internalType": "enum ProposalStatus",
+            "name": "status",
+            "type": "uint8"
           },
           {
             "internalType": "address",
@@ -441,9 +537,22 @@
             "type": "string"
           }
         ],
-        "internalType": "struct Proposal",
+        "internalType": "struct ProposalResponse",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getProposalCount",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
       }
     ],
     "stateMutability": "view",
@@ -489,9 +598,9 @@
     "name": "hasVoted",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "uint32",
         "name": "",
-        "type": "bool"
+        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -522,13 +631,23 @@
             "type": "uint8[5]"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint8[5]",
             "name": "quorum",
-            "type": "uint8"
+            "type": "uint8[5]"
+          },
+          {
+            "internalType": "uint32",
+            "name": "minProposalDuration",
+            "type": "uint32"
           },
           {
             "internalType": "uint32",
             "name": "proposalPeriod",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "executionDelay",
             "type": "uint32"
           },
           {
@@ -572,13 +691,23 @@
             "type": "uint8[5]"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint8[5]",
             "name": "quorum",
-            "type": "uint8"
+            "type": "uint8[5]"
+          },
+          {
+            "internalType": "uint32",
+            "name": "minProposalDuration",
+            "type": "uint32"
           },
           {
             "internalType": "uint32",
             "name": "proposalPeriod",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "executionDelay",
             "type": "uint32"
           },
           {
@@ -741,6 +870,19 @@
   {
     "inputs": [
       {
+        "internalType": "uint64",
+        "name": "proposalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "queue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
@@ -792,7 +934,7 @@
     "inputs": [
       {
         "internalType": "uint64",
-        "name": "_proposalId",
+        "name": "proposalId",
         "type": "uint64"
       },
       {
@@ -802,6 +944,24 @@
       }
     ],
     "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "proposalId",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bool",
+        "name": "_yesVote",
+        "type": "bool"
+      }
+    ],
+    "name": "voteAndQueue",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

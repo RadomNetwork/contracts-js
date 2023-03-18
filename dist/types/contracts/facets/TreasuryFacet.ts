@@ -30,7 +30,6 @@ import type {
 export interface TreasuryFacetInterface extends utils.Interface {
   functions: {
     "deposit(address,address,uint256)": FunctionFragment;
-    "depositFrom(address,address,address,uint256)": FunctionFragment;
     "getAllTokenBalances(address)": FunctionFragment;
     "getBuyAndSellBalances(address,address)": FunctionFragment;
     "getBuyBalance(address,address)": FunctionFragment;
@@ -44,7 +43,6 @@ export interface TreasuryFacetInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "deposit"
-      | "depositFrom"
       | "getAllTokenBalances"
       | "getBuyAndSellBalances"
       | "getBuyBalance"
@@ -58,15 +56,6 @@ export interface TreasuryFacetInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "deposit",
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "depositFrom",
-    values: [
-      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>
@@ -124,10 +113,6 @@ export interface TreasuryFacetInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "depositFrom",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "getAllTokenBalances",
     data: BytesLike
@@ -262,14 +247,6 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    depositFrom(
-      depositor: PromiseOrValue<string>,
-      orgAddress: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     getAllTokenBalances(
       orgId: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -331,14 +308,6 @@ export interface TreasuryFacet extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  depositFrom(
-    depositor: PromiseOrValue<string>,
-    orgAddress: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   getAllTokenBalances(
     orgId: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -395,14 +364,6 @@ export interface TreasuryFacet extends BaseContract {
   callStatic: {
     deposit(
       orgId: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    depositFrom(
-      depositor: PromiseOrValue<string>,
-      orgAddress: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -524,14 +485,6 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    depositFrom(
-      depositor: PromiseOrValue<string>,
-      orgAddress: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     getAllTokenBalances(
       orgId: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -589,14 +542,6 @@ export interface TreasuryFacet extends BaseContract {
   populateTransaction: {
     deposit(
       orgId: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    depositFrom(
-      depositor: PromiseOrValue<string>,
-      orgAddress: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
