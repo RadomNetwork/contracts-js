@@ -21,6 +21,22 @@ const _abi = [
     type: "error",
   },
   {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "subscriptionId",
+        type: "uint64",
+      },
+      {
+        internalType: "string",
+        name: "message",
+        type: "string",
+      },
+    ],
+    name: "AutoDepositTriggerFailed",
+    type: "error",
+  },
+  {
     inputs: [],
     name: "FeatureNotSupported",
     type: "error",

@@ -34,10 +34,13 @@ export interface TreasuryFacetInterface extends utils.Interface {
     "getBuyAndSellBalances(address,address)": FunctionFragment;
     "getBuyBalance(address,address)": FunctionFragment;
     "getSellBalance(address,address)": FunctionFragment;
+    "getTriggerBalance(address,address)": FunctionFragment;
     "withdrawBuyBalance(address,address,uint256)": FunctionFragment;
     "withdrawBuyBalanceToRecipient(address,address,uint256,address)": FunctionFragment;
     "withdrawSellBalance(address,address,uint256)": FunctionFragment;
     "withdrawSellBalanceToRecipient(address,address,uint256,address)": FunctionFragment;
+    "withdrawTriggerBalance(address,address,uint256)": FunctionFragment;
+    "withdrawTriggerBalanceToRecipient(address,address,uint256,address)": FunctionFragment;
   };
 
   getFunction(
@@ -47,10 +50,13 @@ export interface TreasuryFacetInterface extends utils.Interface {
       | "getBuyAndSellBalances"
       | "getBuyBalance"
       | "getSellBalance"
+      | "getTriggerBalance"
       | "withdrawBuyBalance"
       | "withdrawBuyBalanceToRecipient"
       | "withdrawSellBalance"
       | "withdrawSellBalanceToRecipient"
+      | "withdrawTriggerBalance"
+      | "withdrawTriggerBalanceToRecipient"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -78,6 +84,10 @@ export interface TreasuryFacetInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "getTriggerBalance",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "withdrawBuyBalance",
     values: [
       PromiseOrValue<string>,
@@ -104,6 +114,23 @@ export interface TreasuryFacetInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawSellBalanceToRecipient",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawTriggerBalance",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawTriggerBalanceToRecipient",
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -130,6 +157,10 @@ export interface TreasuryFacetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getTriggerBalance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "withdrawBuyBalance",
     data: BytesLike
   ): Result;
@@ -143,6 +174,14 @@ export interface TreasuryFacetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawSellBalanceToRecipient",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawTriggerBalance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawTriggerBalanceToRecipient",
     data: BytesLike
   ): Result;
 
@@ -270,6 +309,12 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     withdrawBuyBalance(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -294,6 +339,21 @@ export interface TreasuryFacet extends BaseContract {
 
     withdrawSellBalanceToRecipient(
       orgId: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      withdrawTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawTriggerBalanceToRecipient(
+      orgAddress: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -331,6 +391,12 @@ export interface TreasuryFacet extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  getTriggerBalance(
+    orgAddress: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   withdrawBuyBalance(
     orgId: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
@@ -355,6 +421,21 @@ export interface TreasuryFacet extends BaseContract {
 
   withdrawSellBalanceToRecipient(
     orgId: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    withdrawTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawTriggerBalance(
+    orgAddress: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawTriggerBalanceToRecipient(
+    orgAddress: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     withdrawTo: PromiseOrValue<string>,
@@ -392,6 +473,12 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     withdrawBuyBalance(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -416,6 +503,21 @@ export interface TreasuryFacet extends BaseContract {
 
     withdrawSellBalanceToRecipient(
       orgId: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      withdrawTo: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawTriggerBalanceToRecipient(
+      orgAddress: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -508,6 +610,12 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     withdrawBuyBalance(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -532,6 +640,21 @@ export interface TreasuryFacet extends BaseContract {
 
     withdrawSellBalanceToRecipient(
       orgId: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      withdrawTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    withdrawTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    withdrawTriggerBalanceToRecipient(
+      orgAddress: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,
@@ -570,6 +693,12 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     withdrawBuyBalance(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -594,6 +723,21 @@ export interface TreasuryFacet extends BaseContract {
 
     withdrawSellBalanceToRecipient(
       orgId: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      withdrawTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawTriggerBalance(
+      orgAddress: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawTriggerBalanceToRecipient(
+      orgAddress: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       withdrawTo: PromiseOrValue<string>,

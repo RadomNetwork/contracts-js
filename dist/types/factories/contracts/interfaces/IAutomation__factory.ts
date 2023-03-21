@@ -46,12 +46,12 @@ const _abi = [
           },
           {
             internalType: "uint32",
-            name: "minimumTimeUntilExpire",
+            name: "minimumDuration",
             type: "uint32",
           },
           {
             internalType: "uint32",
-            name: "minimumDuration",
+            name: "maxFeeInBasisPoints",
             type: "uint32",
           },
         ],
@@ -68,9 +68,40 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "uint32",
+        name: "minimumTimeUntilExpire",
+        type: "uint32",
+      },
+      {
+        indexed: false,
+        internalType: "uint32",
+        name: "minimumDuration",
+        type: "uint32",
+      },
+      {
+        indexed: false,
+        internalType: "uint32",
+        name: "maxFeeInBasisPoints",
+        type: "uint32",
+      },
+    ],
+    name: "AutoDepositDefaultValuesUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: "address",
         name: "customer",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "triggeredBy",
         type: "address",
       },
       {
@@ -84,6 +115,18 @@ const _abi = [
         internalType: "uint64[]",
         name: "subscriptionIds",
         type: "uint64[]",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "feeAmount",
+        type: "uint256",
       },
     ],
     name: "AutoDepositTriggered",
@@ -126,12 +169,12 @@ const _abi = [
           },
           {
             internalType: "uint32",
-            name: "minimumTimeUntilExpire",
+            name: "minimumDuration",
             type: "uint32",
           },
           {
             internalType: "uint32",
-            name: "minimumDuration",
+            name: "maxFeeInBasisPoints",
             type: "uint32",
           },
         ],
@@ -151,7 +194,7 @@ const _abi = [
         type: "uint64",
       },
     ],
-    name: "subscriptionIsEligibleForAutoDeposit",
+    name: "getSubscriptionTriggerResult",
     outputs: [
       {
         internalType: "bool",
@@ -162,6 +205,21 @@ const _abi = [
         internalType: "string",
         name: "failedReason",
         type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "depositAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint32",
+        name: "intervalsToAdd",
+        type: "uint32",
+      },
+      {
+        internalType: "uint256",
+        name: "feeAmount",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -184,9 +242,25 @@ const _abi = [
         name: "subscriptionIds",
         type: "uint64[]",
       },
+      {
+        internalType: "bool",
+        name: "sendToWallet",
+        type: "bool",
+      },
     ],
     name: "triggerAutoDeposit",
-    outputs: [],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "totalDepositAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalFeeAmount",
+        type: "uint256",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -211,12 +285,12 @@ const _abi = [
           },
           {
             internalType: "uint32",
-            name: "minimumTimeUntilExpire",
+            name: "minimumDuration",
             type: "uint32",
           },
           {
             internalType: "uint32",
-            name: "minimumDuration",
+            name: "maxFeeInBasisPoints",
             type: "uint32",
           },
         ],
@@ -246,12 +320,12 @@ const _abi = [
           },
           {
             internalType: "uint32",
-            name: "minimumTimeUntilExpire",
+            name: "minimumDuration",
             type: "uint32",
           },
           {
             internalType: "uint32",
-            name: "minimumDuration",
+            name: "maxFeeInBasisPoints",
             type: "uint32",
           },
         ],
@@ -362,12 +436,12 @@ const _abi = [
           },
           {
             internalType: "uint32",
-            name: "minimumTimeUntilExpire",
+            name: "minimumDuration",
             type: "uint32",
           },
           {
             internalType: "uint32",
-            name: "minimumDuration",
+            name: "maxFeeInBasisPoints",
             type: "uint32",
           },
         ],
@@ -468,12 +542,12 @@ const _abi = [
           },
           {
             internalType: "uint32",
-            name: "minimumTimeUntilExpire",
+            name: "minimumDuration",
             type: "uint32",
           },
           {
             internalType: "uint32",
-            name: "minimumDuration",
+            name: "maxFeeInBasisPoints",
             type: "uint32",
           },
         ],

@@ -31,15 +31,15 @@ export declare namespace Automation {
   export type DepositConfigStruct = {
     useRadomBalanceForMeteredCharge: PromiseOrValue<boolean>;
     disableAutoDeposit: PromiseOrValue<boolean>;
-    minimumTimeUntilExpire: PromiseOrValue<BigNumberish>;
     minimumDuration: PromiseOrValue<BigNumberish>;
+    maxFeeInBasisPoints: PromiseOrValue<BigNumberish>;
   };
 
   export type DepositConfigStructOutput = [boolean, boolean, number, number] & {
     useRadomBalanceForMeteredCharge: boolean;
     disableAutoDeposit: boolean;
-    minimumTimeUntilExpire: number;
     minimumDuration: number;
+    maxFeeInBasisPoints: number;
   };
 }
 
@@ -91,8 +91,8 @@ export interface IAutomationInterface extends utils.Interface {
   functions: {
     "deleteAutoDepositConfig(address)": FunctionFragment;
     "getAutoDepositConfig(address)": FunctionFragment;
-    "subscriptionIsEligibleForAutoDeposit(uint64)": FunctionFragment;
-    "triggerAutoDeposit(address,address,uint64[])": FunctionFragment;
+    "getSubscriptionTriggerResult(uint64)": FunctionFragment;
+    "triggerAutoDeposit(address,address,uint64[],bool)": FunctionFragment;
     "updateAutoDepositConfig(address,(bool,bool,uint32,uint32))": FunctionFragment;
     "updateAutoDepositConfigAndDeposit((bool,bool,uint32,uint32),address,address,uint256)": FunctionFragment;
     "updateAutoDepositConfigAndDepositAndOrder((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[],(bool,bool,uint32,uint32),uint256)": FunctionFragment;
@@ -103,7 +103,7 @@ export interface IAutomationInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "deleteAutoDepositConfig"
       | "getAutoDepositConfig"
-      | "subscriptionIsEligibleForAutoDeposit"
+      | "getSubscriptionTriggerResult"
       | "triggerAutoDeposit"
       | "updateAutoDepositConfig"
       | "updateAutoDepositConfigAndDeposit"
@@ -120,7 +120,7 @@ export interface IAutomationInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "subscriptionIsEligibleForAutoDeposit",
+    functionFragment: "getSubscriptionTriggerResult",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -128,7 +128,8 @@ export interface IAutomationInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>[]
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<boolean>
     ]
   ): string;
   encodeFunctionData(
@@ -173,7 +174,7 @@ export interface IAutomationInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "subscriptionIsEligibleForAutoDeposit",
+    functionFragment: "getSubscriptionTriggerResult",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -200,11 +201,15 @@ export interface IAutomationInterface extends utils.Interface {
   events: {
     "AutoDepositConfigDeleted(address)": EventFragment;
     "AutoDepositConfigUpdated(address,tuple)": EventFragment;
-    "AutoDepositTriggered(address,address,uint64[])": EventFragment;
+    "AutoDepositDefaultValuesUpdated(uint32,uint32,uint32)": EventFragment;
+    "AutoDepositTriggered(address,address,address,uint64[],uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AutoDepositConfigDeleted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AutoDepositConfigUpdated"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "AutoDepositDefaultValuesUpdated"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AutoDepositTriggered"): EventFragment;
 }
 
@@ -231,13 +236,29 @@ export type AutoDepositConfigUpdatedEvent = TypedEvent<
 export type AutoDepositConfigUpdatedEventFilter =
   TypedEventFilter<AutoDepositConfigUpdatedEvent>;
 
+export interface AutoDepositDefaultValuesUpdatedEventObject {
+  minimumTimeUntilExpire: number;
+  minimumDuration: number;
+  maxFeeInBasisPoints: number;
+}
+export type AutoDepositDefaultValuesUpdatedEvent = TypedEvent<
+  [number, number, number],
+  AutoDepositDefaultValuesUpdatedEventObject
+>;
+
+export type AutoDepositDefaultValuesUpdatedEventFilter =
+  TypedEventFilter<AutoDepositDefaultValuesUpdatedEvent>;
+
 export interface AutoDepositTriggeredEventObject {
   customer: string;
+  triggeredBy: string;
   token: string;
   subscriptionIds: BigNumber[];
+  amount: BigNumber;
+  feeAmount: BigNumber;
 }
 export type AutoDepositTriggeredEvent = TypedEvent<
-  [string, string, BigNumber[]],
+  [string, string, string, BigNumber[], BigNumber, BigNumber],
   AutoDepositTriggeredEventObject
 >;
 
@@ -281,17 +302,24 @@ export interface IAutomation extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[Automation.DepositConfigStructOutput]>;
 
-    subscriptionIsEligibleForAutoDeposit(
+    getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, string] & { isSuccessful: boolean; failedReason: string }
+      [boolean, string, BigNumber, number, BigNumber] & {
+        isSuccessful: boolean;
+        failedReason: string;
+        depositAmount: BigNumber;
+        intervalsToAdd: number;
+        feeAmount: BigNumber;
+      }
     >;
 
     triggerAutoDeposit(
       customer: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
+      sendToWallet: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -337,17 +365,24 @@ export interface IAutomation extends BaseContract {
     overrides?: CallOverrides
   ): Promise<Automation.DepositConfigStructOutput>;
 
-  subscriptionIsEligibleForAutoDeposit(
+  getSubscriptionTriggerResult(
     subscriptionId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [boolean, string] & { isSuccessful: boolean; failedReason: string }
+    [boolean, string, BigNumber, number, BigNumber] & {
+      isSuccessful: boolean;
+      failedReason: string;
+      depositAmount: BigNumber;
+      intervalsToAdd: number;
+      feeAmount: BigNumber;
+    }
   >;
 
   triggerAutoDeposit(
     customer: PromiseOrValue<string>,
     token: PromiseOrValue<string>,
     subscriptionIds: PromiseOrValue<BigNumberish>[],
+    sendToWallet: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -393,19 +428,31 @@ export interface IAutomation extends BaseContract {
       overrides?: CallOverrides
     ): Promise<Automation.DepositConfigStructOutput>;
 
-    subscriptionIsEligibleForAutoDeposit(
+    getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [boolean, string] & { isSuccessful: boolean; failedReason: string }
+      [boolean, string, BigNumber, number, BigNumber] & {
+        isSuccessful: boolean;
+        failedReason: string;
+        depositAmount: BigNumber;
+        intervalsToAdd: number;
+        feeAmount: BigNumber;
+      }
     >;
 
     triggerAutoDeposit(
       customer: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
+      sendToWallet: PromiseOrValue<boolean>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        totalDepositAmount: BigNumber;
+        totalFeeAmount: BigNumber;
+      }
+    >;
 
     updateAutoDepositConfig(
       customer: PromiseOrValue<string>,
@@ -456,15 +503,32 @@ export interface IAutomation extends BaseContract {
       depositConfig?: null
     ): AutoDepositConfigUpdatedEventFilter;
 
-    "AutoDepositTriggered(address,address,uint64[])"(
+    "AutoDepositDefaultValuesUpdated(uint32,uint32,uint32)"(
+      minimumTimeUntilExpire?: null,
+      minimumDuration?: null,
+      maxFeeInBasisPoints?: null
+    ): AutoDepositDefaultValuesUpdatedEventFilter;
+    AutoDepositDefaultValuesUpdated(
+      minimumTimeUntilExpire?: null,
+      minimumDuration?: null,
+      maxFeeInBasisPoints?: null
+    ): AutoDepositDefaultValuesUpdatedEventFilter;
+
+    "AutoDepositTriggered(address,address,address,uint64[],uint256,uint256)"(
       customer?: PromiseOrValue<string> | null,
+      triggeredBy?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
-      subscriptionIds?: null
+      subscriptionIds?: null,
+      amount?: null,
+      feeAmount?: null
     ): AutoDepositTriggeredEventFilter;
     AutoDepositTriggered(
       customer?: PromiseOrValue<string> | null,
+      triggeredBy?: PromiseOrValue<string> | null,
       token?: PromiseOrValue<string> | null,
-      subscriptionIds?: null
+      subscriptionIds?: null,
+      amount?: null,
+      feeAmount?: null
     ): AutoDepositTriggeredEventFilter;
   };
 
@@ -479,7 +543,7 @@ export interface IAutomation extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    subscriptionIsEligibleForAutoDeposit(
+    getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -488,6 +552,7 @@ export interface IAutomation extends BaseContract {
       customer: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
+      sendToWallet: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -534,7 +599,7 @@ export interface IAutomation extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    subscriptionIsEligibleForAutoDeposit(
+    getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -543,6 +608,7 @@ export interface IAutomation extends BaseContract {
       customer: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
+      sendToWallet: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

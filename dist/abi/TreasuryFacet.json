@@ -10,6 +10,22 @@
     "type": "error"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "subscriptionId",
+        "type": "uint64"
+      },
+      {
+        "internalType": "string",
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "name": "AutoDepositTriggerFailed",
+    "type": "error"
+  },
+  {
     "inputs": [],
     "name": "FeatureNotSupported",
     "type": "error"
@@ -366,6 +382,30 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "orgAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "getTriggerBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "orgId",
         "type": "address"
       },
@@ -460,6 +500,57 @@
       }
     ],
     "name": "withdrawSellBalanceToRecipient",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "orgAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawTriggerBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "orgAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "withdrawTo",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawTriggerBalanceToRecipient",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

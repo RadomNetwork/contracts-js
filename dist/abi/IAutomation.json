@@ -35,12 +35,12 @@
           },
           {
             "internalType": "uint32",
-            "name": "minimumTimeUntilExpire",
+            "name": "minimumDuration",
             "type": "uint32"
           },
           {
             "internalType": "uint32",
-            "name": "minimumDuration",
+            "name": "maxFeeInBasisPoints",
             "type": "uint32"
           }
         ],
@@ -57,9 +57,40 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "minimumTimeUntilExpire",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "minimumDuration",
+        "type": "uint32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "maxFeeInBasisPoints",
+        "type": "uint32"
+      }
+    ],
+    "name": "AutoDepositDefaultValuesUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "customer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "triggeredBy",
         "type": "address"
       },
       {
@@ -73,6 +104,18 @@
         "internalType": "uint64[]",
         "name": "subscriptionIds",
         "type": "uint64[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
       }
     ],
     "name": "AutoDepositTriggered",
@@ -115,12 +158,12 @@
           },
           {
             "internalType": "uint32",
-            "name": "minimumTimeUntilExpire",
+            "name": "minimumDuration",
             "type": "uint32"
           },
           {
             "internalType": "uint32",
-            "name": "minimumDuration",
+            "name": "maxFeeInBasisPoints",
             "type": "uint32"
           }
         ],
@@ -140,7 +183,7 @@
         "type": "uint64"
       }
     ],
-    "name": "subscriptionIsEligibleForAutoDeposit",
+    "name": "getSubscriptionTriggerResult",
     "outputs": [
       {
         "internalType": "bool",
@@ -151,6 +194,21 @@
         "internalType": "string",
         "name": "failedReason",
         "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "depositAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "intervalsToAdd",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -172,10 +230,26 @@
         "internalType": "uint64[]",
         "name": "subscriptionIds",
         "type": "uint64[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "sendToWallet",
+        "type": "bool"
       }
     ],
     "name": "triggerAutoDeposit",
-    "outputs": [],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "totalDepositAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalFeeAmount",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -200,12 +274,12 @@
           },
           {
             "internalType": "uint32",
-            "name": "minimumTimeUntilExpire",
+            "name": "minimumDuration",
             "type": "uint32"
           },
           {
             "internalType": "uint32",
-            "name": "minimumDuration",
+            "name": "maxFeeInBasisPoints",
             "type": "uint32"
           }
         ],
@@ -235,12 +309,12 @@
           },
           {
             "internalType": "uint32",
-            "name": "minimumTimeUntilExpire",
+            "name": "minimumDuration",
             "type": "uint32"
           },
           {
             "internalType": "uint32",
-            "name": "minimumDuration",
+            "name": "maxFeeInBasisPoints",
             "type": "uint32"
           }
         ],
@@ -351,12 +425,12 @@
           },
           {
             "internalType": "uint32",
-            "name": "minimumTimeUntilExpire",
+            "name": "minimumDuration",
             "type": "uint32"
           },
           {
             "internalType": "uint32",
-            "name": "minimumDuration",
+            "name": "maxFeeInBasisPoints",
             "type": "uint32"
           }
         ],
@@ -457,12 +531,12 @@
           },
           {
             "internalType": "uint32",
-            "name": "minimumTimeUntilExpire",
+            "name": "minimumDuration",
             "type": "uint32"
           },
           {
             "internalType": "uint32",
-            "name": "minimumDuration",
+            "name": "maxFeeInBasisPoints",
             "type": "uint32"
           }
         ],
