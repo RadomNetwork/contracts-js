@@ -123,6 +123,11 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "UnsupportedMethod",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "UnsupportedProduct",
     type: "error",
   },

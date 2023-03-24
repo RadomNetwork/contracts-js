@@ -18,6 +18,8 @@ export type { ERC20PresetFixedSupply } from "./@openzeppelin/contracts/token/ERC
 export { ERC20PresetFixedSupply__factory } from "./factories/@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
+export type { Deprecated } from "./contracts/deprecated/Deprecated";
+export { Deprecated__factory } from "./factories/contracts/deprecated/Deprecated__factory";
 export type { AutomationFacet } from "./contracts/facets/AutomationFacet";
 export { AutomationFacet__factory } from "./factories/contracts/facets/AutomationFacet__factory";
 export type { BillingFacet } from "./contracts/facets/BillingFacet";

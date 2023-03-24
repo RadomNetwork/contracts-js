@@ -37,6 +37,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "Deprecated",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Deprecated__factory>;
+    getContractFactory(
       name: "AutomationFacet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.AutomationFacet__factory>;
@@ -163,6 +167,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "Deprecated",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Deprecated>;
     getContractAt(
       name: "AutomationFacet",
       address: string,
