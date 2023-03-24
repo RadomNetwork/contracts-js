@@ -34,7 +34,6 @@ export declare namespace Subscriptions {
     productType: PromiseOrValue<BigNumberish>;
     subscriptionId: PromiseOrValue<BigNumberish>;
     subscriptionStart: PromiseOrValue<BigNumberish>;
-    authenticationString: PromiseOrValue<BytesLike>;
     subscriptionEnd: PromiseOrValue<BigNumberish>;
     indexRunsOutOfFunds: PromiseOrValue<BigNumberish>;
     pricing: PromiseOrValue<BigNumberish>;
@@ -49,6 +48,11 @@ export declare namespace Subscriptions {
     lastMeteredChargeInterval: PromiseOrValue<BigNumberish>;
     meteredBudget: PromiseOrValue<BigNumberish>;
     meteredBudgetUsed: PromiseOrValue<BigNumberish>;
+    useRadomBalanceForMeteredCharge: PromiseOrValue<boolean>;
+    disableAutoDeposit: PromiseOrValue<boolean>;
+    autoDepositMinimumDuration: PromiseOrValue<BigNumberish>;
+    autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>;
+    autoDepositMaxFeeInBps: PromiseOrValue<BigNumberish>;
   };
 
   export type SubscriptionResponseStructOutput = [
@@ -57,7 +61,6 @@ export declare namespace Subscriptions {
     number,
     BigNumber,
     number,
-    string,
     BigNumber,
     BigNumber,
     BigNumber,
@@ -71,14 +74,18 @@ export declare namespace Subscriptions {
     number,
     number,
     BigNumber,
-    BigNumber
+    BigNumber,
+    boolean,
+    boolean,
+    number,
+    number,
+    number
   ] & {
     customer: string;
     seller: string;
     productType: number;
     subscriptionId: BigNumber;
     subscriptionStart: number;
-    authenticationString: string;
     subscriptionEnd: BigNumber;
     indexRunsOutOfFunds: BigNumber;
     pricing: BigNumber;
@@ -93,6 +100,11 @@ export declare namespace Subscriptions {
     lastMeteredChargeInterval: number;
     meteredBudget: BigNumber;
     meteredBudgetUsed: BigNumber;
+    useRadomBalanceForMeteredCharge: boolean;
+    disableAutoDeposit: boolean;
+    autoDepositMinimumDuration: number;
+    autoDepositMinimumTimeUntilExpireInBps: number;
+    autoDepositMaxFeeInBps: number;
   };
 }
 

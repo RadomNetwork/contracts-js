@@ -152,11 +152,6 @@ const _abi = [
             type: "uint32",
           },
           {
-            internalType: "bytes",
-            name: "authenticationString",
-            type: "bytes",
-          },
-          {
             internalType: "uint256",
             name: "subscriptionEnd",
             type: "uint256",
@@ -225,6 +220,31 @@ const _abi = [
             internalType: "uint256",
             name: "meteredBudgetUsed",
             type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "useRadomBalanceForMeteredCharge",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "disableAutoDeposit",
+            type: "bool",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMinimumDuration",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMinimumTimeUntilExpireInBps",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMaxFeeInBps",
+            type: "uint32",
           },
         ],
         internalType: "struct Subscriptions.SubscriptionResponse[]",
@@ -288,11 +308,6 @@ const _abi = [
             type: "uint32",
           },
           {
-            internalType: "bytes",
-            name: "authenticationString",
-            type: "bytes",
-          },
-          {
             internalType: "uint256",
             name: "subscriptionEnd",
             type: "uint256",
@@ -361,6 +376,31 @@ const _abi = [
             internalType: "uint256",
             name: "meteredBudgetUsed",
             type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "useRadomBalanceForMeteredCharge",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "disableAutoDeposit",
+            type: "bool",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMinimumDuration",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMinimumTimeUntilExpireInBps",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMaxFeeInBps",
+            type: "uint32",
           },
         ],
         internalType: "struct Subscriptions.SubscriptionResponse[]",
@@ -414,11 +454,6 @@ const _abi = [
             type: "uint32",
           },
           {
-            internalType: "bytes",
-            name: "authenticationString",
-            type: "bytes",
-          },
-          {
             internalType: "uint256",
             name: "subscriptionEnd",
             type: "uint256",
@@ -487,6 +522,31 @@ const _abi = [
             internalType: "uint256",
             name: "meteredBudgetUsed",
             type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "useRadomBalanceForMeteredCharge",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "disableAutoDeposit",
+            type: "bool",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMinimumDuration",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMinimumTimeUntilExpireInBps",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "autoDepositMaxFeeInBps",
+            type: "uint32",
           },
         ],
         internalType: "struct Subscriptions.SubscriptionResponse",

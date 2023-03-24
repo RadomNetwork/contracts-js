@@ -31,74 +31,36 @@ export declare namespace Automation {
   export type DepositConfigStruct = {
     useRadomBalanceForMeteredCharge: PromiseOrValue<boolean>;
     disableAutoDeposit: PromiseOrValue<boolean>;
+    minimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>;
     minimumDuration: PromiseOrValue<BigNumberish>;
-    maxFeeInBasisPoints: PromiseOrValue<BigNumberish>;
+    maxFeeInBps: PromiseOrValue<BigNumberish>;
   };
 
-  export type DepositConfigStructOutput = [boolean, boolean, number, number] & {
+  export type DepositConfigStructOutput = [
+    boolean,
+    boolean,
+    number,
+    number,
+    number
+  ] & {
     useRadomBalanceForMeteredCharge: boolean;
     disableAutoDeposit: boolean;
+    minimumTimeUntilExpireInBps: number;
     minimumDuration: number;
-    maxFeeInBasisPoints: number;
-  };
-}
-
-export declare namespace Billing {
-  export type ProductStruct = {
-    productType: PromiseOrValue<BigNumberish>;
-    data: PromiseOrValue<BytesLike>;
-  };
-
-  export type ProductStructOutput = [number, string] & {
-    productType: number;
-    data: string;
-  };
-
-  export type OrderStruct = {
-    customer: PromiseOrValue<string>;
-    seller: PromiseOrValue<string>;
-    token: PromiseOrValue<string>;
-    chainId: PromiseOrValue<BigNumberish>;
-    products: Billing.ProductStruct[];
-  };
-
-  export type OrderStructOutput = [
-    string,
-    string,
-    string,
-    BigNumber,
-    Billing.ProductStructOutput[]
-  ] & {
-    customer: string;
-    seller: string;
-    token: string;
-    chainId: BigNumber;
-    products: Billing.ProductStructOutput[];
-  };
-
-  export type KeyValuePairStruct = {
-    key: PromiseOrValue<BytesLike>;
-    value: PromiseOrValue<BytesLike>;
-  };
-
-  export type KeyValuePairStructOutput = [string, string] & {
-    key: string;
-    value: string;
+    maxFeeInBps: number;
   };
 }
 
 export interface AutomationFacetInterface extends utils.Interface {
   functions: {
-    "changeDefaultValues(uint32,uint32,uint16)": FunctionFragment;
+    "changeDefaultValues(uint16,uint32,uint16,uint32)": FunctionFragment;
     "deleteAutoDepositConfig(address)": FunctionFragment;
     "getAutoDepositConfig(address)": FunctionFragment;
     "getDefaultValues()": FunctionFragment;
     "getSubscriptionTriggerResult(uint64)": FunctionFragment;
     "triggerAutoDeposit(address,address,uint64[],bool)": FunctionFragment;
-    "updateAutoDepositConfig(address,(bool,bool,uint32,uint32))": FunctionFragment;
-    "updateAutoDepositConfigAndDeposit((bool,bool,uint32,uint32),address,address,uint256)": FunctionFragment;
-    "updateAutoDepositConfigAndDepositAndOrder((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[],(bool,bool,uint32,uint32),uint256)": FunctionFragment;
-    "updateAutoDepositConfigAndOrder((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[],(bool,bool,uint32,uint32))": FunctionFragment;
+    "updateAutoDepositConfig(address,(bool,bool,uint16,uint32,uint16))": FunctionFragment;
+    "updateSubscriptionAutoDepositConfigs(address,uint64[],(bool,bool,uint16,uint32,uint16))": FunctionFragment;
   };
 
   getFunction(
@@ -110,14 +72,13 @@ export interface AutomationFacetInterface extends utils.Interface {
       | "getSubscriptionTriggerResult"
       | "triggerAutoDeposit"
       | "updateAutoDepositConfig"
-      | "updateAutoDepositConfigAndDeposit"
-      | "updateAutoDepositConfigAndDepositAndOrder"
-      | "updateAutoDepositConfigAndOrder"
+      | "updateSubscriptionAutoDepositConfigs"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "changeDefaultValues",
     values: [
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
@@ -153,30 +114,10 @@ export interface AutomationFacetInterface extends utils.Interface {
     values: [PromiseOrValue<string>, Automation.DepositConfigStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateAutoDepositConfigAndDeposit",
+    functionFragment: "updateSubscriptionAutoDepositConfigs",
     values: [
-      Automation.DepositConfigStruct,
       PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateAutoDepositConfigAndDepositAndOrder",
-    values: [
-      Billing.OrderStruct,
-      PromiseOrValue<boolean>,
-      Billing.KeyValuePairStruct[],
-      Automation.DepositConfigStruct,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateAutoDepositConfigAndOrder",
-    values: [
-      Billing.OrderStruct,
-      PromiseOrValue<boolean>,
-      Billing.KeyValuePairStruct[],
+      PromiseOrValue<BigNumberish>[],
       Automation.DepositConfigStruct
     ]
   ): string;
@@ -210,15 +151,7 @@ export interface AutomationFacetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfigAndDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfigAndDepositAndOrder",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfigAndOrder",
+    functionFragment: "updateSubscriptionAutoDepositConfigs",
     data: BytesLike
   ): Result;
 
@@ -317,9 +250,10 @@ export interface AutomationFacet extends BaseContract {
 
   functions: {
     changeDefaultValues(
-      autoDepositMinimumTimeUntilExpire: PromiseOrValue<BigNumberish>,
+      autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
+      minTimeUntilExpireInSeconds: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -336,10 +270,11 @@ export interface AutomationFacet extends BaseContract {
     getDefaultValues(
       overrides?: CallOverrides
     ): Promise<
-      [number, number, number] & {
-        autoDepositMinimumTimeUntilExpire: number;
+      [number, number, number, number] & {
+        autoDepositMinimumTimeUntilExpireInBps: number;
         autoDepositMinimumDuration: number;
         autoDepositMaxFeeInBasisPoints: number;
+        minTimeUntilExpireInSeconds: number;
       }
     >;
 
@@ -370,36 +305,19 @@ export interface AutomationFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
+    updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
+      subscriptionIds: PromiseOrValue<BigNumberish>[],
       depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   changeDefaultValues(
-    autoDepositMinimumTimeUntilExpire: PromiseOrValue<BigNumberish>,
+    autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
     autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
     autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
+    minTimeUntilExpireInSeconds: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -416,10 +334,11 @@ export interface AutomationFacet extends BaseContract {
   getDefaultValues(
     overrides?: CallOverrides
   ): Promise<
-    [number, number, number] & {
-      autoDepositMinimumTimeUntilExpire: number;
+    [number, number, number, number] & {
+      autoDepositMinimumTimeUntilExpireInBps: number;
       autoDepositMinimumDuration: number;
       autoDepositMaxFeeInBasisPoints: number;
+      minTimeUntilExpireInSeconds: number;
     }
   >;
 
@@ -450,36 +369,19 @@ export interface AutomationFacet extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateAutoDepositConfigAndDeposit(
-    depositUpdate: Automation.DepositConfigStruct,
+  updateSubscriptionAutoDepositConfigs(
     customer: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  updateAutoDepositConfigAndDepositAndOrder(
-    orderData: Billing.OrderStruct,
-    fromRadomBalance: PromiseOrValue<boolean>,
-    metadata: Billing.KeyValuePairStruct[],
-    depositConfig: Automation.DepositConfigStruct,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  updateAutoDepositConfigAndOrder(
-    orderData: Billing.OrderStruct,
-    fromRadomBalance: PromiseOrValue<boolean>,
-    metadata: Billing.KeyValuePairStruct[],
+    subscriptionIds: PromiseOrValue<BigNumberish>[],
     depositConfig: Automation.DepositConfigStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     changeDefaultValues(
-      autoDepositMinimumTimeUntilExpire: PromiseOrValue<BigNumberish>,
+      autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
+      minTimeUntilExpireInSeconds: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -496,10 +398,11 @@ export interface AutomationFacet extends BaseContract {
     getDefaultValues(
       overrides?: CallOverrides
     ): Promise<
-      [number, number, number] & {
-        autoDepositMinimumTimeUntilExpire: number;
+      [number, number, number, number] & {
+        autoDepositMinimumTimeUntilExpireInBps: number;
         autoDepositMinimumDuration: number;
         autoDepositMaxFeeInBasisPoints: number;
+        minTimeUntilExpireInSeconds: number;
       }
     >;
 
@@ -535,27 +438,9 @@ export interface AutomationFacet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
+    updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
+      subscriptionIds: PromiseOrValue<BigNumberish>[],
       depositConfig: Automation.DepositConfigStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -609,9 +494,10 @@ export interface AutomationFacet extends BaseContract {
 
   estimateGas: {
     changeDefaultValues(
-      autoDepositMinimumTimeUntilExpire: PromiseOrValue<BigNumberish>,
+      autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
+      minTimeUntilExpireInSeconds: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -646,27 +532,9 @@ export interface AutomationFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
+    updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
+      subscriptionIds: PromiseOrValue<BigNumberish>[],
       depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -674,9 +542,10 @@ export interface AutomationFacet extends BaseContract {
 
   populateTransaction: {
     changeDefaultValues(
-      autoDepositMinimumTimeUntilExpire: PromiseOrValue<BigNumberish>,
+      autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
+      minTimeUntilExpireInSeconds: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -711,27 +580,9 @@ export interface AutomationFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
+    updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
+      subscriptionIds: PromiseOrValue<BigNumberish>[],
       depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

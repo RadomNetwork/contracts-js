@@ -93,6 +93,30 @@ export declare namespace Billing {
   };
 }
 
+export declare namespace Automation {
+  export type DepositConfigStruct = {
+    useRadomBalanceForMeteredCharge: PromiseOrValue<boolean>;
+    disableAutoDeposit: PromiseOrValue<boolean>;
+    minimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>;
+    minimumDuration: PromiseOrValue<BigNumberish>;
+    maxFeeInBps: PromiseOrValue<BigNumberish>;
+  };
+
+  export type DepositConfigStructOutput = [
+    boolean,
+    boolean,
+    number,
+    number,
+    number
+  ] & {
+    useRadomBalanceForMeteredCharge: boolean;
+    disableAutoDeposit: boolean;
+    minimumTimeUntilExpireInBps: number;
+    minimumDuration: number;
+    maxFeeInBps: number;
+  };
+}
+
 export declare namespace Subscriptions {
   export type SubscriptionResponseStruct = {
     customer: PromiseOrValue<string>;
@@ -100,7 +124,6 @@ export declare namespace Subscriptions {
     productType: PromiseOrValue<BigNumberish>;
     subscriptionId: PromiseOrValue<BigNumberish>;
     subscriptionStart: PromiseOrValue<BigNumberish>;
-    authenticationString: PromiseOrValue<BytesLike>;
     subscriptionEnd: PromiseOrValue<BigNumberish>;
     indexRunsOutOfFunds: PromiseOrValue<BigNumberish>;
     pricing: PromiseOrValue<BigNumberish>;
@@ -115,6 +138,11 @@ export declare namespace Subscriptions {
     lastMeteredChargeInterval: PromiseOrValue<BigNumberish>;
     meteredBudget: PromiseOrValue<BigNumberish>;
     meteredBudgetUsed: PromiseOrValue<BigNumberish>;
+    useRadomBalanceForMeteredCharge: PromiseOrValue<boolean>;
+    disableAutoDeposit: PromiseOrValue<boolean>;
+    autoDepositMinimumDuration: PromiseOrValue<BigNumberish>;
+    autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>;
+    autoDepositMaxFeeInBps: PromiseOrValue<BigNumberish>;
   };
 
   export type SubscriptionResponseStructOutput = [
@@ -123,7 +151,6 @@ export declare namespace Subscriptions {
     number,
     BigNumber,
     number,
-    string,
     BigNumber,
     BigNumber,
     BigNumber,
@@ -137,14 +164,18 @@ export declare namespace Subscriptions {
     number,
     number,
     BigNumber,
-    BigNumber
+    BigNumber,
+    boolean,
+    boolean,
+    number,
+    number,
+    number
   ] & {
     customer: string;
     seller: string;
     productType: number;
     subscriptionId: BigNumber;
     subscriptionStart: number;
-    authenticationString: string;
     subscriptionEnd: BigNumber;
     indexRunsOutOfFunds: BigNumber;
     pricing: BigNumber;
@@ -159,6 +190,11 @@ export declare namespace Subscriptions {
     lastMeteredChargeInterval: number;
     meteredBudget: BigNumber;
     meteredBudgetUsed: BigNumber;
+    useRadomBalanceForMeteredCharge: boolean;
+    disableAutoDeposit: boolean;
+    autoDepositMinimumDuration: number;
+    autoDepositMinimumTimeUntilExpireInBps: number;
+    autoDepositMaxFeeInBps: number;
   };
 }
 
@@ -171,7 +207,7 @@ export interface BillingFacetInterface extends utils.Interface {
     "getPurchasedSubscriptions(address,uint64,uint64)": FunctionFragment;
     "getSoldSubscriptions(address,uint64,uint64)": FunctionFragment;
     "getSubscription(uint64)": FunctionFragment;
-    "order((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[])": FunctionFragment;
+    "order((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[],(bool,bool,uint16,uint32,uint16)[])": FunctionFragment;
     "pay((uint256,address,address,address,uint256),bool,(bytes32,bytes)[])": FunctionFragment;
     "revokeSubscription(uint64)": FunctionFragment;
   };
@@ -235,7 +271,8 @@ export interface BillingFacetInterface extends utils.Interface {
     values: [
       Billing.OrderStruct,
       PromiseOrValue<boolean>,
-      Billing.KeyValuePairStruct[]
+      Billing.KeyValuePairStruct[],
+      Automation.DepositConfigStruct[]
     ]
   ): string;
   encodeFunctionData(
@@ -289,7 +326,7 @@ export interface BillingFacetInterface extends utils.Interface {
   events: {
     "MeteredProductCharged(address,address,uint64,address,uint256,uint256)": EventFragment;
     "OrderMetadataReplaced(address,address,bytes32,tuple[])": EventFragment;
-    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])": EventFragment;
+    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[],tuple[])": EventFragment;
     "PaymentSuccessful(address,address,bytes32,tuple,tuple[])": EventFragment;
     "SubscriptionCancelled(address,address,uint64)": EventFragment;
     "SubscriptionCreated(address,address,uint64,bytes32)": EventFragment;
@@ -342,6 +379,7 @@ export interface OrderPurchasedEventObject {
   orderData: Billing.OrderStructOutput;
   subscriptionIds: BigNumber[];
   configInputs: Billing.KeyValuePairStructOutput[];
+  autoDepositConfigs: Automation.DepositConfigStructOutput[];
 }
 export type OrderPurchasedEvent = TypedEvent<
   [
@@ -350,7 +388,8 @@ export type OrderPurchasedEvent = TypedEvent<
     string,
     Billing.OrderStructOutput,
     BigNumber[],
-    Billing.KeyValuePairStructOutput[]
+    Billing.KeyValuePairStructOutput[],
+    Automation.DepositConfigStructOutput[]
   ],
   OrderPurchasedEventObject
 >;
@@ -499,6 +538,7 @@ export interface BillingFacet extends BaseContract {
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      autoDepositConfigs: Automation.DepositConfigStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -569,6 +609,7 @@ export interface BillingFacet extends BaseContract {
     orderData: Billing.OrderStruct,
     fromRadomBalance: PromiseOrValue<boolean>,
     metadata: Billing.KeyValuePairStruct[],
+    autoDepositConfigs: Automation.DepositConfigStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -639,6 +680,7 @@ export interface BillingFacet extends BaseContract {
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      autoDepositConfigs: Automation.DepositConfigStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -686,13 +728,14 @@ export interface BillingFacet extends BaseContract {
       metadata?: null
     ): OrderMetadataReplacedEventFilter;
 
-    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])"(
+    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[],tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null
+      configInputs?: null,
+      autoDepositConfigs?: null
     ): OrderPurchasedEventFilter;
     OrderPurchased(
       seller?: PromiseOrValue<string> | null,
@@ -700,7 +743,8 @@ export interface BillingFacet extends BaseContract {
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null
+      configInputs?: null,
+      autoDepositConfigs?: null
     ): OrderPurchasedEventFilter;
 
     "PaymentSuccessful(address,address,bytes32,tuple,tuple[])"(
@@ -801,6 +845,7 @@ export interface BillingFacet extends BaseContract {
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      autoDepositConfigs: Automation.DepositConfigStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -864,6 +909,7 @@ export interface BillingFacet extends BaseContract {
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      autoDepositConfigs: Automation.DepositConfigStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

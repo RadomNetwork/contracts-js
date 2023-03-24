@@ -160,14 +160,19 @@
             "type": "bool"
           },
           {
+            "internalType": "uint16",
+            "name": "minimumTimeUntilExpireInBps",
+            "type": "uint16"
+          },
+          {
             "internalType": "uint32",
             "name": "minimumDuration",
             "type": "uint32"
           },
           {
-            "internalType": "uint32",
-            "name": "maxFeeInBasisPoints",
-            "type": "uint32"
+            "internalType": "uint16",
+            "name": "maxFeeInBps",
+            "type": "uint16"
           }
         ],
         "indexed": false,
@@ -250,9 +255,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint32",
-        "name": "autoDepositMinimumTimeUntilExpire",
-        "type": "uint32"
+        "internalType": "uint16",
+        "name": "autoDepositMinimumTimeUntilExpireInBps",
+        "type": "uint16"
       },
       {
         "internalType": "uint32",
@@ -263,6 +268,11 @@
         "internalType": "uint16",
         "name": "autoDepositMaxFeeInBasisPoints",
         "type": "uint16"
+      },
+      {
+        "internalType": "uint32",
+        "name": "minTimeUntilExpireInSeconds",
+        "type": "uint32"
       }
     ],
     "name": "changeDefaultValues",
@@ -306,14 +316,19 @@
             "type": "bool"
           },
           {
+            "internalType": "uint16",
+            "name": "minimumTimeUntilExpireInBps",
+            "type": "uint16"
+          },
+          {
             "internalType": "uint32",
             "name": "minimumDuration",
             "type": "uint32"
           },
           {
-            "internalType": "uint32",
-            "name": "maxFeeInBasisPoints",
-            "type": "uint32"
+            "internalType": "uint16",
+            "name": "maxFeeInBps",
+            "type": "uint16"
           }
         ],
         "internalType": "struct Automation.DepositConfig",
@@ -330,7 +345,7 @@
     "outputs": [
       {
         "internalType": "uint32",
-        "name": "autoDepositMinimumTimeUntilExpire",
+        "name": "autoDepositMinimumTimeUntilExpireInBps",
         "type": "uint32"
       },
       {
@@ -341,6 +356,11 @@
       {
         "internalType": "uint32",
         "name": "autoDepositMaxFeeInBasisPoints",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "minTimeUntilExpireInSeconds",
         "type": "uint32"
       }
     ],
@@ -445,14 +465,19 @@
             "type": "bool"
           },
           {
+            "internalType": "uint16",
+            "name": "minimumTimeUntilExpireInBps",
+            "type": "uint16"
+          },
+          {
             "internalType": "uint32",
             "name": "minimumDuration",
             "type": "uint32"
           },
           {
-            "internalType": "uint32",
-            "name": "maxFeeInBasisPoints",
-            "type": "uint32"
+            "internalType": "uint16",
+            "name": "maxFeeInBps",
+            "type": "uint16"
           }
         ],
         "internalType": "struct Automation.DepositConfig",
@@ -468,120 +493,14 @@
   {
     "inputs": [
       {
-        "components": [
-          {
-            "internalType": "bool",
-            "name": "useRadomBalanceForMeteredCharge",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "disableAutoDeposit",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint32",
-            "name": "minimumDuration",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "maxFeeInBasisPoints",
-            "type": "uint32"
-          }
-        ],
-        "internalType": "struct Automation.DepositConfig",
-        "name": "depositUpdate",
-        "type": "tuple"
-      },
-      {
         "internalType": "address",
         "name": "customer",
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateAutoDepositConfigAndDeposit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "customer",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "seller",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "token",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "chainId",
-            "type": "uint256"
-          },
-          {
-            "components": [
-              {
-                "internalType": "uint32",
-                "name": "productType",
-                "type": "uint32"
-              },
-              {
-                "internalType": "bytes",
-                "name": "data",
-                "type": "bytes"
-              }
-            ],
-            "internalType": "struct Billing.Product[]",
-            "name": "products",
-            "type": "tuple[]"
-          }
-        ],
-        "internalType": "struct Billing.Order",
-        "name": "orderData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bool",
-        "name": "fromRadomBalance",
-        "type": "bool"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bytes32",
-            "name": "key",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes",
-            "name": "value",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct Billing.KeyValuePair[]",
-        "name": "metadata",
-        "type": "tuple[]"
+        "internalType": "uint64[]",
+        "name": "subscriptionIds",
+        "type": "uint64[]"
       },
       {
         "components": [
@@ -596,110 +515,9 @@
             "type": "bool"
           },
           {
-            "internalType": "uint32",
-            "name": "minimumDuration",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "maxFeeInBasisPoints",
-            "type": "uint32"
-          }
-        ],
-        "internalType": "struct Automation.DepositConfig",
-        "name": "depositConfig",
-        "type": "tuple"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateAutoDepositConfigAndDepositAndOrder",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "customer",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "seller",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "token",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "chainId",
-            "type": "uint256"
-          },
-          {
-            "components": [
-              {
-                "internalType": "uint32",
-                "name": "productType",
-                "type": "uint32"
-              },
-              {
-                "internalType": "bytes",
-                "name": "data",
-                "type": "bytes"
-              }
-            ],
-            "internalType": "struct Billing.Product[]",
-            "name": "products",
-            "type": "tuple[]"
-          }
-        ],
-        "internalType": "struct Billing.Order",
-        "name": "orderData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bool",
-        "name": "fromRadomBalance",
-        "type": "bool"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bytes32",
-            "name": "key",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "bytes",
-            "name": "value",
-            "type": "bytes"
-          }
-        ],
-        "internalType": "struct Billing.KeyValuePair[]",
-        "name": "metadata",
-        "type": "tuple[]"
-      },
-      {
-        "components": [
-          {
-            "internalType": "bool",
-            "name": "useRadomBalanceForMeteredCharge",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "disableAutoDeposit",
-            "type": "bool"
+            "internalType": "uint16",
+            "name": "minimumTimeUntilExpireInBps",
+            "type": "uint16"
           },
           {
             "internalType": "uint32",
@@ -707,9 +525,9 @@
             "type": "uint32"
           },
           {
-            "internalType": "uint32",
-            "name": "maxFeeInBasisPoints",
-            "type": "uint32"
+            "internalType": "uint16",
+            "name": "maxFeeInBps",
+            "type": "uint16"
           }
         ],
         "internalType": "struct Automation.DepositConfig",
@@ -717,7 +535,7 @@
         "type": "tuple"
       }
     ],
-    "name": "updateAutoDepositConfigAndOrder",
+    "name": "updateSubscriptionAutoDepositConfigs",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

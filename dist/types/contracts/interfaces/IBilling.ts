@@ -93,11 +93,35 @@ export declare namespace Billing {
   };
 }
 
+export declare namespace Automation {
+  export type DepositConfigStruct = {
+    useRadomBalanceForMeteredCharge: PromiseOrValue<boolean>;
+    disableAutoDeposit: PromiseOrValue<boolean>;
+    minimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>;
+    minimumDuration: PromiseOrValue<BigNumberish>;
+    maxFeeInBps: PromiseOrValue<BigNumberish>;
+  };
+
+  export type DepositConfigStructOutput = [
+    boolean,
+    boolean,
+    number,
+    number,
+    number
+  ] & {
+    useRadomBalanceForMeteredCharge: boolean;
+    disableAutoDeposit: boolean;
+    minimumTimeUntilExpireInBps: number;
+    minimumDuration: number;
+    maxFeeInBps: number;
+  };
+}
+
 export interface IBillingInterface extends utils.Interface {
   functions: {
     "chargeMeteredProduct(uint64,uint256)": FunctionFragment;
     "generateOrderHash((address,address,address,uint256,(uint32,bytes)[]))": FunctionFragment;
-    "order((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[])": FunctionFragment;
+    "order((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[],(bool,bool,uint16,uint32,uint16)[])": FunctionFragment;
     "pay((uint256,address,address,address,uint256),bool,(bytes32,bytes)[])": FunctionFragment;
   };
 
@@ -122,7 +146,8 @@ export interface IBillingInterface extends utils.Interface {
     values: [
       Billing.OrderStruct,
       PromiseOrValue<boolean>,
-      Billing.KeyValuePairStruct[]
+      Billing.KeyValuePairStruct[],
+      Automation.DepositConfigStruct[]
     ]
   ): string;
   encodeFunctionData(
@@ -148,7 +173,7 @@ export interface IBillingInterface extends utils.Interface {
   events: {
     "MeteredProductCharged(address,address,uint64,address,uint256,uint256)": EventFragment;
     "OrderMetadataReplaced(address,address,bytes32,tuple[])": EventFragment;
-    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])": EventFragment;
+    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[],tuple[])": EventFragment;
     "PaymentSuccessful(address,address,bytes32,tuple,tuple[])": EventFragment;
   };
 
@@ -195,6 +220,7 @@ export interface OrderPurchasedEventObject {
   orderData: Billing.OrderStructOutput;
   subscriptionIds: BigNumber[];
   configInputs: Billing.KeyValuePairStructOutput[];
+  autoDepositConfigs: Automation.DepositConfigStructOutput[];
 }
 export type OrderPurchasedEvent = TypedEvent<
   [
@@ -203,7 +229,8 @@ export type OrderPurchasedEvent = TypedEvent<
     string,
     Billing.OrderStructOutput,
     BigNumber[],
-    Billing.KeyValuePairStructOutput[]
+    Billing.KeyValuePairStructOutput[],
+    Automation.DepositConfigStructOutput[]
   ],
   OrderPurchasedEventObject
 >;
@@ -270,9 +297,10 @@ export interface IBilling extends BaseContract {
     ): Promise<[string] & { orderHash: string }>;
 
     order(
-      order: Billing.OrderStruct,
+      orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      depositConfigs: Automation.DepositConfigStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -296,9 +324,10 @@ export interface IBilling extends BaseContract {
   ): Promise<string>;
 
   order(
-    order: Billing.OrderStruct,
+    orderData: Billing.OrderStruct,
     fromRadomBalance: PromiseOrValue<boolean>,
     metadata: Billing.KeyValuePairStruct[],
+    depositConfigs: Automation.DepositConfigStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -322,9 +351,10 @@ export interface IBilling extends BaseContract {
     ): Promise<string>;
 
     order(
-      order: Billing.OrderStruct,
+      orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      depositConfigs: Automation.DepositConfigStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -367,13 +397,14 @@ export interface IBilling extends BaseContract {
       metadata?: null
     ): OrderMetadataReplacedEventFilter;
 
-    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[])"(
+    "OrderPurchased(address,address,bytes32,tuple,uint64[],tuple[],tuple[])"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null
+      configInputs?: null,
+      autoDepositConfigs?: null
     ): OrderPurchasedEventFilter;
     OrderPurchased(
       seller?: PromiseOrValue<string> | null,
@@ -381,7 +412,8 @@ export interface IBilling extends BaseContract {
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null
+      configInputs?: null,
+      autoDepositConfigs?: null
     ): OrderPurchasedEventFilter;
 
     "PaymentSuccessful(address,address,bytes32,tuple,tuple[])"(
@@ -413,9 +445,10 @@ export interface IBilling extends BaseContract {
     ): Promise<BigNumber>;
 
     order(
-      order: Billing.OrderStruct,
+      orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      depositConfigs: Automation.DepositConfigStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -440,9 +473,10 @@ export interface IBilling extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     order(
-      order: Billing.OrderStruct,
+      orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
       metadata: Billing.KeyValuePairStruct[],
+      depositConfigs: Automation.DepositConfigStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

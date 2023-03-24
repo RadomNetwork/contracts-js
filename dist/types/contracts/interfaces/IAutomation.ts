@@ -31,59 +31,23 @@ export declare namespace Automation {
   export type DepositConfigStruct = {
     useRadomBalanceForMeteredCharge: PromiseOrValue<boolean>;
     disableAutoDeposit: PromiseOrValue<boolean>;
+    minimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>;
     minimumDuration: PromiseOrValue<BigNumberish>;
-    maxFeeInBasisPoints: PromiseOrValue<BigNumberish>;
+    maxFeeInBps: PromiseOrValue<BigNumberish>;
   };
 
-  export type DepositConfigStructOutput = [boolean, boolean, number, number] & {
+  export type DepositConfigStructOutput = [
+    boolean,
+    boolean,
+    number,
+    number,
+    number
+  ] & {
     useRadomBalanceForMeteredCharge: boolean;
     disableAutoDeposit: boolean;
+    minimumTimeUntilExpireInBps: number;
     minimumDuration: number;
-    maxFeeInBasisPoints: number;
-  };
-}
-
-export declare namespace Billing {
-  export type ProductStruct = {
-    productType: PromiseOrValue<BigNumberish>;
-    data: PromiseOrValue<BytesLike>;
-  };
-
-  export type ProductStructOutput = [number, string] & {
-    productType: number;
-    data: string;
-  };
-
-  export type OrderStruct = {
-    customer: PromiseOrValue<string>;
-    seller: PromiseOrValue<string>;
-    token: PromiseOrValue<string>;
-    chainId: PromiseOrValue<BigNumberish>;
-    products: Billing.ProductStruct[];
-  };
-
-  export type OrderStructOutput = [
-    string,
-    string,
-    string,
-    BigNumber,
-    Billing.ProductStructOutput[]
-  ] & {
-    customer: string;
-    seller: string;
-    token: string;
-    chainId: BigNumber;
-    products: Billing.ProductStructOutput[];
-  };
-
-  export type KeyValuePairStruct = {
-    key: PromiseOrValue<BytesLike>;
-    value: PromiseOrValue<BytesLike>;
-  };
-
-  export type KeyValuePairStructOutput = [string, string] & {
-    key: string;
-    value: string;
+    maxFeeInBps: number;
   };
 }
 
@@ -93,10 +57,7 @@ export interface IAutomationInterface extends utils.Interface {
     "getAutoDepositConfig(address)": FunctionFragment;
     "getSubscriptionTriggerResult(uint64)": FunctionFragment;
     "triggerAutoDeposit(address,address,uint64[],bool)": FunctionFragment;
-    "updateAutoDepositConfig(address,(bool,bool,uint32,uint32))": FunctionFragment;
-    "updateAutoDepositConfigAndDeposit((bool,bool,uint32,uint32),address,address,uint256)": FunctionFragment;
-    "updateAutoDepositConfigAndDepositAndOrder((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[],(bool,bool,uint32,uint32),uint256)": FunctionFragment;
-    "updateAutoDepositConfigAndOrder((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[],(bool,bool,uint32,uint32))": FunctionFragment;
+    "updateAutoDepositConfig(address,(bool,bool,uint16,uint32,uint16))": FunctionFragment;
   };
 
   getFunction(
@@ -106,9 +67,6 @@ export interface IAutomationInterface extends utils.Interface {
       | "getSubscriptionTriggerResult"
       | "triggerAutoDeposit"
       | "updateAutoDepositConfig"
-      | "updateAutoDepositConfigAndDeposit"
-      | "updateAutoDepositConfigAndDepositAndOrder"
-      | "updateAutoDepositConfigAndOrder"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -136,34 +94,6 @@ export interface IAutomationInterface extends utils.Interface {
     functionFragment: "updateAutoDepositConfig",
     values: [PromiseOrValue<string>, Automation.DepositConfigStruct]
   ): string;
-  encodeFunctionData(
-    functionFragment: "updateAutoDepositConfigAndDeposit",
-    values: [
-      Automation.DepositConfigStruct,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateAutoDepositConfigAndDepositAndOrder",
-    values: [
-      Billing.OrderStruct,
-      PromiseOrValue<boolean>,
-      Billing.KeyValuePairStruct[],
-      Automation.DepositConfigStruct,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateAutoDepositConfigAndOrder",
-    values: [
-      Billing.OrderStruct,
-      PromiseOrValue<boolean>,
-      Billing.KeyValuePairStruct[],
-      Automation.DepositConfigStruct
-    ]
-  ): string;
 
   decodeFunctionResult(
     functionFragment: "deleteAutoDepositConfig",
@@ -183,18 +113,6 @@ export interface IAutomationInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "updateAutoDepositConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfigAndDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfigAndDepositAndOrder",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfigAndOrder",
     data: BytesLike
   ): Result;
 
@@ -328,31 +246,6 @@ export interface IAutomation extends BaseContract {
       depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
-      customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
   };
 
   deleteAutoDepositConfig(
@@ -388,31 +281,6 @@ export interface IAutomation extends BaseContract {
 
   updateAutoDepositConfig(
     customer: PromiseOrValue<string>,
-    depositConfig: Automation.DepositConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  updateAutoDepositConfigAndDeposit(
-    depositUpdate: Automation.DepositConfigStruct,
-    customer: PromiseOrValue<string>,
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  updateAutoDepositConfigAndDepositAndOrder(
-    orderData: Billing.OrderStruct,
-    fromRadomBalance: PromiseOrValue<boolean>,
-    metadata: Billing.KeyValuePairStruct[],
-    depositConfig: Automation.DepositConfigStruct,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  updateAutoDepositConfigAndOrder(
-    orderData: Billing.OrderStruct,
-    fromRadomBalance: PromiseOrValue<boolean>,
-    metadata: Billing.KeyValuePairStruct[],
     depositConfig: Automation.DepositConfigStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -456,31 +324,6 @@ export interface IAutomation extends BaseContract {
 
     updateAutoDepositConfig(
       customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
-      customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
       depositConfig: Automation.DepositConfigStruct,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -561,31 +404,6 @@ export interface IAutomation extends BaseContract {
       depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
-      customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -614,31 +432,6 @@ export interface IAutomation extends BaseContract {
 
     updateAutoDepositConfig(
       customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAutoDepositConfigAndDeposit(
-      depositUpdate: Automation.DepositConfigStruct,
-      customer: PromiseOrValue<string>,
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAutoDepositConfigAndDepositAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
-      depositConfig: Automation.DepositConfigStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAutoDepositConfigAndOrder(
-      orderData: Billing.OrderStruct,
-      fromRadomBalance: PromiseOrValue<boolean>,
-      metadata: Billing.KeyValuePairStruct[],
       depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

@@ -186,6 +186,39 @@ const _abi = [
         name: "configInputs",
         type: "tuple[]",
       },
+      {
+        components: [
+          {
+            internalType: "bool",
+            name: "useRadomBalanceForMeteredCharge",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "disableAutoDeposit",
+            type: "bool",
+          },
+          {
+            internalType: "uint16",
+            name: "minimumTimeUntilExpireInBps",
+            type: "uint16",
+          },
+          {
+            internalType: "uint32",
+            name: "minimumDuration",
+            type: "uint32",
+          },
+          {
+            internalType: "uint16",
+            name: "maxFeeInBps",
+            type: "uint16",
+          },
+        ],
+        indexed: false,
+        internalType: "struct Automation.DepositConfig[]",
+        name: "autoDepositConfigs",
+        type: "tuple[]",
+      },
     ],
     name: "OrderPurchased",
     type: "event",
@@ -385,7 +418,7 @@ const _abi = [
           },
         ],
         internalType: "struct Billing.Order",
-        name: "order",
+        name: "orderData",
         type: "tuple",
       },
       {
@@ -408,6 +441,38 @@ const _abi = [
         ],
         internalType: "struct Billing.KeyValuePair[]",
         name: "metadata",
+        type: "tuple[]",
+      },
+      {
+        components: [
+          {
+            internalType: "bool",
+            name: "useRadomBalanceForMeteredCharge",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "disableAutoDeposit",
+            type: "bool",
+          },
+          {
+            internalType: "uint16",
+            name: "minimumTimeUntilExpireInBps",
+            type: "uint16",
+          },
+          {
+            internalType: "uint32",
+            name: "minimumDuration",
+            type: "uint32",
+          },
+          {
+            internalType: "uint16",
+            name: "maxFeeInBps",
+            type: "uint16",
+          },
+        ],
+        internalType: "struct Automation.DepositConfig[]",
+        name: "depositConfigs",
         type: "tuple[]",
       },
     ],

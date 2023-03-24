@@ -45,14 +45,19 @@ const _abi = [
             type: "bool",
           },
           {
+            internalType: "uint16",
+            name: "minimumTimeUntilExpireInBps",
+            type: "uint16",
+          },
+          {
             internalType: "uint32",
             name: "minimumDuration",
             type: "uint32",
           },
           {
-            internalType: "uint32",
-            name: "maxFeeInBasisPoints",
-            type: "uint32",
+            internalType: "uint16",
+            name: "maxFeeInBps",
+            type: "uint16",
           },
         ],
         indexed: false,
@@ -168,14 +173,19 @@ const _abi = [
             type: "bool",
           },
           {
+            internalType: "uint16",
+            name: "minimumTimeUntilExpireInBps",
+            type: "uint16",
+          },
+          {
             internalType: "uint32",
             name: "minimumDuration",
             type: "uint32",
           },
           {
-            internalType: "uint32",
-            name: "maxFeeInBasisPoints",
-            type: "uint32",
+            internalType: "uint16",
+            name: "maxFeeInBps",
+            type: "uint16",
           },
         ],
         internalType: "struct Automation.DepositConfig",
@@ -284,14 +294,19 @@ const _abi = [
             type: "bool",
           },
           {
+            internalType: "uint16",
+            name: "minimumTimeUntilExpireInBps",
+            type: "uint16",
+          },
+          {
             internalType: "uint32",
             name: "minimumDuration",
             type: "uint32",
           },
           {
-            internalType: "uint32",
-            name: "maxFeeInBasisPoints",
-            type: "uint32",
+            internalType: "uint16",
+            name: "maxFeeInBps",
+            type: "uint16",
           },
         ],
         internalType: "struct Automation.DepositConfig",
@@ -300,263 +315,6 @@ const _abi = [
       },
     ],
     name: "updateAutoDepositConfig",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "bool",
-            name: "useRadomBalanceForMeteredCharge",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "disableAutoDeposit",
-            type: "bool",
-          },
-          {
-            internalType: "uint32",
-            name: "minimumDuration",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "maxFeeInBasisPoints",
-            type: "uint32",
-          },
-        ],
-        internalType: "struct Automation.DepositConfig",
-        name: "depositUpdate",
-        type: "tuple",
-      },
-      {
-        internalType: "address",
-        name: "customer",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "token",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "updateAutoDepositConfigAndDeposit",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "address",
-            name: "customer",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "seller",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "token",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "chainId",
-            type: "uint256",
-          },
-          {
-            components: [
-              {
-                internalType: "uint32",
-                name: "productType",
-                type: "uint32",
-              },
-              {
-                internalType: "bytes",
-                name: "data",
-                type: "bytes",
-              },
-            ],
-            internalType: "struct Billing.Product[]",
-            name: "products",
-            type: "tuple[]",
-          },
-        ],
-        internalType: "struct Billing.Order",
-        name: "orderData",
-        type: "tuple",
-      },
-      {
-        internalType: "bool",
-        name: "fromRadomBalance",
-        type: "bool",
-      },
-      {
-        components: [
-          {
-            internalType: "bytes32",
-            name: "key",
-            type: "bytes32",
-          },
-          {
-            internalType: "bytes",
-            name: "value",
-            type: "bytes",
-          },
-        ],
-        internalType: "struct Billing.KeyValuePair[]",
-        name: "metadata",
-        type: "tuple[]",
-      },
-      {
-        components: [
-          {
-            internalType: "bool",
-            name: "useRadomBalanceForMeteredCharge",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "disableAutoDeposit",
-            type: "bool",
-          },
-          {
-            internalType: "uint32",
-            name: "minimumDuration",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "maxFeeInBasisPoints",
-            type: "uint32",
-          },
-        ],
-        internalType: "struct Automation.DepositConfig",
-        name: "depositConfig",
-        type: "tuple",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "updateAutoDepositConfigAndDepositAndOrder",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "address",
-            name: "customer",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "seller",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "token",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "chainId",
-            type: "uint256",
-          },
-          {
-            components: [
-              {
-                internalType: "uint32",
-                name: "productType",
-                type: "uint32",
-              },
-              {
-                internalType: "bytes",
-                name: "data",
-                type: "bytes",
-              },
-            ],
-            internalType: "struct Billing.Product[]",
-            name: "products",
-            type: "tuple[]",
-          },
-        ],
-        internalType: "struct Billing.Order",
-        name: "orderData",
-        type: "tuple",
-      },
-      {
-        internalType: "bool",
-        name: "fromRadomBalance",
-        type: "bool",
-      },
-      {
-        components: [
-          {
-            internalType: "bytes32",
-            name: "key",
-            type: "bytes32",
-          },
-          {
-            internalType: "bytes",
-            name: "value",
-            type: "bytes",
-          },
-        ],
-        internalType: "struct Billing.KeyValuePair[]",
-        name: "metadata",
-        type: "tuple[]",
-      },
-      {
-        components: [
-          {
-            internalType: "bool",
-            name: "useRadomBalanceForMeteredCharge",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "disableAutoDeposit",
-            type: "bool",
-          },
-          {
-            internalType: "uint32",
-            name: "minimumDuration",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "maxFeeInBasisPoints",
-            type: "uint32",
-          },
-        ],
-        internalType: "struct Automation.DepositConfig",
-        name: "depositConfig",
-        type: "tuple",
-      },
-    ],
-    name: "updateAutoDepositConfigAndOrder",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
