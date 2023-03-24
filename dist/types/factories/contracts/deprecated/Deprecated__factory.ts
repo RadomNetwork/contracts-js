@@ -238,6 +238,142 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "seller",
+        type: "address",
+      },
+      {
+        internalType: "uint64",
+        name: "offset",
+        type: "uint64",
+      },
+      {
+        internalType: "uint64",
+        name: "limit",
+        type: "uint64",
+      },
+    ],
+    name: "getSoldSubscriptions",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "customer",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "seller",
+            type: "address",
+          },
+          {
+            internalType: "uint32",
+            name: "productType",
+            type: "uint32",
+          },
+          {
+            internalType: "uint64",
+            name: "subscriptionId",
+            type: "uint64",
+          },
+          {
+            internalType: "uint32",
+            name: "subscriptionStart",
+            type: "uint32",
+          },
+          {
+            internalType: "bytes",
+            name: "authenticationString",
+            type: "bytes",
+          },
+          {
+            internalType: "uint256",
+            name: "subscriptionEnd",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "indexRunsOutOfFunds",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "pricing",
+            type: "uint256",
+          },
+          {
+            internalType: "uint32",
+            name: "chargingInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "elapsedIntervals",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "intervals",
+            type: "uint32",
+          },
+          {
+            internalType: "bool",
+            name: "isActive",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "cancelled",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "revoked",
+            type: "bool",
+          },
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+          {
+            internalType: "uint32",
+            name: "meteredChargingInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "lastMeteredChargeInterval",
+            type: "uint32",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudget",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "meteredBudgetUsed",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Deprecated.SubscriptionResponse[]",
+        name: "subscriptions",
+        type: "tuple[]",
+      },
+      {
+        internalType: "uint64",
+        name: "cursor",
+        type: "uint64",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         components: [
           {
             internalType: "address",
@@ -312,7 +448,7 @@ const _abi = [
 ] as const;
 
 const _bytecode =
-  "0x608060405234801561001057600080fd5b5061014a806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063cda1d4eb14610030575b600080fd5b61004361003e36600461005e565b610045565b005b60405163036a2f6360e31b815260040160405180910390fd5b6000806000806060858703121561007457600080fd5b843567ffffffffffffffff8082111561008c57600080fd5b9086019060a082890312156100a057600080fd5b90945060208601359081151582146100b757600080fd5b909350604086013590808211156100cd57600080fd5b818701915087601f8301126100e157600080fd5b8135818111156100f057600080fd5b8860208260051b850101111561010557600080fd5b9598949750506020019450505056fea26469706673582212208c1a4a634279561b407d8231a96d18f12ec66ac72de9635a16c7ccc608decc9164736f6c63430008110033";
+  "0x608060405234801561001057600080fd5b506103e9806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c806360e083a71461003b578063cda1d4eb14610065575b600080fd5b61004e6100493660046100cd565b61007a565b60405161005c929190610164565b60405180910390f35b6100786100733660046102fd565b610097565b005b6060600060405163036a2f6360e31b815260040160405180910390fd5b60405163036a2f6360e31b815260040160405180910390fd5b803567ffffffffffffffff811681146100c857600080fd5b919050565b6000806000606084860312156100e257600080fd5b83356001600160a01b03811681146100f957600080fd5b9250610107602085016100b0565b9150610115604085016100b0565b90509250925092565b6000815180845260005b8181101561014457602081850181015186830182015201610128565b506000602082860101526020601f19601f83011685010191505092915050565b60006040808301818452808651808352606092508286019150828160051b8701016020808a0160005b848110156102d657605f198a8503018652815180516001600160a01b0390811686528482015116848601528881015163ffffffff9081168a8701528882015167ffffffffffffffff16898701526080808301519091169086015260a08082015161028082880181905291906102048389018261011e565b60c085810151908a015260e080860151908a015261010080860151908a01526101208086015163ffffffff908116918b0191909152610140808701518216908b0152610160808701518216908b0152610180808701511515908b01526101a0808701511515908b01526101c0808701511515908b01526101e0808701516001600160a01b0316908b0152610200808701518216908b015261022080870151909116908a015261024080860151908a0152610260948501519490980193909352505050948201949082019060010161018d565b50508196506102f08189018a67ffffffffffffffff169052565b5050505050509392505050565b6000806000806060858703121561031357600080fd5b843567ffffffffffffffff8082111561032b57600080fd5b9086019060a0828903121561033f57600080fd5b909450602086013590811515821461035657600080fd5b9093506040860135908082111561036c57600080fd5b818701915087601f83011261038057600080fd5b81358181111561038f57600080fd5b8860208260051b85010111156103a457600080fd5b9598949750506020019450505056fea264697066735822122073cb7b2995ad90215095ffa37aa6172f21571c7df7cabcb5bd31786444a7edb264736f6c63430008110033";
 
 type DeprecatedConstructorParams =
   | [signer?: Signer]

@@ -227,6 +227,142 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "seller",
+        "type": "address"
+      },
+      {
+        "internalType": "uint64",
+        "name": "offset",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "limit",
+        "type": "uint64"
+      }
+    ],
+    "name": "getSoldSubscriptions",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "customer",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "productType",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "subscriptionId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "subscriptionStart",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "authenticationString",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subscriptionEnd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "indexRunsOutOfFunds",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricing",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint32",
+            "name": "chargingInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "elapsedIntervals",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "intervals",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "cancelled",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "revoked",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "meteredChargingInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lastMeteredChargeInterval",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "meteredBudget",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "meteredBudgetUsed",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Deprecated.SubscriptionResponse[]",
+        "name": "subscriptions",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint64",
+        "name": "cursor",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "components": [
           {
             "internalType": "address",

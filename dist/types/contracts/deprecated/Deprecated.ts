@@ -71,13 +71,93 @@ export declare namespace Billing {
   };
 }
 
+export declare namespace Deprecated {
+  export type SubscriptionResponseStruct = {
+    customer: PromiseOrValue<string>;
+    seller: PromiseOrValue<string>;
+    productType: PromiseOrValue<BigNumberish>;
+    subscriptionId: PromiseOrValue<BigNumberish>;
+    subscriptionStart: PromiseOrValue<BigNumberish>;
+    authenticationString: PromiseOrValue<BytesLike>;
+    subscriptionEnd: PromiseOrValue<BigNumberish>;
+    indexRunsOutOfFunds: PromiseOrValue<BigNumberish>;
+    pricing: PromiseOrValue<BigNumberish>;
+    chargingInterval: PromiseOrValue<BigNumberish>;
+    elapsedIntervals: PromiseOrValue<BigNumberish>;
+    intervals: PromiseOrValue<BigNumberish>;
+    isActive: PromiseOrValue<boolean>;
+    cancelled: PromiseOrValue<boolean>;
+    revoked: PromiseOrValue<boolean>;
+    token: PromiseOrValue<string>;
+    meteredChargingInterval: PromiseOrValue<BigNumberish>;
+    lastMeteredChargeInterval: PromiseOrValue<BigNumberish>;
+    meteredBudget: PromiseOrValue<BigNumberish>;
+    meteredBudgetUsed: PromiseOrValue<BigNumberish>;
+  };
+
+  export type SubscriptionResponseStructOutput = [
+    string,
+    string,
+    number,
+    BigNumber,
+    number,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    number,
+    number,
+    number,
+    boolean,
+    boolean,
+    boolean,
+    string,
+    number,
+    number,
+    BigNumber,
+    BigNumber
+  ] & {
+    customer: string;
+    seller: string;
+    productType: number;
+    subscriptionId: BigNumber;
+    subscriptionStart: number;
+    authenticationString: string;
+    subscriptionEnd: BigNumber;
+    indexRunsOutOfFunds: BigNumber;
+    pricing: BigNumber;
+    chargingInterval: number;
+    elapsedIntervals: number;
+    intervals: number;
+    isActive: boolean;
+    cancelled: boolean;
+    revoked: boolean;
+    token: string;
+    meteredChargingInterval: number;
+    lastMeteredChargeInterval: number;
+    meteredBudget: BigNumber;
+    meteredBudgetUsed: BigNumber;
+  };
+}
+
 export interface DeprecatedInterface extends utils.Interface {
   functions: {
+    "getSoldSubscriptions(address,uint64,uint64)": FunctionFragment;
     "order((address,address,address,uint256,(uint32,bytes)[]),bool,(bytes32,bytes)[])": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "order"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "getSoldSubscriptions" | "order"
+  ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "getSoldSubscriptions",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
   encodeFunctionData(
     functionFragment: "order",
     values: [
@@ -87,6 +167,10 @@ export interface DeprecatedInterface extends utils.Interface {
     ]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "getSoldSubscriptions",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "order", data: BytesLike): Result;
 
   events: {
@@ -145,6 +229,18 @@ export interface Deprecated extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    getSoldSubscriptions(
+      seller: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [Deprecated.SubscriptionResponseStructOutput[], BigNumber] & {
+        subscriptions: Deprecated.SubscriptionResponseStructOutput[];
+        cursor: BigNumber;
+      }
+    >;
+
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
@@ -152,6 +248,18 @@ export interface Deprecated extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
+
+  getSoldSubscriptions(
+    seller: PromiseOrValue<string>,
+    offset: PromiseOrValue<BigNumberish>,
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [Deprecated.SubscriptionResponseStructOutput[], BigNumber] & {
+      subscriptions: Deprecated.SubscriptionResponseStructOutput[];
+      cursor: BigNumber;
+    }
+  >;
 
   order(
     orderData: Billing.OrderStruct,
@@ -161,6 +269,18 @@ export interface Deprecated extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    getSoldSubscriptions(
+      seller: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [Deprecated.SubscriptionResponseStructOutput[], BigNumber] & {
+        subscriptions: Deprecated.SubscriptionResponseStructOutput[];
+        cursor: BigNumber;
+      }
+    >;
+
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
@@ -189,6 +309,13 @@ export interface Deprecated extends BaseContract {
   };
 
   estimateGas: {
+    getSoldSubscriptions(
+      seller: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
@@ -198,6 +325,13 @@ export interface Deprecated extends BaseContract {
   };
 
   populateTransaction: {
+    getSoldSubscriptions(
+      seller: PromiseOrValue<string>,
+      offset: PromiseOrValue<BigNumberish>,
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     order(
       orderData: Billing.OrderStruct,
       fromRadomBalance: PromiseOrValue<boolean>,
