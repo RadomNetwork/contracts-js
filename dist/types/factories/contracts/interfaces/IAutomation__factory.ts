@@ -140,65 +140,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "customer",
-        type: "address",
-      },
-    ],
-    name: "deleteAutoDepositConfig",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "customer",
-        type: "address",
-      },
-    ],
-    name: "getAutoDepositConfig",
-    outputs: [
-      {
-        components: [
-          {
-            internalType: "bool",
-            name: "useRadomBalanceForMeteredCharge",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "disableAutoDeposit",
-            type: "bool",
-          },
-          {
-            internalType: "uint16",
-            name: "minimumTimeUntilExpireInBps",
-            type: "uint16",
-          },
-          {
-            internalType: "uint32",
-            name: "minimumDuration",
-            type: "uint32",
-          },
-          {
-            internalType: "uint16",
-            name: "maxFeeInBps",
-            type: "uint16",
-          },
-        ],
-        internalType: "struct Automation.DepositConfig",
-        name: "",
-        type: "tuple",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint64",
         name: "subscriptionId",
         type: "uint64",
@@ -271,51 +212,6 @@ const _abi = [
         type: "uint256",
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "customer",
-        type: "address",
-      },
-      {
-        components: [
-          {
-            internalType: "bool",
-            name: "useRadomBalanceForMeteredCharge",
-            type: "bool",
-          },
-          {
-            internalType: "bool",
-            name: "disableAutoDeposit",
-            type: "bool",
-          },
-          {
-            internalType: "uint16",
-            name: "minimumTimeUntilExpireInBps",
-            type: "uint16",
-          },
-          {
-            internalType: "uint32",
-            name: "minimumDuration",
-            type: "uint32",
-          },
-          {
-            internalType: "uint16",
-            name: "maxFeeInBps",
-            type: "uint16",
-          },
-        ],
-        internalType: "struct Automation.DepositConfig",
-        name: "depositConfig",
-        type: "tuple",
-      },
-    ],
-    name: "updateAutoDepositConfig",
-    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },

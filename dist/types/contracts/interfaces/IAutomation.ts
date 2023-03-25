@@ -53,32 +53,18 @@ export declare namespace Automation {
 
 export interface IAutomationInterface extends utils.Interface {
   functions: {
-    "deleteAutoDepositConfig(address)": FunctionFragment;
-    "getAutoDepositConfig(address)": FunctionFragment;
     "getSubscriptionTriggerResult(uint64)": FunctionFragment;
     "triggerAutoDeposit(address,address,uint64[],bool)": FunctionFragment;
-    "updateAutoDepositConfig(address,(bool,bool,uint16,uint32,uint16))": FunctionFragment;
     "updateSubscriptionAutoDepositConfigs(address,uint64[],(bool,bool,uint16,uint32,uint16))": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "deleteAutoDepositConfig"
-      | "getAutoDepositConfig"
       | "getSubscriptionTriggerResult"
       | "triggerAutoDeposit"
-      | "updateAutoDepositConfig"
       | "updateSubscriptionAutoDepositConfigs"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "deleteAutoDepositConfig",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAutoDepositConfig",
-    values: [PromiseOrValue<string>]
-  ): string;
   encodeFunctionData(
     functionFragment: "getSubscriptionTriggerResult",
     values: [PromiseOrValue<BigNumberish>]
@@ -93,10 +79,6 @@ export interface IAutomationInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateAutoDepositConfig",
-    values: [PromiseOrValue<string>, Automation.DepositConfigStruct]
-  ): string;
-  encodeFunctionData(
     functionFragment: "updateSubscriptionAutoDepositConfigs",
     values: [
       PromiseOrValue<string>,
@@ -106,23 +88,11 @@ export interface IAutomationInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "deleteAutoDepositConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAutoDepositConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getSubscriptionTriggerResult",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "triggerAutoDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfig",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -224,16 +194,6 @@ export interface IAutomation extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[Automation.DepositConfigStructOutput]>;
-
     getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -255,12 +215,6 @@ export interface IAutomation extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
@@ -268,16 +222,6 @@ export interface IAutomation extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
-
-  deleteAutoDepositConfig(
-    customer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  getAutoDepositConfig(
-    customer: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<Automation.DepositConfigStructOutput>;
 
   getSubscriptionTriggerResult(
     subscriptionId: PromiseOrValue<BigNumberish>,
@@ -300,12 +244,6 @@ export interface IAutomation extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateAutoDepositConfig(
-    customer: PromiseOrValue<string>,
-    depositConfig: Automation.DepositConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   updateSubscriptionAutoDepositConfigs(
     customer: PromiseOrValue<string>,
     subscriptionIds: PromiseOrValue<BigNumberish>[],
@@ -314,16 +252,6 @@ export interface IAutomation extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<Automation.DepositConfigStructOutput>;
-
     getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -349,12 +277,6 @@ export interface IAutomation extends BaseContract {
         totalFeeAmount: BigNumber;
       }
     >;
-
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
@@ -411,16 +333,6 @@ export interface IAutomation extends BaseContract {
   };
 
   estimateGas: {
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -431,12 +343,6 @@ export interface IAutomation extends BaseContract {
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
       sendToWallet: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -449,16 +355,6 @@ export interface IAutomation extends BaseContract {
   };
 
   populateTransaction: {
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getSubscriptionTriggerResult(
       subscriptionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -469,12 +365,6 @@ export interface IAutomation extends BaseContract {
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
       sendToWallet: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

@@ -54,24 +54,18 @@ export declare namespace Automation {
 export interface AutomationFacetInterface extends utils.Interface {
   functions: {
     "changeDefaultValues(uint16,uint32,uint16,uint32)": FunctionFragment;
-    "deleteAutoDepositConfig(address)": FunctionFragment;
-    "getAutoDepositConfig(address)": FunctionFragment;
     "getDefaultValues()": FunctionFragment;
     "getSubscriptionTriggerResult(uint64)": FunctionFragment;
     "triggerAutoDeposit(address,address,uint64[],bool)": FunctionFragment;
-    "updateAutoDepositConfig(address,(bool,bool,uint16,uint32,uint16))": FunctionFragment;
     "updateSubscriptionAutoDepositConfigs(address,uint64[],(bool,bool,uint16,uint32,uint16))": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "changeDefaultValues"
-      | "deleteAutoDepositConfig"
-      | "getAutoDepositConfig"
       | "getDefaultValues"
       | "getSubscriptionTriggerResult"
       | "triggerAutoDeposit"
-      | "updateAutoDepositConfig"
       | "updateSubscriptionAutoDepositConfigs"
   ): FunctionFragment;
 
@@ -83,14 +77,6 @@ export interface AutomationFacetInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "deleteAutoDepositConfig",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAutoDepositConfig",
-    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getDefaultValues",
@@ -110,10 +96,6 @@ export interface AutomationFacetInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateAutoDepositConfig",
-    values: [PromiseOrValue<string>, Automation.DepositConfigStruct]
-  ): string;
-  encodeFunctionData(
     functionFragment: "updateSubscriptionAutoDepositConfigs",
     values: [
       PromiseOrValue<string>,
@@ -127,14 +109,6 @@ export interface AutomationFacetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "deleteAutoDepositConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAutoDepositConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getDefaultValues",
     data: BytesLike
   ): Result;
@@ -144,10 +118,6 @@ export interface AutomationFacetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "triggerAutoDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateAutoDepositConfig",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -257,16 +227,6 @@ export interface AutomationFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[Automation.DepositConfigStructOutput]>;
-
     getDefaultValues(
       overrides?: CallOverrides
     ): Promise<
@@ -299,12 +259,6 @@ export interface AutomationFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
@@ -320,16 +274,6 @@ export interface AutomationFacet extends BaseContract {
     minTimeUntilExpireInSeconds: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
-
-  deleteAutoDepositConfig(
-    customer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  getAutoDepositConfig(
-    customer: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<Automation.DepositConfigStructOutput>;
 
   getDefaultValues(
     overrides?: CallOverrides
@@ -363,12 +307,6 @@ export interface AutomationFacet extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateAutoDepositConfig(
-    customer: PromiseOrValue<string>,
-    depositConfig: Automation.DepositConfigStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   updateSubscriptionAutoDepositConfigs(
     customer: PromiseOrValue<string>,
     subscriptionIds: PromiseOrValue<BigNumberish>[],
@@ -384,16 +322,6 @@ export interface AutomationFacet extends BaseContract {
       minTimeUntilExpireInSeconds: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<Automation.DepositConfigStructOutput>;
 
     getDefaultValues(
       overrides?: CallOverrides
@@ -431,12 +359,6 @@ export interface AutomationFacet extends BaseContract {
         totalFeeAmount: BigNumber;
       }
     >;
-
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     updateSubscriptionAutoDepositConfigs(
       customer: PromiseOrValue<string>,
@@ -501,16 +423,6 @@ export interface AutomationFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getDefaultValues(overrides?: CallOverrides): Promise<BigNumber>;
 
     getSubscriptionTriggerResult(
@@ -523,12 +435,6 @@ export interface AutomationFacet extends BaseContract {
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
       sendToWallet: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -549,16 +455,6 @@ export interface AutomationFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    deleteAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    getAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getDefaultValues(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getSubscriptionTriggerResult(
@@ -571,12 +467,6 @@ export interface AutomationFacet extends BaseContract {
       token: PromiseOrValue<string>,
       subscriptionIds: PromiseOrValue<BigNumberish>[],
       sendToWallet: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateAutoDepositConfig(
-      customer: PromiseOrValue<string>,
-      depositConfig: Automation.DepositConfigStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
