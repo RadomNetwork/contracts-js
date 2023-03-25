@@ -319,6 +319,56 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "customer",
+        type: "address",
+      },
+      {
+        internalType: "uint64[]",
+        name: "subscriptionIds",
+        type: "uint64[]",
+      },
+      {
+        components: [
+          {
+            internalType: "bool",
+            name: "useRadomBalanceForMeteredCharge",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "disableAutoDeposit",
+            type: "bool",
+          },
+          {
+            internalType: "uint16",
+            name: "minimumTimeUntilExpireInBps",
+            type: "uint16",
+          },
+          {
+            internalType: "uint32",
+            name: "minimumDuration",
+            type: "uint32",
+          },
+          {
+            internalType: "uint16",
+            name: "maxFeeInBps",
+            type: "uint16",
+          },
+        ],
+        internalType: "struct Automation.DepositConfig",
+        name: "depositConfig",
+        type: "tuple",
+      },
+    ],
+    name: "updateSubscriptionAutoDepositConfigs",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ] as const;
 
 export class IAutomation__factory {

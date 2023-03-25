@@ -726,9 +726,9 @@
             "type": "bytes"
           }
         ],
-        "internalType": "struct ExecutionData",
+        "internalType": "struct ExecutionData[]",
         "name": "executionData",
-        "type": "tuple"
+        "type": "tuple[]"
       },
       {
         "internalType": "string",
@@ -768,7 +768,7 @@
           }
         ],
         "internalType": "struct IDiamondCut.FacetCut[]",
-        "name": "_facetCuts",
+        "name": "facetCuts",
         "type": "tuple[]"
       },
       {

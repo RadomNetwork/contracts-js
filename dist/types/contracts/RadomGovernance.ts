@@ -165,7 +165,7 @@ export interface RadomGovernanceInterface extends utils.Interface {
     "hasVoted(address,uint64)": FunctionFragment;
     "initialize((address,address,uint8,uint8[5],uint8[5],uint32,uint32,uint32,uint64))": FunctionFragment;
     "proposeChangeGovernanceParameters((address,address,uint8,uint8[5],uint8[5],uint32,uint32,uint32,uint64),string)": FunctionFragment;
-    "proposeCodeExecution((bool,address,uint256,bytes),string)": FunctionFragment;
+    "proposeCodeExecution((bool,address,uint256,bytes)[],string)": FunctionFragment;
     "proposeDiamondChange((address,uint8,bytes4[])[],string)": FunctionFragment;
     "proposeOwnershipChange(address,string)": FunctionFragment;
     "proposeText(string)": FunctionFragment;
@@ -253,7 +253,7 @@ export interface RadomGovernanceInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "proposeCodeExecution",
-    values: [ExecutionDataStruct, PromiseOrValue<string>]
+    values: [ExecutionDataStruct[], PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "proposeDiamondChange",
@@ -565,13 +565,13 @@ export interface RadomGovernance extends BaseContract {
     ): Promise<ContractTransaction>;
 
     proposeCodeExecution(
-      executionData: ExecutionDataStruct,
+      executionData: ExecutionDataStruct[],
       description: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     proposeDiamondChange(
-      _facetCuts: IDiamondCut.FacetCutStruct[],
+      facetCuts: IDiamondCut.FacetCutStruct[],
       description: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -675,13 +675,13 @@ export interface RadomGovernance extends BaseContract {
   ): Promise<ContractTransaction>;
 
   proposeCodeExecution(
-    executionData: ExecutionDataStruct,
+    executionData: ExecutionDataStruct[],
     description: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   proposeDiamondChange(
-    _facetCuts: IDiamondCut.FacetCutStruct[],
+    facetCuts: IDiamondCut.FacetCutStruct[],
     description: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -785,13 +785,13 @@ export interface RadomGovernance extends BaseContract {
     ): Promise<BigNumber>;
 
     proposeCodeExecution(
-      executionData: ExecutionDataStruct,
+      executionData: ExecutionDataStruct[],
       description: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     proposeDiamondChange(
-      _facetCuts: IDiamondCut.FacetCutStruct[],
+      facetCuts: IDiamondCut.FacetCutStruct[],
       description: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -984,13 +984,13 @@ export interface RadomGovernance extends BaseContract {
     ): Promise<BigNumber>;
 
     proposeCodeExecution(
-      executionData: ExecutionDataStruct,
+      executionData: ExecutionDataStruct[],
       description: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     proposeDiamondChange(
-      _facetCuts: IDiamondCut.FacetCutStruct[],
+      facetCuts: IDiamondCut.FacetCutStruct[],
       description: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1097,13 +1097,13 @@ export interface RadomGovernance extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     proposeCodeExecution(
-      executionData: ExecutionDataStruct,
+      executionData: ExecutionDataStruct[],
       description: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     proposeDiamondChange(
-      _facetCuts: IDiamondCut.FacetCutStruct[],
+      facetCuts: IDiamondCut.FacetCutStruct[],
       description: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
