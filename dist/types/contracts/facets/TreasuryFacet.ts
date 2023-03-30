@@ -29,6 +29,7 @@ import type {
 
 export interface TreasuryFacetInterface extends utils.Interface {
   functions: {
+    "changeTreasuryValues(uint16,address)": FunctionFragment;
     "deposit(address,address,uint256)": FunctionFragment;
     "getAllTokenBalances(address)": FunctionFragment;
     "getBuyAndSellBalances(address,address)": FunctionFragment;
@@ -45,6 +46,7 @@ export interface TreasuryFacetInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "changeTreasuryValues"
       | "deposit"
       | "getAllTokenBalances"
       | "getBuyAndSellBalances"
@@ -59,6 +61,10 @@ export interface TreasuryFacetInterface extends utils.Interface {
       | "withdrawTriggerBalanceToRecipient"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "changeTreasuryValues",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "deposit",
     values: [
@@ -139,6 +145,10 @@ export interface TreasuryFacetInterface extends utils.Interface {
     ]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "changeTreasuryValues",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getAllTokenBalances",
@@ -190,12 +200,14 @@ export interface TreasuryFacetInterface extends utils.Interface {
     "Deposit(address,address,uint256)": EventFragment;
     "InnerTransfer(address,address,address,uint256,uint256)": EventFragment;
     "SellBalanceWithdrawn(address,address,uint256,address)": EventFragment;
+    "TreasuryValuesUpdated(uint16,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "BuyBalanceWithdrawn"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "InnerTransfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SellBalanceWithdrawn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TreasuryValuesUpdated"): EventFragment;
 }
 
 export interface BuyBalanceWithdrawnEventObject {
@@ -252,6 +264,18 @@ export type SellBalanceWithdrawnEvent = TypedEvent<
 export type SellBalanceWithdrawnEventFilter =
   TypedEventFilter<SellBalanceWithdrawnEvent>;
 
+export interface TreasuryValuesUpdatedEventObject {
+  fee: number;
+  feeRecipient: string;
+}
+export type TreasuryValuesUpdatedEvent = TypedEvent<
+  [number, string],
+  TreasuryValuesUpdatedEventObject
+>;
+
+export type TreasuryValuesUpdatedEventFilter =
+  TypedEventFilter<TreasuryValuesUpdatedEvent>;
+
 export interface TreasuryFacet extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -279,6 +303,12 @@ export interface TreasuryFacet extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    changeTreasuryValues(
+      salesFeeInBps: PromiseOrValue<BigNumberish>,
+      feeRecipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     deposit(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -360,6 +390,12 @@ export interface TreasuryFacet extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
+
+  changeTreasuryValues(
+    salesFeeInBps: PromiseOrValue<BigNumberish>,
+    feeRecipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   deposit(
     orgId: PromiseOrValue<string>,
@@ -443,6 +479,12 @@ export interface TreasuryFacet extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    changeTreasuryValues(
+      salesFeeInBps: PromiseOrValue<BigNumberish>,
+      feeRecipient: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     deposit(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -577,9 +619,24 @@ export interface TreasuryFacet extends BaseContract {
       amount?: null,
       recipient?: null
     ): SellBalanceWithdrawnEventFilter;
+
+    "TreasuryValuesUpdated(uint16,address)"(
+      fee?: null,
+      feeRecipient?: null
+    ): TreasuryValuesUpdatedEventFilter;
+    TreasuryValuesUpdated(
+      fee?: null,
+      feeRecipient?: null
+    ): TreasuryValuesUpdatedEventFilter;
   };
 
   estimateGas: {
+    changeTreasuryValues(
+      salesFeeInBps: PromiseOrValue<BigNumberish>,
+      feeRecipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     deposit(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -663,6 +720,12 @@ export interface TreasuryFacet extends BaseContract {
   };
 
   populateTransaction: {
+    changeTreasuryValues(
+      salesFeeInBps: PromiseOrValue<BigNumberish>,
+      feeRecipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     deposit(
       orgId: PromiseOrValue<string>,
       token: PromiseOrValue<string>,

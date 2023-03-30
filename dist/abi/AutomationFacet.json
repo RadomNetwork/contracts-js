@@ -275,12 +275,12 @@
         "type": "uint16"
       },
       {
-        "internalType": "uint32",
+        "internalType": "uint16",
         "name": "minTimeUntilExpireInSeconds",
-        "type": "uint32"
+        "type": "uint16"
       }
     ],
-    "name": "changeDefaultValues",
+    "name": "changeAutomationValues",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -305,9 +305,9 @@
         "type": "uint32"
       },
       {
-        "internalType": "uint32",
+        "internalType": "uint16",
         "name": "minTimeUntilExpireInSeconds",
-        "type": "uint32"
+        "type": "uint16"
       }
     ],
     "stateMutability": "view",

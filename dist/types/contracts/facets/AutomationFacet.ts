@@ -53,7 +53,7 @@ export declare namespace Automation {
 
 export interface AutomationFacetInterface extends utils.Interface {
   functions: {
-    "changeDefaultValues(uint16,uint32,uint16,uint32)": FunctionFragment;
+    "changeAutomationValues(uint16,uint32,uint16,uint16)": FunctionFragment;
     "getDefaultValues()": FunctionFragment;
     "getSubscriptionTriggerResult(uint64)": FunctionFragment;
     "triggerAutoDeposit(address,address,uint64[],bool)": FunctionFragment;
@@ -62,7 +62,7 @@ export interface AutomationFacetInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "changeDefaultValues"
+      | "changeAutomationValues"
       | "getDefaultValues"
       | "getSubscriptionTriggerResult"
       | "triggerAutoDeposit"
@@ -70,7 +70,7 @@ export interface AutomationFacetInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "changeDefaultValues",
+    functionFragment: "changeAutomationValues",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -105,7 +105,7 @@ export interface AutomationFacetInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "changeDefaultValues",
+    functionFragment: "changeAutomationValues",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -219,7 +219,7 @@ export interface AutomationFacet extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    changeDefaultValues(
+    changeAutomationValues(
       autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
@@ -267,7 +267,7 @@ export interface AutomationFacet extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  changeDefaultValues(
+  changeAutomationValues(
     autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
     autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
     autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
@@ -315,7 +315,7 @@ export interface AutomationFacet extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    changeDefaultValues(
+    changeAutomationValues(
       autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
@@ -415,7 +415,7 @@ export interface AutomationFacet extends BaseContract {
   };
 
   estimateGas: {
-    changeDefaultValues(
+    changeAutomationValues(
       autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
@@ -447,7 +447,7 @@ export interface AutomationFacet extends BaseContract {
   };
 
   populateTransaction: {
-    changeDefaultValues(
+    changeAutomationValues(
       autoDepositMinimumTimeUntilExpireInBps: PromiseOrValue<BigNumberish>,
       autoDepositMinimumDuration: PromiseOrValue<BigNumberish>,
       autoDepositMaxFeeInBasisPoints: PromiseOrValue<BigNumberish>,
