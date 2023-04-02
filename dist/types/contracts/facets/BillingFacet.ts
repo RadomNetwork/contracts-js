@@ -378,7 +378,7 @@ export interface OrderPurchasedEventObject {
   orderHash: string;
   orderData: Billing.OrderStructOutput;
   subscriptionIds: BigNumber[];
-  configInputs: Billing.KeyValuePairStructOutput[];
+  metadata: Billing.KeyValuePairStructOutput[];
   autoDepositConfigs: Automation.DepositConfigStructOutput[];
 }
 export type OrderPurchasedEvent = TypedEvent<
@@ -734,7 +734,7 @@ export interface BillingFacet extends BaseContract {
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null,
+      metadata?: null,
       autoDepositConfigs?: null
     ): OrderPurchasedEventFilter;
     OrderPurchased(
@@ -743,7 +743,7 @@ export interface BillingFacet extends BaseContract {
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null,
+      metadata?: null,
       autoDepositConfigs?: null
     ): OrderPurchasedEventFilter;
 

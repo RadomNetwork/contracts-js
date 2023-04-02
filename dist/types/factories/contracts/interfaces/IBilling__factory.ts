@@ -183,7 +183,7 @@ const _abi = [
         ],
         indexed: false,
         internalType: "struct Billing.KeyValuePair[]",
-        name: "configInputs",
+        name: "metadata",
         type: "tuple[]",
       },
       {

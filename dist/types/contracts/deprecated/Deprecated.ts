@@ -186,7 +186,7 @@ export interface OrderPurchasedEventObject {
   orderHash: string;
   orderData: Billing.OrderStructOutput;
   subscriptionIds: BigNumber[];
-  configInputs: Billing.KeyValuePairStructOutput[];
+  metadata: Billing.KeyValuePairStructOutput[];
 }
 export type OrderPurchasedEvent = TypedEvent<
   [
@@ -296,7 +296,7 @@ export interface Deprecated extends BaseContract {
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null
+      metadata?: null
     ): OrderPurchasedEventFilter;
     OrderPurchased(
       seller?: PromiseOrValue<string> | null,
@@ -304,7 +304,7 @@ export interface Deprecated extends BaseContract {
       orderHash?: PromiseOrValue<BytesLike> | null,
       orderData?: null,
       subscriptionIds?: null,
-      configInputs?: null
+      metadata?: null
     ): OrderPurchasedEventFilter;
   };
 
