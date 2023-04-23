@@ -4,13 +4,13 @@ This package contains automatically published Radom contract ABIs and typescript
 # How to use
 1. Install `ethers.js` and `radom-contracts-js`:
 ```
-npm install ethers https://github.com/RadomNetwork/contracts-js.git
+npm install ethers https://github.com/RadomNetwork/radom-contracts-js.git
 ```
 
-2. Import and initialize a facet from `radom-contracts-js`:
+2. Import and initialize a facet from `@radom/radom-contracts-js`:
 
 ```typescript
-import { BillingFacet__factory } from 'radom-contracts-js'
+import { BillingFacet__factory } from '@radom/radom-contracts-js'
 
 /*
   Radom contract address. Find the list of addresses per chain here:

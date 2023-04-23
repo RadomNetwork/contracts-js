@@ -1,5 +1,5 @@
 {
-  "name": "radom-contracts-js",
+  "name": "@radom/radom-contracts-js",
   "version": "1.0.0",
   "description": "Radom contract abi files",
   "main": "dist/types/index.ts",
