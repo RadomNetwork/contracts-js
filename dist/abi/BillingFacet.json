@@ -437,7 +437,7 @@
       {
         "indexed": true,
         "internalType": "uint64",
-        "name": "serviceSubscriptionId",
+        "name": "subscriptionId",
         "type": "uint64"
       }
     ],
@@ -493,7 +493,7 @@
       {
         "indexed": true,
         "internalType": "uint64",
-        "name": "serviceSubscriptionId",
+        "name": "subscriptionId",
         "type": "uint64"
       }
     ],

@@ -420,7 +420,7 @@ export type PaymentSuccessfulEventFilter =
 export interface SubscriptionCancelledEventObject {
   seller: string;
   customer: string;
-  serviceSubscriptionId: BigNumber;
+  subscriptionId: BigNumber;
 }
 export type SubscriptionCancelledEvent = TypedEvent<
   [string, string, BigNumber],
@@ -447,7 +447,7 @@ export type SubscriptionCreatedEventFilter =
 export interface SubscriptionRevokedEventObject {
   seller: string;
   customer: string;
-  serviceSubscriptionId: BigNumber;
+  subscriptionId: BigNumber;
 }
 export type SubscriptionRevokedEvent = TypedEvent<
   [string, string, BigNumber],
@@ -765,12 +765,12 @@ export interface BillingFacet extends BaseContract {
     "SubscriptionCancelled(address,address,uint64)"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
+      subscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionCancelledEventFilter;
     SubscriptionCancelled(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
+      subscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionCancelledEventFilter;
 
     "SubscriptionCreated(address,address,uint64,bytes32)"(
@@ -789,12 +789,12 @@ export interface BillingFacet extends BaseContract {
     "SubscriptionRevoked(address,address,uint64)"(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
+      subscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionRevokedEventFilter;
     SubscriptionRevoked(
       seller?: PromiseOrValue<string> | null,
       customer?: PromiseOrValue<string> | null,
-      serviceSubscriptionId?: PromiseOrValue<BigNumberish> | null
+      subscriptionId?: PromiseOrValue<BigNumberish> | null
     ): SubscriptionRevokedEventFilter;
   };
 

@@ -28,7 +28,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "uint64",
-        name: "serviceSubscriptionId",
+        name: "subscriptionId",
         type: "uint64",
       },
     ],
@@ -84,7 +84,7 @@ const _abi = [
       {
         indexed: true,
         internalType: "uint64",
-        name: "serviceSubscriptionId",
+        name: "subscriptionId",
         type: "uint64",
       },
     ],
