@@ -9,7 +9,7 @@ npm install ethers https://github.com/RadomNetwork/radom-contracts-js.git
 
 2. Import and initialize a facet from `@radom/radom-contracts-js`:
 
-    (Refer to [Radom documentation](https://docs.radom.network/additional-resources/chainsrpcs) for Radom contract address per chain.)
+    (Refer to Radom documentation for [Radom contract address per chain](https://docs.radom.network/additional-resources/chainsrpcs) and [payment tokens supported by Radom Pay](https://docs.radom.network/additional-resources/chainstokens).)
 
 ```typescript
 import { BillingFacet__factory } from '@radom/radom-contracts-js'
@@ -95,7 +95,9 @@ const receipt = await tx.wait(1)
 ```
 
 # Withdrawing funds from sales
-To withdraw funds received from sales, simply call the treasury facet's `withdrawSellBalance(sellerAddress, token, amount)` function to withdraw to the seller wallet or `withdrawSellBalanceToRecipient(sellerAddress, token, amount, recipientAddress)` to withdraw to a different wallet:
+To withdraw funds received from sales, simply call the treasury facet's `withdrawSellBalance(sellerAddress, token, amount)` function to withdraw to the seller wallet or `withdrawSellBalanceToRecipient(sellerAddress, token, amount, recipientAddress)` to withdraw to a different wallet.
+
+Here's an example of withdrawing $1000 [USDC on Ethereum mainnet](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) from the sell balance to the seller's wallet:
 ```typescript
 // Connect to Radom's Treasury facet
 const treasuryFacet = TreasuryFacet__factory.connect(
@@ -104,7 +106,7 @@ const treasuryFacet = TreasuryFacet__factory.connect(
 )
 
 // Withdraw sales balance to seller's Ethereum address
-const tx = await treasuryFacet.withdrawSellBalance(sellerAddress, token, amount)
+const tx = await treasuryFacet.withdrawSellBalance(sellerAddress, '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', 1000)
 const receipt = await tx.wait(1)
 ```
 
