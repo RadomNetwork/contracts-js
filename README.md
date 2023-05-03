@@ -2,15 +2,17 @@
 This package contains automatically published Radom contract ABIs and typescript bindings. It relies on the [ethers.js](https://github.com/ethers-io/ethers.js/) library.
 
 # How to use
+Refer to Radom documentation for contract and token addresses:
+
+* [Radom contract address per chain](https://docs.radom.network/additional-resources/chainsrpcs)
+* [Payment tokens supported by Radom Pay](https://docs.radom.network/additional-resources/chainstokens)
+
 1. Install `ethers.js` and `radom-contracts-js`:
 ```
 npm install ethers https://github.com/RadomNetwork/radom-contracts-js.git
 ```
 
 2. Import and initialize a facet from `@radom/radom-contracts-js`:
-
-    (Refer to Radom documentation for [Radom contract address per chain](https://docs.radom.network/additional-resources/chainsrpcs) and [payment tokens supported by Radom Pay](https://docs.radom.network/additional-resources/chainstokens).)
-
 ```typescript
 import { BillingFacet__factory } from '@radom/radom-contracts-js'
 
@@ -36,7 +38,6 @@ const erc20 = ERC20__factory.connect(
 ```
 
 3. Call Radom contract functions, for example, to make a simple payment:
-
 ```typescript
 // Approve an allowance for the Radom contract
 let tx = await erc20.approve(
@@ -97,7 +98,7 @@ const receipt = await tx.wait(1)
 # Withdrawing funds from sales
 To withdraw funds received from sales, simply call the treasury facet's `withdrawSellBalance(sellerAddress, token, amount)` function to withdraw to the seller wallet or `withdrawSellBalanceToRecipient(sellerAddress, token, amount, recipientAddress)` to withdraw to a different wallet.
 
-Here's an example of withdrawing $1000 [USDC on Ethereum mainnet](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) from the sell balance to the seller's wallet:
+Here's an example of withdrawing $200.59 [USDC on Ethereum mainnet](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) from the sell balance to the seller's wallet:
 ```typescript
 // Connect to Radom's Treasury facet
 const treasuryFacet = TreasuryFacet__factory.connect(
@@ -106,7 +107,17 @@ const treasuryFacet = TreasuryFacet__factory.connect(
 )
 
 // Withdraw sales balance to seller's Ethereum address
-const tx = await treasuryFacet.withdrawSellBalance(sellerAddress, '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', 1000)
+const tx = await treasuryFacet.withdrawSellBalance(
+  {
+    sellerAddress: '0xb44A6Bf1e5Af931378046349Db73485367ba6c1B',
+
+    /* USDC */
+    token: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+
+    /* Amount of tokens to withdraw */
+    amount: 200.59)
+  }
+)
 const receipt = await tx.wait(1)
 ```
 
