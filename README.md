@@ -115,7 +115,7 @@ const tx = await treasuryFacet.withdrawSellBalance(
     token: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
 
     /* Amount of tokens to withdraw */
-    amount: 200.59)
+    amount: 200.59
   }
 )
 const receipt = await tx.wait(1)
